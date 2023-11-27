@@ -54,6 +54,10 @@
     border-radius: 5px;
     margin: 0px;
     padding: 0px 25px;
+    max-width: 100%;
+    flex-wrap: wrap;
+    text-wrap: wrap;
+    word-wrap: break-word;
 }
 
 p {

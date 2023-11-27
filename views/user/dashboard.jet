@@ -22,39 +22,43 @@
         <input type="hidden" id="lname" value="{{.user.LastName}}">
         <input type="hidden" id="email" value="{{.user.Email}}">
         <input type="hidden" id="visible" value="{{.preferences.Visible}}">
-        <div class="col-md-10 col-sm-12">
-            <div class="row my-1">
-                <div class="box col-12 col-md-4 border border-primary">
-                    <div class="card-body">
-                        <div class="d-grid justify-content-center align-items-center">
-                            <div class="row m-auto">
-                                <div class="col-12 pt-5">
-                                    <h3 class="text-center">
-                                        <i class="bi bi-people-fill fs-3 fw-bold"></i>
-                                    </h3>
-                                </div>
-                                <div class="input-group col-12 text-wrap">
-                                    <span id="user-count-span"
-                                        class="input-group-text bg-white border-0 mx-0 fs-3 fw-bold">
-                                    </span>
-                                    <input id="user-count-input" type="text"
-                                        class="form-control border-0 bg-white fw-bold fs-3 mx-0 px-0" readonly>
-                                </div>
-                                <div class="col-12 py-5"></div>
+
+        <div class="container border border-primary rounded">
+            <div class="row my-1 justify-content-center gap-5">
+                <div class="box border border-primary col-3 col-md-3 col-sm-12">
+                    <span id="user-count-span" class="input-group-text bg-white border-0 mx-0 fs-3 fw-bold">
+                    </span>
+                    <input id="user-count-input" type="text"
+                        class="form-control border-0 bg-white fw-bold fs-3 mx-0 px-0" readonly>
+                </div>
+
+                <div class="box border border-primary rounded col-3 col-md-3 col-sm-12">
+                    <div class="container d-grid justify-content-center">
+                        <div class=" row d-flex justify-content-evenly">
+                            <div class=" form-check form-switch">
+                                <input id="visible-input" class="form-check-input fw-bold fs-3" type="checkbox"
+                                    role="switch" id="flexSwitchCheckDefault">
+
+                                <p id="visible-label" class="form-check-label fw-bold m-0">Visible
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex justify-content-evenly">
+                            <div class=" form-check form-switch">
+                                <input id="visible-input" class="form-check-input fw-bold fs-3" type="checkbox"
+                                    role="switch" id="flexSwitchCheckDefault">
+
+                                <p id="visible-label" class="form-check-label fw-bold m-0">Visible
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="box col-12 col-md-4 border border-primary">
-                    <p>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos dicta laudantium vero, aut dolor
-                        natus, vitae,
-                        ipsa omnis velit veritatis quos ratione amet quia tempora quibusdam rerum? Labore, tempora
-                        dolorem!
-                    </p>
-                </div>
-                <div class="box col-12 col-md-4 border border-primary">
-                    <p>
+
+
+                <div class="box border border-primary rounded col-3 col-md-3 col-sm-12">
+                    <p class="text-wrap">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ducimus qui debitis consectetur
                         aut aperiam
                         at excepturi. Illo praesentium quaerat consequatur laboriosam labore esse quasi adipisci!

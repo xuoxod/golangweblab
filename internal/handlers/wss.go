@@ -131,6 +131,9 @@ func ListenToWsChannel() {
 		case "exit":
 			handleUserExit(e.Conn)
 
+		case "hide":
+			handleHide(e.Conn)
+
 		case "broadcast":
 			fmt.Println("Broadcast")
 			// broadcastToAll(response)
@@ -140,6 +143,12 @@ func ListenToWsChannel() {
 		// response.Message = fmt.Sprintf("Some message and action was %s ", e.Action)
 		// broadcastToAll(response)
 	}
+}
+
+func handleHide(conn WebSocketConnection) {
+	client := clients[conn]
+	client["visible"] = fmt.Sprintf("%t", false)
+	broadcastOnlineUsers()
 }
 
 func handleUserExit(conn WebSocketConnection) {

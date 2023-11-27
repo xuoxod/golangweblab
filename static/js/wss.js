@@ -55,9 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function handleUserList(data) {
   const { action, users } = data;
-  log(`Users:\t${stringify(users)}\n\n`);
-  log(`Array?:\t${Array.isArray(users)}\n\n`);
-
   count = 0;
   userObject = {};
 
@@ -67,13 +64,11 @@ function handleUserList(data) {
     lname = arr[1];
     email = arr[2];
     visible = arr[3];
-    log(`Is visible? ${visible}\n\n `);
     if (visible == true || visible == "true") {
       count += 1;
       userObject[`${email}`] = [fname, lname, email, visible];
     }
   }
-  log(`User count:\t${count}\n\n`);
   handleUserCount(count);
   handleUserObject(userObject);
 }
