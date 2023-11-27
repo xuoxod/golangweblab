@@ -60,6 +60,11 @@
     word-wrap: break-word;
 }
 
+#user-count-input {
+    text-wrap: wrap;
+    word-wrap: break-word;
+}
+
 p {
     /* white-space: pre-wrap; */
     /* Webkit */

@@ -90,7 +90,7 @@ function handleUserCount(count) {
     "#user-count-span"
   ).innerHTML = `<strong class="text-center">${count}</strong>`;
 
-  document.querySelector("#user-count-input").value = `${userslist}`;
+  document.querySelector("#user-count-input").innerText = `${userslist}`;
 }
 
 function handleUserObject(userObj) {

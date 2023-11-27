@@ -23,10 +23,12 @@ const objInputs = {};
 const changedInputs = {};
 
 inputs.forEach((input) => {
-  objInputs[`${input.name.trim()}`] = {
-    name: input.name.trim(),
-    value: input.value.trim(),
-  };
+  if (input.name) {
+    objInputs[`${input.name.trim()}`] = {
+      name: input.name.trim(),
+      value: input.value.trim(),
+    };
+  }
 });
 
 const inputValueChanged = (inputName, value) => {
