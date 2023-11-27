@@ -149,20 +149,19 @@ func handleUserExit(conn WebSocketConnection) {
 }
 
 func broadcastOnlineUsers() {
-	if len(clients) > 0 {
-		var response WsJsonResponse
-		onlineClients := make(map[string][]string)
+	log.Printf("How many clients?\t%d\n", len(clients))
+	var response WsJsonResponse
+	onlineClients := make(map[string][]string)
 
-		for client := range clients {
-			dict := clients[client]
+	for client := range clients {
+		dict := clients[client]
 
-			onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"]}
-		}
-
-		response.Users = onlineClients
-		response.Action = "userlist"
-		broadcastToAll(response)
+		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"]}
 	}
+
+	response.Users = onlineClients
+	response.Action = "userlist"
+	broadcastToAll(response)
 }
 
 func broadcastToAll(response WsJsonResponse) {
@@ -170,7 +169,7 @@ func broadcastToAll(response WsJsonResponse) {
 		err := client.WriteJSON(response)
 
 		if err != nil {
-			log.Println("Web socket error")
+			log.Println("Client socket write error")
 
 			_ = client.Close()
 

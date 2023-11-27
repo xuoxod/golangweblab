@@ -7,7 +7,7 @@
 
 ```
 
-###### \*\*Cloned from my newbie project [weblab](https://https://github.com/xuoxod/weblab "This project is learning reference for Golang web development").
+###### **Cloned from my newbie project** [weblab](https://https://github.com/xuoxod/weblab "This project is learning reference for Golang web development").
 
 ---
 

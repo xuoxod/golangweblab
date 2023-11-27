@@ -34,10 +34,11 @@
                                     </h3>
                                 </div>
                                 <div class="input-group col-12 text-wrap">
-                                    <span id="user-count" class="input-group-text bg-white border-0 mx-0 fs-3 fw-bold">
+                                    <span id="user-count-span"
+                                        class="input-group-text bg-white border-0 mx-0 fs-3 fw-bold">
                                     </span>
-                                    <input type="text" class="form-control border-0 bg-white fw-bold fs-3 mx-0 px-0"
-                                        value="Online Users" readonly>
+                                    <input id="user-count-input" type="text"
+                                        class="form-control border-0 bg-white fw-bold fs-3 mx-0 px-0" readonly>
                                 </div>
                                 <div class="col-12 py-5"></div>
                             </div>

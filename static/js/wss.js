@@ -57,12 +57,49 @@ function handleUserList(data) {
   const { action, users } = data;
   log(`Users:\t${stringify(users)}\n\n`);
   log(`Array?:\t${Array.isArray(users)}\n\n`);
+
+  count = 0;
+  userObject = {};
+
+  for (const obj in users) {
+    const arr = users[obj];
+    fname = arr[0];
+    lname = arr[1];
+    email = arr[2];
+    visible = arr[3];
+    log(`Is visible? ${visible}\n\n `);
+    if (visible == true || visible == "true") {
+      count += 1;
+      userObject[`${email}`] = [fname, lname, email, visible];
+    }
+  }
+  log(`User count:\t${count}\n\n`);
+  handleUserCount(count);
+  handleUserObject(userObject);
 }
 
-function handleUserCount(data) {
+function handleUserCount(count) {
+  let userslist = "";
+
+  switch (count) {
+    case 1:
+      userslist = ` Online User`;
+      break;
+
+    default:
+      userslist = ` Online Users`;
+      break;
+  }
+
   document.querySelector(
-    "#user-count"
-  ).innerHTML = `<strong class="text-center">${data}</strong>`;
+    "#user-count-span"
+  ).innerHTML = `<strong class="text-center">${count}</strong>`;
+
+  document.querySelector("#user-count-input").value = `${userslist}`;
+}
+
+function handleUserObject(userObj) {
+  log(`Handling user object\n`);
 }
 
 function updateUserList(data) {}
