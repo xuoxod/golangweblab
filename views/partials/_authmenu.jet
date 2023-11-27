@@ -1,0 +1,44 @@
+{{import "../partials/_brand"}}
+{{block unauthmenu()}}
+<div class="w3-bar w3-blue">
+    <a href="/user" class="w3-bar-item w3-button">Home</a>
+    <a id="menu-account" href="#" class="w3-bar-item w3-button w3-hide-small account-link menu-account">Account</a>
+    <a id="menu-profile" href="#" class="w3-bar-item w3-button w3-hide-small profile-link menu-profile">Profile</a>
+    <a id="menu-settings" href="#" class="w3-bar-item w3-button w3-hide-small settings-link menu-settings">Settings</a>
+    <a href="/user/signout" class="w3-bar-item w3-button w3-hide-small signout-link w3-right">Sign Out</a>
+    <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
+        onclick="siteMenuEffect()">&#9776;</a>
+</div>
+
+<div id="site-menu" class="w3-bar-block w3-blue w3-hide w3-hide-large w3-hide-medium">
+    <a href="#" class="w3-bar-item w3-button mobile-account-link">
+        <span class="w3-left">
+            Account
+        </span>
+
+        <i class="bi bi-person-badge w3-right"></i>
+    </a>
+    <a href="#" class="w3-bar-item w3-button mobile-profile-link">
+        <span class="w3-left">
+            Profile
+        </span>
+
+        <i class="bi bi-person w3-right"></i>
+    </a>
+    <a href="#" class="w3-bar-item w3-button mobile-settings-link">
+        <span class="w3-left">
+            Settings
+        </span>
+
+        <i class="bi bi-gear w3-right"></i>
+    </a>
+
+    <a href="/user/signout" class="w3-bar-item w3-button mobile-signout-link">
+        <span class="w3-left">
+            Sign Out
+        </span>
+
+        <i class="bi bi-box-arrow-right w3-right"></i>
+    </a>
+</div>
+{{end}}

@@ -1,0 +1,7 @@
+*.txt
+*.env
+.env
+go*
+weblab
+scratch*
+node_modules

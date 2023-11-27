@@ -1,0 +1,109 @@
+.notie-container {
+    box-shadow: none;
+}
+
+::-webkit-scrollbar {
+    -webkit-backface-visibility: hidden;
+}
+
+.action:hover,
+#pwd1-toggler {
+    cursor: pointer;
+}
+
+.parent-container {
+    max-height: 88%;
+    overflow-y: scroll;
+}
+
+#settings-form-parent {
+    max-height: 75vh;
+}
+
+#profile-form-parent {
+    max-height: 75vh;
+}
+
+#settings-form-parent,
+#profile-form-parent {
+    height: max-content;
+    overflow-y: scroll;
+}
+
+
+.scroller {
+    overflow: hidden;
+}
+
+.footer {
+    background: #dddce1;
+    color: color(dark);
+    padding: 30px 2.45rem;
+    transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
+    -webkit-transition: all 0.25s ease;
+    -ms-transition: all 0.25s ease;
+    font-size: calc(0.875rem - 0.05rem);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.box {
+    position: relative;
+    border-radius: 5px;
+    margin: 0px;
+    padding: 0px 25px;
+}
+
+p {
+    /* white-space: pre-wrap; */
+    /* Webkit */
+    /* white-space: -moz-pre-wrap; */
+    /* Firefox */
+    /* white-space: -pre-wrap; */
+    /* Opera <7 */
+    /* white-space: -o-pre-wrap; */
+    /* Opera 7 */
+    word-wrap: break-word;
+    text-align: left;
+    padding: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+    #menu-account {
+        display: none;
+    }
+
+    #menu-profile {
+        display: none;
+    }
+
+    #menu-settings {
+        display: none;
+    }
+
+    .index-menu {
+        display: grid;
+    }
+
+}
+
+@media (max-width: 767px) {
+    .menu-account {
+        display: block;
+    }
+
+    .menu-profile {
+        display: block;
+    }
+
+    .menu-settings {
+        display: block;
+    }
+
+    .index-menu {
+        display: none;
+    }
+
+}

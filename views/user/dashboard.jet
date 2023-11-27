@@ -1,0 +1,84 @@
+{{extends "../layouts/layout.jet"}}
+{{block documentBody()}}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2 col-sm-12">
+            <ul class="w3-ul index-menu">
+                <li>
+                    <a id="index-account" href="#" class="w3-bar-item w3-button">Account</a>
+                </li>
+
+                <li>
+                    <a id="index-profile" href="#" class="w3-bar-item w3-button w3-hide-small profile-link">Profile</a>
+                </li>
+
+                <li>
+                    <a id="index-settings" href="#"
+                        class="w3-bar-item w3-button w3-hide-small settings-link">Settings</a>
+                </li>
+            </ul>
+        </div>
+        <input type="hidden" id="fname" value="{{.user.FirstName}}">
+        <input type="hidden" id="lname" value="{{.user.LastName}}">
+        <input type="hidden" id="email" value="{{.user.Email}}">
+        <input type="hidden" id="visible" value="{{.preferences.Visible}}">
+        <div class="col-md-10 col-sm-12">
+            <div class="row my-1">
+                <div class="box col-12 col-md-4 border border-primary">
+                    <div class="card-body">
+                        <div class="d-grid justify-content-center align-items-center">
+                            <div class="row m-auto">
+                                <div class="col-12 pt-5">
+                                    <h3 class="text-center">
+                                        <i class="bi bi-people-fill fs-3 fw-bold"></i>
+                                    </h3>
+                                </div>
+                                <div class="input-group col-12 text-wrap">
+                                    <span id="user-count" class="input-group-text bg-white border-0 mx-0 fs-3 fw-bold">
+                                    </span>
+                                    <input type="text" class="form-control border-0 bg-white fw-bold fs-3 mx-0 px-0"
+                                        value="Online Users" readonly>
+                                </div>
+                                <div class="col-12 py-5"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="box col-12 col-md-4 border border-primary">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos dicta laudantium vero, aut dolor
+                        natus, vitae,
+                        ipsa omnis velit veritatis quos ratione amet quia tempora quibusdam rerum? Labore, tempora
+                        dolorem!
+                    </p>
+                </div>
+                <div class="box col-12 col-md-4 border border-primary">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore ducimus qui debitis consectetur
+                        aut aperiam
+                        at excepturi. Illo praesentium quaerat consequatur laboriosam labore esse quasi adipisci!
+                        Laudantium
+                        necessitatibus atque eaque!
+                    </p>
+                </div>
+            </div>
+
+            <div class="row my-1">
+                <div class="box col-12 border border-primary">
+                    <p>
+                        episode
+                    </p>
+                </div>
+                <div class="box col-12 border border-primary">
+                    <p>
+                        episode
+                    </p>
+                </div>
+                <div class="box col-12 border border-primary">
+                    <p>episode</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
