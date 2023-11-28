@@ -1,4 +1,5 @@
 let socket = null;
+let usersObject = {};
 
 document.addEventListener("DOMContentLoaded", function () {
   // socket = new WebSocket("ws://127.0.0.1:8080/ws");
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleUserList(data) {
-  const { action, users } = data;
+  const { users } = data;
   count = 0;
   userObject = {};
 
@@ -64,6 +65,10 @@ function handleUserList(data) {
     lname = arr[1];
     email = arr[2];
     visible = arr[3];
+
+    if (document.querySelector("#email").value.trim() == email) {
+      updateUserVisibility(visible);
+    }
     if (visible == true || visible == "true") {
       count += 1;
       userObject[`${email}`] = [fname, lname, email, visible];
@@ -95,6 +100,112 @@ function handleUserCount(count) {
 
 function handleUserObject(userObj) {
   log(`Handling user object\n`);
+  usersObject = userObj;
+  populateActivityParent();
+}
+
+function populateActivityParent() {
+  if (Object.keys(usersObject).length > 0) {
+    const activityParent = document.querySelector("#activity-parent");
+
+    if (countChildren(activityParent) > 0) {
+      removeChildren(activityParent);
+    }
+
+    // const activityRow = newElement("div");
+    const activityRow = document.createElement("div");
+    addAttribute(activityRow, "class", "row justify-content-center");
+
+    // const colTop = newElement("div");
+    const colTop = document.createElement("div");
+    addAttribute(colTop, "class", "col-12 my-1");
+
+    // const colBottom = newElement("div");
+    const colMiddle = document.createElement("div");
+    addAttribute(colMiddle, "class", "col-12 my-1");
+
+    const colBottom = document.createElement("div");
+    addAttribute(colBottom, "class", "col-12 my-1");
+
+    // const userList = newElement("ul");
+    const userList = document.createElement("ul");
+    addAttribute(userList, "class", "list-group list-group-horizontal");
+
+    appendChild(activityParent, activityRow);
+    appendChild(activityRow, colTop);
+    appendChild(activityRow, colMiddle);
+    appendChild(activityRow, colBottom);
+
+    const activityWindow = document.createElement("div");
+    addAttribute(
+      activityWindow,
+      "class",
+      "border border-success rounded activity-window"
+    );
+    appendChild(colMiddle, activityWindow);
+
+    const divControlsParent = document.createElement("div");
+    addAttribute(divControlsParent, "class", "input-group border rounded");
+
+    const sendInput = document.createElement("input");
+    addAttribute(sendInput, "class", "form-control");
+
+    const sendButtonSpan = document.createElement("span");
+    addAttribute(sendButtonSpan, "class", "input-group-text");
+
+    const sendButton = document.createElement("button");
+    addAttribute(sendButton, "class", "btn btn-primary");
+    sendButton.innerText = "Send";
+
+    appendChild(colBottom, divControlsParent);
+    appendChild(divControlsParent, sendInput);
+    appendChild(divControlsParent, sendButtonSpan);
+    appendChild(sendButtonSpan, sendButton);
+
+    for (const uo in usersObject) {
+      // const listItem = newElement("li");
+      const listItem = document.createElement("li");
+      addAttribute(listItem, "class", "list-group-item");
+
+      // const div = newElement("div");
+      const div = document.createElement("div");
+      addAttribute(div, "class", "user-list-item");
+
+      // const messageIcon = newElement("i");
+      const messageIcon = document.createElement("i");
+      addAttribute(messageIcon, "id", `icon-${usersObject[uo][2]}`);
+      addAttribute(
+        messageIcon,
+        "class",
+        "bi bi-chat-square-text-fill fw-bold icon"
+      );
+
+      // const userName = newElement("span");
+      const userName = document.createElement("span");
+      addAttribute(userName, "id", `span-${usersObject[uo][2]}`);
+      addAttribute(userName, "class", "badge text-bg-dark fw-bold");
+
+      const userNameTextNode = document.createTextNode(
+        `${cap(usersObject[uo][0])}`
+      );
+      appendChild(colTop, userList);
+      appendChild(userList, listItem);
+      appendChild(listItem, div);
+      appendChild(div, messageIcon);
+      appendChild(div, userName);
+      appendChild(userName, userNameTextNode);
+    }
+  } else {
+    log(`No online users\n`);
+  }
+}
+
+function updateUserVisibility(isVisible) {
+  if (isVisible == "true") {
+    document.querySelector("#visible-input").checked = true;
+  } else {
+    document.querySelector("#visible-input").checked = false;
+  }
 }
 
 function updateUserList(data) {}
