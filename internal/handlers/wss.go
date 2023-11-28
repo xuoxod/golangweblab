@@ -25,30 +25,32 @@ type WebSocketConnection struct {
 }
 
 type WsJsonResponse struct {
-	Action      string              `json:"action"`
-	Message     string              `json:"message"`
-	MessageType string              `json:"message_type"`
-	From        string              `json:"from"`
-	To          string              `json:"to"`
-	Level       string              `json:"level"`
-	Title       string              `json:"title"`
-	Fname       string              `json:"fname"`
-	Lname       string              `json:"lname"`
-	Email       string              `json:"email"`
-	Visible     string              `json:"visible"`
-	Users       map[string][]string `json:"users"`
-	Exit        string              `json:"exit"`
+	Action           string              `json:"action"`
+	Message          string              `json:"message"`
+	MessageType      string              `json:"message_type"`
+	From             string              `json:"from"`
+	To               string              `json:"to"`
+	Level            string              `json:"level"`
+	Title            string              `json:"title"`
+	Fname            string              `json:"fname"`
+	Lname            string              `json:"lname"`
+	Email            string              `json:"email"`
+	Visible          string              `json:"visible"`
+	PermanentVisible string              `json:"permvisible"`
+	Users            map[string][]string `json:"users"`
+	Exit             string              `json:"exit"`
 }
 
 type WsPayload struct {
-	Action  string              `json:"action"`
-	Message string              `json:"message"`
-	Fname   string              `json:"fname"`
-	Lname   string              `json:"lname"`
-	Email   string              `json:"email"`
-	Visible string              `json:"visible"`
-	Conn    WebSocketConnection `json:"-"`
-	Exit    string              `json:"exit"`
+	Action           string              `json:"action"`
+	Message          string              `json:"message"`
+	Fname            string              `json:"fname"`
+	Lname            string              `json:"lname"`
+	Email            string              `json:"email"`
+	Visible          string              `json:"visible"`
+	PermanentVisible string              `json:"permvisible"`
+	Conn             WebSocketConnection `json:"-"`
+	Exit             string              `json:"exit"`
 }
 
 func WsEndpoint(w http.ResponseWriter, r *http.Request) {
@@ -68,6 +70,7 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	strMap := make(map[string]string)
 	strMap["ip"] = fmt.Sprintf("%v", conn.RemoteAddr())
 	strMap["visible"] = fmt.Sprintf("%t", false)
+	strMap["permvisible"] = fmt.Sprintf("%t", true)
 	strMap["fname"] = ""
 	strMap["lname"] = ""
 	strMap["email"] = ""
@@ -116,23 +119,36 @@ func ListenToWsChannel() {
 			email := e.Email
 			v := e.Visible
 			var visible bool
+			pv := e.PermanentVisible
+			var permvisible bool
 
 			if v == "true" {
 				visible = true
 			} else {
 				visible = false
 			}
+
+			if pv == "true" {
+				permvisible = true
+			} else {
+				permvisible = false
+			}
+
 			client := clients[e.Conn]
 			client["fname"] = fname
 			client["lname"] = lname
 			client["email"] = email
 			client["visible"] = fmt.Sprintf("%t", visible)
+			client["permvisible"] = fmt.Sprintf("%t", permvisible)
 			broadcastOnlineUsers()
 		case "exit":
 			handleUserExit(e.Conn)
 
 		case "hide":
 			handleHide(e.Conn)
+
+		case "unhide":
+			handleUnhide(e.Conn)
 
 		case "broadcast":
 			fmt.Println("Broadcast")
@@ -151,6 +167,12 @@ func handleHide(conn WebSocketConnection) {
 	broadcastOnlineUsers()
 }
 
+func handleUnhide(conn WebSocketConnection) {
+	client := clients[conn]
+	client["visible"] = fmt.Sprintf("%t", true)
+	broadcastOnlineUsers()
+}
+
 func handleUserExit(conn WebSocketConnection) {
 	fmt.Println("User exited")
 	delete(clients, conn)
@@ -165,7 +187,7 @@ func broadcastOnlineUsers() {
 	for client := range clients {
 		dict := clients[client]
 
-		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"]}
+		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"], dict["permvisible"]}
 	}
 
 	response.Users = onlineClients

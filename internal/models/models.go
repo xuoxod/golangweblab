@@ -60,6 +60,7 @@ type Preferences struct {
 	EnableSmsNotifications   bool
 	EnableEmailNotifications bool
 	Visible                  bool
+	PermanentVisible         bool
 	UpdatedAt                time.Time
 	CreatedAt                time.Time
 }

@@ -243,11 +243,11 @@ func (m *postgresDbRepo) Authenticate(email, testPassword string) (models.User, 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	query := `select u.id, u.first_name, u.last_name, u.email, u.phone, u.access_level, u.created_at, u.updated_at, u.password, u.email_verified, u.phone_verified, p.user_name, p.address, p.city, p.state, p.zipcode, s.id, s.user_id, s.enable_sms_nots, s.enable_email_nots, s.enable_public_profile, s.visible from users u inner join profiles p on p.user_id = u.id inner join preferences s on s.user_id = u.id where email = $1`
+	query := `select u.id, u.first_name, u.last_name, u.email, u.phone, u.access_level, u.created_at, u.updated_at, u.password, u.email_verified, u.phone_verified, p.user_name, p.address, p.city, p.state, p.zipcode, s.id, s.user_id, s.enable_sms_nots, s.enable_email_nots, s.enable_public_profile, s.visible, s.permanent_visible from users u inner join profiles p on p.user_id = u.id inner join preferences s on s.user_id = u.id where email = $1`
 
 	row := m.DB.QueryRowContext(ctx, query, email)
 
-	err := row.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Phone, &user.AccessLevel, &user.CreatedAt, &user.UpdatedAt, &user.Password, &user.EmailVerified, &user.PhoneVerified, &profile.UserName, &profile.Address, &profile.City, &profile.State, &profile.Zipcode, &preferences.ID, &preferences.UserID, &preferences.EnableSmsNotifications, &preferences.EnableEmailNotifications, &preferences.EnablePublicProfile, &preferences.Visible)
+	err := row.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Email, &user.Phone, &user.AccessLevel, &user.CreatedAt, &user.UpdatedAt, &user.Password, &user.EmailVerified, &user.PhoneVerified, &profile.UserName, &profile.Address, &profile.City, &profile.State, &profile.Zipcode, &preferences.ID, &preferences.UserID, &preferences.EnableSmsNotifications, &preferences.EnableEmailNotifications, &preferences.EnablePublicProfile, &preferences.Visible, &preferences.PermanentVisible)
 
 	if err != nil {
 		log.Printf("\n\tQuery error on table users\n\t%s\n", err.Error())

@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const lname = document.querySelector("#lname").value;
       const email = document.querySelector("#email").value;
       const visible = document.querySelector("#visible").value;
+      const permvisible = document.querySelector("#perm-visible").value;
       createAndSendMessage(
         action,
         null,
@@ -28,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
         fname,
         lname,
         email,
-        visible
+        visible,
+        permvisible
       );
     };
 
@@ -65,9 +67,10 @@ function handleUserList(data) {
     lname = arr[1];
     email = arr[2];
     visible = arr[3];
+    permvisible = arr[4];
 
     if (document.querySelector("#email").value.trim() == email) {
-      updateUserVisibility(visible);
+      updateUserVisibility(visible, permvisible);
     }
     if (visible == true || visible == "true") {
       count += 1;
@@ -199,14 +202,40 @@ function populateActivityParent() {
     }
   } else {
     log(`No online users\n`);
+    const activityParent = document.querySelector("#activity-parent");
+
+    if (countChildren(activityParent) > 0) {
+      removeChildren(activityParent);
+    }
+
+    const activityRow = document.createElement("div");
+    addAttribute(activityRow, "class", "row justify-content-center");
+
+    // const colTop = newElement("div");
+    const activityCol = document.createElement("div");
+    addAttribute(activityCol, "class", "col-12 my-1");
+
+    const activityPara = document.createElement("p");
+    addAttribute(activityPara, "class", "fs-2 text-center");
+    activityPara.innerHTML = `<strong>No Participants</strong>`;
+
+    appendChild(activityParent, activityRow);
+    appendChild(activityRow, activityCol);
+    appendChild(activityCol, activityPara);
   }
 }
 
-function updateUserVisibility(isVisible) {
-  if (isVisible == "true") {
+function updateUserVisibility(isVisible, permVisible) {
+  if (permVisible == "true") {
+    document.querySelector("#visible-input2").checked = true;
     document.querySelector("#visible-input").checked = true;
   } else {
-    document.querySelector("#visible-input").checked = false;
+    document.querySelector("#visible-input2").checked = false;
+    if (isVisible == "true") {
+      document.querySelector("#visible-input").checked = true;
+    } else {
+      document.querySelector("#visible-input").checked = false;
+    }
   }
 }
 
@@ -240,7 +269,8 @@ function createAndSendMessage(
   fname = null,
   lname = null,
   email = null,
-  visible = false
+  visible = false,
+  permvisible = true
 ) {
   const jsonData = {};
   jsonData.action = action;
@@ -283,6 +313,10 @@ function createAndSendMessage(
 
   if (null != visible) {
     jsonData.visible = visible;
+  }
+
+  if (null != permvisible) {
+    jsonData.permvisible = permvisible;
   }
 
   sendMessage(jsonData);
