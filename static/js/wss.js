@@ -229,8 +229,10 @@ function updateUserVisibility(isVisible, permVisible) {
   if (permVisible == "true") {
     document.querySelector("#visible-input2").checked = true;
     document.querySelector("#visible-input").checked = true;
+    document.querySelector("#visible2-parent").classList.remove("d-none");
   } else {
     document.querySelector("#visible-input2").checked = false;
+    // document.querySelector("#visible2-parent").classList.add("d-none");
     if (isVisible == "true") {
       document.querySelector("#visible-input").checked = true;
     } else {

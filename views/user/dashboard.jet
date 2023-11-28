@@ -40,39 +40,53 @@
                             <div id="flush-collapseZero" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
+
                                     <div class="container-fluid d-md-flex d-sm-grid justify-content-evenly gap-3">
-                                        <div class="row">
-                                            <div class="col-auto border rounded">
+                                        <div class="row w-md-50 justify-content-center border rounded">
+                                            <div class="col-auto">
                                                 <span id="user-count-span"
                                                     class="input-group-text bg-white border-0 m-0 p-0 w-auto fs-3 fw-bold">
                                                 </span>
                                             </div>
 
-                                            <div class="col-auto border rounded">
+                                            <div class="col-auto">
                                                 <span id="user-count-input" type="text"
                                                     class="form-control border-0 bg-white fw-bold fs-3 m-0 p-0 w-auto"></span>
                                             </div>
                                         </div>
 
-                                        <div class="row">
-                                            <div class=" row d-flex justify-content-evenly">
-                                                <div class=" form-check form-switch">
-                                                    <input id="visible-input" class="form-check-input fw-bold fs-3"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                        <div class="row w-md-50 justify-content-evenly border rounded">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div class=" row d-flex d-sm-grid justify-content-evenly">
+                                                    <div class="col-auto col-sm-12">
+                                                        <div class=" form-check form-switch">
+                                                            <input id="visible-input"
+                                                                class="form-check-input fw-bold fs-3" type="checkbox"
+                                                                role="switch" id="flexSwitchCheckDefault">
 
-                                                    <p id="visible-label" class="form-check-label fw-bold m-0">Visible
-                                                    </p>
+                                                            <p id="visible-label" class="form-check-label fw-bold m-0">
+                                                                Visible
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
 
-                                            <div class="row d-flex justify-content-evenly">
-                                                <div class="form-check form-switch">
-                                                    <input id="visible-input2" class="form-check-input fw-bold fs-3"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                            <div class="col-md-6 col-sm-12">
+                                                <div id="visible2-parent"
+                                                    class="row d-flex d-sm-grid justify-content-evenly">
+                                                    <div class="col-12">
+                                                        <div class="form-check form-switch">
+                                                            <input id="visible-input2"
+                                                                class="form-check-input fw-bold fs-3" type="checkbox"
+                                                                role="switch" id="flexSwitchCheckDefault">
 
-                                                    <p id="visible2-label" class="form-check-label fw-bold m-0">Make
-                                                        Permanent
-                                                    </p>
+                                                            <p id="visible2-label" class="form-check-label fw-bold m-0">
+                                                                Make
+                                                                Permanent
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
