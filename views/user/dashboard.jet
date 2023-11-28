@@ -106,7 +106,7 @@
                             <div id="flush-collapseOne" class="accordion-collapse collapse"
                                 aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                                 <div class="accordion-body">
-                                    <div id="activity-parent" class="box col-12 border border-primary container-fluid">
+                                    <div id="activity-parent" class="container-fluid">
                                         <p>
                                             episode
                                         </p>

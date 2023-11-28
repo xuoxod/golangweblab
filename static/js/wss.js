@@ -3,6 +3,16 @@ let usersObject = {};
 
 document.addEventListener("DOMContentLoaded", function () {
   // socket = new WebSocket("ws://127.0.0.1:8080/ws");
+  if (document.querySelector(".accordion-item")) {
+    const aItems = document.querySelectorAll(".accordion-item");
+
+    aItems.forEach((item) => {
+      item.addEventListener("mouseup", () => {
+        item.blur();
+        item.parentElement.focus();
+      });
+    });
+  }
   try {
     socket = new ReconnectingWebSocket("ws://192.168.1.57:8080/ws", null, {
       debug: true,
@@ -132,7 +142,11 @@ function populateActivityParent() {
 
     // const userList = newElement("ul");
     const userList = document.createElement("ul");
-    addAttribute(userList, "class", "list-group list-group-horizontal");
+    addAttribute(
+      userList,
+      "class",
+      "list-group list-group-horizontal online-users"
+    );
 
     appendChild(activityParent, activityRow);
     appendChild(activityRow, colTop);
@@ -140,11 +154,7 @@ function populateActivityParent() {
     appendChild(activityRow, colBottom);
 
     const activityWindow = document.createElement("div");
-    addAttribute(
-      activityWindow,
-      "class",
-      "border border-success rounded activity-window"
-    );
+    addAttribute(activityWindow, "class", "activity-window bg-light rounded");
     appendChild(colMiddle, activityWindow);
 
     const divControlsParent = document.createElement("div");

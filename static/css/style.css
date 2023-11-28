@@ -62,6 +62,10 @@
     word-wrap: break-word;
 }
 
+.online-users {
+    overflow-x: scroll;
+}
+
 #user-count-input {
     text-wrap: wrap;
     word-wrap: break-word;
