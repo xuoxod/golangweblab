@@ -239,6 +239,7 @@ function updateUserVisibility(isVisible, permVisible) {
       document.querySelector("#visible-input").checked = false;
     }
   }
+  return;
 }
 
 function updateUserList(data) {}
