@@ -149,12 +149,14 @@ function populateActivityParent() {
 
     const sendInput = document.createElement("input");
     addAttribute(sendInput, "class", "form-control");
+    addAttribute(sendInput, "id", "send-input");
 
     const sendButtonSpan = document.createElement("span");
     addAttribute(sendButtonSpan, "class", "input-group-text");
 
     const sendButton = document.createElement("button");
     addAttribute(sendButton, "class", "btn btn-primary");
+    addAttribute(sendButton, "id", "send-button");
     sendButton.innerText = "Send";
 
     appendChild(colBottom, divControlsParent);
