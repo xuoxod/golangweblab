@@ -114,32 +114,7 @@ func ListenToWsChannel() {
 
 		switch e.Action {
 		case "initconnect":
-			fname := e.Fname
-			lname := e.Lname
-			email := e.Email
-			v := e.Visible
-			var visible bool
-			pv := e.PermanentVisible
-			var permvisible bool
-
-			if v == "true" {
-				visible = true
-			} else {
-				visible = false
-			}
-
-			if pv == "true" {
-				permvisible = true
-			} else {
-				permvisible = false
-			}
-
-			client := clients[e.Conn]
-			client["fname"] = fname
-			client["lname"] = lname
-			client["email"] = email
-			client["visible"] = fmt.Sprintf("%t", visible)
-			client["permvisible"] = fmt.Sprintf("%t", permvisible)
+			handleInitConnect(e)
 			broadcastOnlineUsers()
 		case "exit":
 			handleUserExit(e.Conn)
@@ -159,6 +134,35 @@ func ListenToWsChannel() {
 		// response.Message = fmt.Sprintf("Some message and action was %s ", e.Action)
 		// broadcastToAll(response)
 	}
+}
+
+func handleInitConnect(e WsPayload) {
+	fname := e.Fname
+	lname := e.Lname
+	email := e.Email
+	v := e.Visible
+	var visible bool
+	pv := e.PermanentVisible
+	var permvisible bool
+
+	if v == "true" {
+		visible = true
+	} else {
+		visible = false
+	}
+
+	if pv == "true" {
+		permvisible = true
+	} else {
+		permvisible = false
+	}
+
+	client := clients[e.Conn]
+	client["fname"] = fname
+	client["lname"] = lname
+	client["email"] = email
+	client["visible"] = fmt.Sprintf("%t", visible)
+	client["permvisible"] = fmt.Sprintf("%t", permvisible)
 }
 
 func handleHide(conn WebSocketConnection) {
