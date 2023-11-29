@@ -195,18 +195,25 @@ function populateActivityParent() {
     appendChild(sendButtonSpan, sendButton);
 
     for (const uo in usersObject) {
-      // const listItem = newElement("li");
+      const fname = usersObject[uo][0];
+      const lname = usersObject[uo][1];
+      const email = usersObject[uo][2];
+      const visible = usersObject[uo][3];
+      const pVisible = usersObject[uo][4];
+      const busy = usersObject[uo][5];
+
       const listItem = document.createElement("li");
       addAttribute(listItem, "class", "list-group-item");
+      addAttribute(listItem, "id", `li-${email}`);
 
       // const div = newElement("div");
       const div = document.createElement("div");
       addAttribute(div, "class", "user-list-item");
 
       // const messageIcon = newElement("i");
-      if (document.querySelector("#email").value.trim() != usersObject[uo][2]) {
+      if (document.querySelector("#email").value.trim() != email) {
         const messageIcon = document.createElement("i");
-        addAttribute(messageIcon, "id", `icon-${usersObject[uo][2]}`);
+        addAttribute(messageIcon, "id", `icon-${email}`);
         addAttribute(
           messageIcon,
           "class",
@@ -217,16 +224,14 @@ function populateActivityParent() {
 
       // const userName = newElement("span");
       const userName = document.createElement("span");
-      addAttribute(userName, "id", `span-${usersObject[uo][2]}`);
+      addAttribute(userName, "id", `span-${email}`);
       addAttribute(
         userName,
         "class",
         "badge text-primary-emphasis fw-bold text"
       );
 
-      const userNameTextNode = document.createTextNode(
-        `${cap(usersObject[uo][0])}`
-      );
+      const userNameTextNode = document.createTextNode(`${cap(fname)}`);
       appendChild(colTop, userList);
       appendChild(userList, listItem);
       appendChild(listItem, div);

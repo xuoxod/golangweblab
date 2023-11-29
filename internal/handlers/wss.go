@@ -76,6 +76,7 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	strMap["ip"] = fmt.Sprintf("%v", conn.RemoteAddr())
 	strMap["visible"] = fmt.Sprintf("%t", false)
 	strMap["permvisible"] = fmt.Sprintf("%t", true)
+	strMap["busy"] = fmt.Sprintf("%t", false)
 	strMap["fname"] = ""
 	strMap["lname"] = ""
 	strMap["email"] = ""
@@ -196,7 +197,7 @@ func broadcastOnlineUsers() {
 	for client := range clients {
 		dict := clients[client]
 
-		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"], dict["permvisible"]}
+		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"], dict["permvisible"], dict["busy"]}
 	}
 
 	response.Users = onlineClients
