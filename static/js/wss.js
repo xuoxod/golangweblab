@@ -64,6 +64,23 @@ document.addEventListener("DOMContentLoaded", function () {
     log("\n\nWS Connection Error:\t", err);
     log(`\n\n`);
   }
+
+  const visibleSwitch = document.querySelector("#visible-input");
+  visibleSwitch.addEventListener("click", (e) => {
+    const checked = e.target.checked;
+
+    if (checked) {
+      log(`User is visible`);
+      const jsonData = {};
+      jsonData.action = "unhide";
+      sendMessage(jsonData);
+    } else {
+      log(`User is invisible`);
+      const jsonData = {};
+      jsonData.action = "hide";
+      sendMessage(jsonData);
+    }
+  });
 });
 
 function handleUserList(data) {
@@ -187,13 +204,16 @@ function populateActivityParent() {
       addAttribute(div, "class", "user-list-item");
 
       // const messageIcon = newElement("i");
-      const messageIcon = document.createElement("i");
-      addAttribute(messageIcon, "id", `icon-${usersObject[uo][2]}`);
-      addAttribute(
-        messageIcon,
-        "class",
-        "bi bi-chat-square-text-fill text-primary-emphasis fw-bold icon"
-      );
+      if (document.querySelector("#email").value.trim() != usersObject[uo][2]) {
+        const messageIcon = document.createElement("i");
+        addAttribute(messageIcon, "id", `icon-${usersObject[uo][2]}`);
+        addAttribute(
+          messageIcon,
+          "class",
+          "bi bi-chat-square-text-fill text-primary-emphasis fw-bold icon"
+        );
+        appendChild(div, messageIcon);
+      }
 
       // const userName = newElement("span");
       const userName = document.createElement("span");
@@ -210,7 +230,6 @@ function populateActivityParent() {
       appendChild(colTop, userList);
       appendChild(userList, listItem);
       appendChild(listItem, div);
-      appendChild(div, messageIcon);
       appendChild(div, userName);
       appendChild(userName, userNameTextNode);
     }
