@@ -44,6 +44,11 @@ type WsJsonResponse struct {
 type WsPayload struct {
 	Action           string              `json:"action"`
 	Message          string              `json:"message"`
+	MessageType      string              `json:"message_type"`
+	From             string              `json:"from"`
+	To               string              `json:"to"`
+	Level            string              `json:"level"`
+	Title            string              `json:"title"`
 	Fname            string              `json:"fname"`
 	Lname            string              `json:"lname"`
 	Email            string              `json:"email"`
