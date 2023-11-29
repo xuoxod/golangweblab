@@ -4,9 +4,9 @@ let usersObject = {};
 document.addEventListener("DOMContentLoaded", function () {
   // socket = new WebSocket("ws://127.0.0.1:8080/ws");
   if (document.querySelector(".accordion-item")) {
-    const aItems = document.querySelectorAll(".accordion-item");
+    const aButtons = document.querySelectorAll(".accordion-button");
 
-    aItems.forEach((item) => {
+    aButtons.forEach((item) => {
       item.addEventListener("mouseup", () => {
         item.blur();
         item.parentElement.focus();
@@ -192,13 +192,17 @@ function populateActivityParent() {
       addAttribute(
         messageIcon,
         "class",
-        "bi bi-chat-square-text-fill fw-bold icon"
+        "bi bi-chat-square-text-fill text-primary-emphasis fw-bold icon"
       );
 
       // const userName = newElement("span");
       const userName = document.createElement("span");
       addAttribute(userName, "id", `span-${usersObject[uo][2]}`);
-      addAttribute(userName, "class", "badge text-bg-dark fw-bold");
+      addAttribute(
+        userName,
+        "class",
+        "badge text-primary-emphasis fw-bold text"
+      );
 
       const userNameTextNode = document.createTextNode(
         `${cap(usersObject[uo][0])}`

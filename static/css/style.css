@@ -56,10 +56,13 @@
     margin: 0px;
     padding: 0px 25px;
     max-width: 100%;
-    height: 200px;
     flex-wrap: wrap;
     text-wrap: wrap;
     word-wrap: break-word;
+}
+
+.text {
+    font-size: 1rem;
 }
 
 .online-users {
