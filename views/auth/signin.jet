@@ -34,7 +34,7 @@
                             </label>
 
                             <input type="password" name="password" value="{{ .signinform.Password}}"
-                                placeholder="Enter password" autocomplete="true" class="form-control">
+                                placeholder="Enter password" autocomplete="current-password" required class="form-control">
                         </div>
 
                         {{if .form.Errors.Get("password")}}

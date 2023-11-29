@@ -20,7 +20,7 @@
                     </label>
 
                     <input type="text" name="fname" value="{{ .registrationform.FirstName }}"
-                        placeholder=" Enter first name" autocomplete="false" class="form-control">
+                        placeholder=" Enter first name" autocomplete="false" required class="form-control">
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                     </label>
 
                     <input type="text" name="lname" value="{{ .registrationform.LastName}}"
-                        placeholder="Enter last name" autocomplete="false" class="form-control">
+                        placeholder="Enter last name" autocomplete="false" required class="form-control">
                 </div>
             </div>
 
@@ -52,7 +52,7 @@
                     </label>
 
                     <input type="email" name="email" value="{{ .registrationform.Email}}"
-                        placeholder="Enter email address" autocomplete="false" class="form-control">
+                        placeholder="Enter email address" autocomplete="false" required class="form-control">
                 </div>
             </div>
 
@@ -68,7 +68,7 @@
                     </label>
 
                     <input type="phone" name="phone" value="{{ .registrationform.Phone}}"
-                        placeholder="Enter phone number" autocomplete="false" class="form-control">
+                        placeholder="Enter phone number" autocomplete="false" required class="form-control">
                 </div>
             </div>
 
@@ -84,7 +84,7 @@
                     </label>
 
                     <input type="password" name="pwd1" value="{{ .registrationform.PasswordCreate}}"
-                        placeholder="Create a password" autocomplete="true" class="form-control">
+                        placeholder="Create a password" autocomplete="new-password" required minlength="6" class="form-control">
                 </div>
             </div>
 
@@ -100,7 +100,7 @@
                     </label>
 
                     <input type="password" name="pwd2" value="{{ .registrationform.PasswordConfirm}}"
-                        placeholder="Confirm the password" autocomplete="true" class="form-control">
+                        placeholder="Confirm the password" autocomplete="new-password" required minlength="6"  class="form-control">
                 </div>
             </div>
 

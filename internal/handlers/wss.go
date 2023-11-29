@@ -115,7 +115,6 @@ func ListenToWsChannel() {
 		switch e.Action {
 		case "initconnect":
 			handleInitConnect(e)
-			broadcastOnlineUsers()
 		case "exit":
 			handleUserExit(e.Conn)
 
@@ -163,6 +162,7 @@ func handleInitConnect(e WsPayload) {
 	client["email"] = email
 	client["visible"] = fmt.Sprintf("%t", visible)
 	client["permvisible"] = fmt.Sprintf("%t", permvisible)
+	broadcastOnlineUsers()
 }
 
 func handleHide(conn WebSocketConnection) {
