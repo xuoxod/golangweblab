@@ -113,11 +113,11 @@ function handleUserCount(count) {
 
   switch (count) {
     case 1:
-      userslist = ` Online User`;
+      userslist = `User Online`;
       break;
 
     default:
-      userslist = ` Online Users`;
+      userslist = `Users Online`;
       break;
   }
 
