@@ -58,6 +58,11 @@ document.addEventListener("DOMContentLoaded", function () {
       switch (data.action) {
         case "userlist":
           handleUserList(data);
+          break;
+
+        case "onetoone":
+          handleOneToOneMessage(data);
+          break;
       }
     };
   } catch (err) {
@@ -82,6 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 });
+
+function handleOneToOneMessage(data) {
+  oneToOneMessage(data);
+}
 
 function handleUserList(data) {
   const { users } = data;

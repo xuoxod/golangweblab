@@ -296,12 +296,55 @@ const message = (element) => {
           log(`From ${fromInput}\n`);
           log(`To ${toInput}\n`);
           log(`Message ${message}\n`);
+          const jsonData = {};
+          jsonData.action = "onetoone";
+          jsonData.to = toInput;
+          jsonData.from = fromInput;
+          jsonData.message = message;
+          sendMessage(jsonData);
         } else {
           Swal.closeModal();
         }
       }
 
       Swal.closeModal();
+    })
+    .catch((err) => {
+      log(err);
+    });
+};
+
+// modal display custom toast
+// title string: modal's title
+// text string: the message to user
+// icon built-in: success, warning, error, info or question
+// btnText string: button's text
+// showStatus: true or false
+const oneToOneMessage = (msgObj) => {
+  const { from, message } = msgObj;
+
+  Swal.fire({
+    title: `Message from ${cap(from)}`,
+    text: "Message",
+    icon: "question",
+    confirmButtonText: "Accept",
+    showCloseButton: true,
+    showCancelButton: true,
+    showLoading: true,
+    toast: true,
+    position: "center",
+    width: "58rem",
+    focusConfirm: true,
+  })
+    .then((results) => {
+      const { isConfirmed, isDenied, isDismissed } = results;
+      log(results, "\n");
+
+      if (isConfirmed) {
+        showMessage(msgObj);
+      } else {
+        Swal.closeModal();
+      }
     })
     .catch((err) => {
       log(err);
@@ -590,6 +633,29 @@ const register = async () => {
       log(err);
     });
 };
+
+function showMessage(msgObj) {
+  const { from, message } = msgObj;
+  Swal.fire({
+    title: `Message from ${cap(from)}`,
+    text: `${message}`,
+    icon: "success",
+    showCloseButton: true,
+    showLoading: true,
+    toast: true,
+    position: "bottom-end",
+    width: "48rem",
+    focusClose: true,
+  })
+    .then((results) => {
+      const { isConfirmed, isDenied, isDismissed } = results;
+      log(results, "\n");
+      Swal.closeModal();
+    })
+    .catch((err) => {
+      log(err);
+    });
+}
 
 let showPasswordToggler = false;
 

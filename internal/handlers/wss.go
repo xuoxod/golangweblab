@@ -69,7 +69,7 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 
 	var response WsJsonResponse
 
-	response.Message = `<em><small>Connected to Server</small></em>`
+	response.Message = `Client Connected to the Server`
 
 	conn := WebSocketConnection{Conn: ws}
 	strMap := make(map[string]string)
@@ -132,9 +132,39 @@ func ListenToWsChannel() {
 
 		case "broadcast":
 			handleBroadcastMessage(e)
+
+		case "onetoone":
+			handleOneToOneMessage(e)
 		}
 
 	}
+}
+
+func handleOneToOneMessage(payload WsPayload) {
+	for c := range clients {
+		if clients[c]["email"] == payload.To {
+			var response WsJsonResponse
+			from := payload.From
+			to := payload.To
+			message := payload.Message
+
+			log.Printf("From: %s\n", from)
+			log.Printf("To: %s\n", to)
+			log.Printf("Message: %s\n", message)
+
+			response.From = from
+			response.Message = message
+			response.Action = "onetoone"
+			err := c.WriteJSON(response)
+
+			if err != nil {
+				log.Println(err.Error())
+				fmt.Println("Error sending one to one message")
+			}
+			return
+		}
+	}
+
 }
 
 func handleBroadcastMessage(payload WsPayload) {
@@ -190,13 +220,11 @@ func handleUserExit(conn WebSocketConnection) {
 }
 
 func broadcastOnlineUsers() {
-	log.Printf("How many clients?\t%d\n", len(clients))
 	var response WsJsonResponse
 	onlineClients := make(map[string][]string)
 
 	for client := range clients {
 		dict := clients[client]
-
 		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"], dict["permvisible"], dict["busy"]}
 	}
 
