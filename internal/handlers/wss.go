@@ -10,7 +10,7 @@ import (
 
 var wsChan = make(chan WsPayload)
 
-var clients = make(map[WebSocketConnection]map[string]string)
+var clients = make(map[WebSocketConnection]map[string]interface{})
 
 var upgradeConnection = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -80,6 +80,7 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	strMap["fname"] = ""
 	strMap["lname"] = ""
 	strMap["email"] = ""
+	strMap["alwaysaccepted"] = []string{}
 	clients[conn] = strMap
 
 	err = ws.WriteJSON(response)
