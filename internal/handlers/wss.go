@@ -131,14 +131,14 @@ func ListenToWsChannel() {
 			handleUnhide(e.Conn)
 
 		case "broadcast":
-			fmt.Println("Broadcast")
-			// broadcastToAll(response)
+			handleBroadcastMessage(e)
 		}
 
-		// response.Action = "Got here"
-		// response.Message = fmt.Sprintf("Some message and action was %s ", e.Action)
-		// broadcastToAll(response)
 	}
+}
+
+func handleBroadcastMessage(payload WsPayload) {
+
 }
 
 func handleInitConnect(e WsPayload) {
@@ -216,44 +216,5 @@ func broadcastToAll(response WsJsonResponse) {
 
 			delete(clients, client)
 		}
-	}
-}
-
-func checkUsernameExists(conn WebSocketConnection, username string, id string) {
-	var response WsJsonResponse
-
-	for client := range clients {
-		dict := clients[client]
-
-		if dict["id"] != id {
-			if username == dict["username"] {
-				response.Action = "badusername"
-				response.Title = "Username Error"
-				response.Level = "error"
-				response.Message = fmt.Sprintf("Username %s is already taken", username)
-				sendToClient(conn, response)
-				return
-			}
-		}
-	}
-
-	dict := clients[conn]
-	dict["username"] = username
-	dict["online"] = fmt.Sprintf("%t", true)
-
-	response.Action = "goodusername"
-	response.Message = username
-	sendToClient(conn, response)
-}
-
-func sendToClient(conn WebSocketConnection, response WsJsonResponse) {
-	err := conn.WriteJSON(response)
-
-	if err != nil {
-		log.Println("Error send response to client:\t", err.Error())
-
-		_ = conn.Close()
-
-		delete(clients, conn)
 	}
 }

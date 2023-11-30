@@ -220,6 +220,8 @@ function populateActivityParent() {
           "bi bi-chat-square-text-fill text-primary-emphasis fw-bold icon"
         );
         appendChild(div, messageIcon);
+
+        messageIcon.addEventListener("click", messageHandler);
       }
 
       // const userName = newElement("span");
@@ -380,3 +382,9 @@ window.addEventListener("beforeunload", (event) => {
   );
   return;
 });
+
+// Click Handlers
+
+function messageHandler(e) {
+  message(e.target);
+}

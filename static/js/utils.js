@@ -251,6 +251,63 @@ const modal = (
   });
 };
 
+// modal display custom toast
+// title string: modal's title
+// text string: the message to user
+// icon built-in: success, warning, error, info or question
+// btnText string: button's text
+// showStatus: true or false
+const message = (element) => {
+  Swal.fire({
+    title: "",
+    text: "Message",
+    icon: "success",
+    confirmButtonText: "Send",
+    showCloseButton: true,
+    showCancelButton: true,
+    showLoading: true,
+    toast: true,
+    position: "center",
+    width: "58rem",
+
+    html: `
+  <div class="container-fluid">
+    <div class="input-group">
+      <textarea id="msg" type="text" name="msg" autocomplete="false"
+        class="form-control"></textarea>
+    </div>
+  </div>
+  `,
+    focusConfirm: true,
+    preConfirm: () => {
+      return [document.querySelector("#msg").value];
+    },
+  })
+    .then((results) => {
+      const { isConfirmed, isDenied, isDismissed } = results;
+      log(results, "\n");
+
+      const fromInput = document.querySelector("#email").value;
+      const toInput = element.id.split("-")[1];
+      const message = document.querySelector("#msg").value;
+
+      if (fromInput && message && toInput) {
+        if (isConfirmed) {
+          log(`From ${fromInput}\n`);
+          log(`To ${toInput}\n`);
+          log(`Message ${message}\n`);
+        } else {
+          Swal.closeModal();
+        }
+      }
+
+      Swal.closeModal();
+    })
+    .catch((err) => {
+      log(err);
+    });
+};
+
 const about = async () => {
   const form = await Swal.fire({
     titleText: "About",
