@@ -371,6 +371,7 @@ const oneToOneMessage = (msgObj) => {
 
       if (isConfirmed) {
         showMessage(msgObj);
+        return;
       } else {
         Swal.closeModal();
       }
