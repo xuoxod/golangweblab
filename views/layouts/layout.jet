@@ -15,6 +15,9 @@
 
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
 
+    <link rel="stylesheet" href="/static/css/vex.css" />
+    <link rel="stylesheet" href="/static/css/vex-theme-os.css" />
+
     <link href="/static/css/style.css" rel="stylesheet" />
 
     {{if .title == "Settings"}}
@@ -23,11 +26,11 @@
 
     {{if .title == "Home"}}
     <link rel="icon" type="image/x-icon" href="/static/favicon-home.ico" />
-    {{ end  }}
+    {{ end }}
 
     {{if .title == "About"}}
     <link rel="icon" type="image/x-icon" href="/static/favicon-about.ico" />
-    {{ end  }}
+    {{ end }}
 
     {{if .title == "Dashboard"}}
     <link rel="icon" type="image/x-icon" href="/static/favicon-dashboard.ico" />
@@ -59,6 +62,8 @@
         Copyright &copy; {{ copyright }}
     </div>
 
+    <script src="/static/js/vex.combined.min.js"></script>
+    <script>vex.defaultOptions.className = 'vex-theme-os'</script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>

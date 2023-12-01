@@ -10,7 +10,7 @@ import (
 
 var wsChan = make(chan WsPayload)
 
-var clients = make(map[WebSocketConnection]map[string]interface{})
+var clients = make(map[WebSocketConnection]map[string]string)
 
 var upgradeConnection = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -80,7 +80,6 @@ func WsEndpoint(w http.ResponseWriter, r *http.Request) {
 	strMap["fname"] = ""
 	strMap["lname"] = ""
 	strMap["email"] = ""
-	strMap["alwaysaccepted"] = []string{}
 	clients[conn] = strMap
 
 	err = ws.WriteJSON(response)
@@ -146,18 +145,12 @@ func handleOneToOneMessage(payload WsPayload) {
 		if clients[c]["email"] == payload.To {
 			var response WsJsonResponse
 			from := payload.From
-			to := payload.To
 			message := payload.Message
-
-			log.Printf("From: %s\n", from)
-			log.Printf("To: %s\n", to)
-			log.Printf("Message: %s\n", message)
-
 			response.From = from
+			response.Email = payload.Email
 			response.Message = message
 			response.Action = "onetoone"
 			err := c.WriteJSON(response)
-
 			if err != nil {
 				log.Println(err.Error())
 				fmt.Println("Error sending one to one message")
@@ -165,7 +158,6 @@ func handleOneToOneMessage(payload WsPayload) {
 			return
 		}
 	}
-
 }
 
 func handleBroadcastMessage(payload WsPayload) {

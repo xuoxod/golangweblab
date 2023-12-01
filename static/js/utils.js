@@ -287,7 +287,8 @@ const message = (element) => {
       const { isConfirmed, isDenied, isDismissed } = results;
       log(results, "\n");
 
-      const fromInput = document.querySelector("#email").value;
+      const fromInput = document.querySelector("#fname").value;
+      const email = document.querySelector("#email").value;
       const toInput = element.id.split("-")[1];
       const message = document.querySelector("#msg").value;
 
@@ -300,6 +301,7 @@ const message = (element) => {
           jsonData.action = "onetoone";
           jsonData.to = toInput;
           jsonData.from = fromInput;
+          jsonData.email = email;
           jsonData.message = message;
           sendMessage(jsonData);
         } else {
@@ -321,7 +323,12 @@ const message = (element) => {
 // btnText string: button's text
 // showStatus: true or false
 const oneToOneMessage = (msgObj) => {
-  const { from, message } = msgObj;
+  const { from, message, email } = msgObj;
+
+  if (isAccepted(email)) {
+    showMessage(msgObj);
+    return;
+  }
 
   Swal.fire({
     title: `Message from ${cap(from)}`,
@@ -335,10 +342,32 @@ const oneToOneMessage = (msgObj) => {
     position: "center",
     width: "58rem",
     focusConfirm: true,
+    html: `
+  <div class="container-fluid">
+    <div class="form-check">
+      <input id="accepted-user" class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+      <label class="form-check-label" for="flexCheckDefault">
+        Always accept messages from this user
+      </label>
+    </div>
+  </div>
+  `,
+    focusConfirm: true,
+    preConfirm: () => {
+      return [document.querySelector("#accepted-user").checked];
+    },
   })
     .then((results) => {
-      const { isConfirmed, isDenied, isDismissed } = results;
+      const { isConfirmed, isDenied, isDismissed, value } = results;
       log(results, "\n");
+
+      if (value[0]) {
+        log(`Added user to accepted list\n${stringify(msgObj)}\n`);
+        const userObj = {};
+        userObj.email = msgObj.email;
+        userObj.fname = msgObj.from;
+        addUser(userObj);
+      }
 
       if (isConfirmed) {
         showMessage(msgObj);

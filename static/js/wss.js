@@ -1,5 +1,19 @@
 let socket = null;
 let usersObject = {};
+const acceptedUsers = {};
+
+function addUser(userObj) {
+  acceptedUsers[`${userObj.email}`] = userObj;
+}
+
+function removeUser(email) {
+  delete acceptedUsers[email];
+}
+
+function isAccepted(email) {
+  const exist = acceptedUsers[email] || null;
+  return exist != null;
+}
 
 document.addEventListener("DOMContentLoaded", function () {
   // socket = new WebSocket("ws://127.0.0.1:8080/ws");
