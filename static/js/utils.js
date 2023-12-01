@@ -676,6 +676,7 @@ function showMessage(msgObj) {
     position: "bottom-end",
     width: "48rem",
     focusClose: true,
+    toast: true,
   })
     .then((results) => {
       const { isConfirmed, isDenied, isDismissed } = results;
