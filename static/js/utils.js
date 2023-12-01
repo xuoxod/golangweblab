@@ -354,14 +354,14 @@ const oneToOneMessage = (msgObj) => {
   `,
     focusConfirm: true,
     preConfirm: () => {
-      return [document.querySelector("#accepted-user").checked];
+      return document.querySelector("#accepted-user").checked;
     },
   })
     .then((results) => {
       const { isConfirmed, isDenied, isDismissed, value } = results;
       log(results, "\n");
 
-      if (value[0]) {
+      if (value) {
         log(`Added user to accepted list\n${stringify(msgObj)}\n`);
         const userObj = {};
         userObj.email = msgObj.email;
