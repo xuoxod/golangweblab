@@ -1,5 +1,5 @@
 {{import "../partials/_brand"}}
-{{block unauthmenu()}}
+{{block authmenu()}}
 <div class="w3-bar w3-blue">
     <a href="/user" class="w3-bar-item w3-button">Home</a>
     <a id="menu-account" href="#" class="w3-bar-item w3-button w3-hide-small account-link menu-account">Account</a>

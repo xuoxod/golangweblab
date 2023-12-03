@@ -234,42 +234,6 @@ function handlePersonToPersonMessage(data) {
   }
 }
 
-function displayMessage(data) {
-  const { email, message, fname } = data;
-
-  const row = document.createElement("div");
-  const col = document.createElement("div");
-  const p = document.createElement("p");
-
-  addAttribute(p, "class", "m-0 px-1 pt-1 para");
-
-  if (email.trim() == document.querySelector("#email").value.trim()) {
-    addAttribute(p, "style", "text-align:left;");
-    p.innerHTML = `<strong>${cap("me")}</strong>: ${message}`;
-    addAttribute(
-      row,
-      "class",
-      "row bg-primary-subtle border border-primary-subtle rounded-pill d-block m-1"
-    );
-  } else {
-    addAttribute(p, "style", "text-align:right;");
-    p.innerHTML = `<strong>${cap(fname)}</strong>: ${message}`;
-    addAttribute(
-      row,
-      "class",
-      "row bg-warning-subtle border border-warning-subtle rounded-pill d-block m-1"
-    );
-  }
-
-  addAttribute(row, "id", `row-${email}`);
-
-  addAttribute(col, "class", "col-12");
-
-  appendChild(col, p);
-  appendChild(row, col);
-  appendChild(document.querySelector(".activity-window"), row);
-}
-
 function s_howMessage(msgObj) {
   const { from, message } = msgObj;
   Swal.fire({
@@ -293,7 +257,27 @@ function s_howMessage(msgObj) {
 }
 
 function handleBroadcastMessage(data) {
-  const { from, message } = data;
+  const { email, fname, message } = data;
+  const chatTranscript = document.querySelector("#chat-transcript");
+  const p = document.createElement("p");
+
+  appendChild(chatTranscript, p);
+
+  if (email == document.querySelector("#email").value) {
+    addAttribute(
+      p,
+      "class",
+      "bg-primary-subtle rounded-3 text-primary-emphasis text-start p-3 text-break"
+    );
+    p.innerHTML = `<strong>${cap("me")}</strong>: ${message}`;
+  } else {
+    addAttribute(
+      p,
+      "class",
+      "bg-warning-subtle rounded-3 text-primary-emphasis text-end p-3 text-break"
+    );
+    p.innerHTML = `<strong>${cap(fname)}</strong>: ${message}`;
+  }
 }
 
 function messageHandler(e) {

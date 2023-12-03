@@ -1,6 +1,25 @@
 let socket = null;
 const clients = {};
 const alwaysAcceptMessagesFrom = {};
+let transcripts = [];
+
+function addTranscript(objT) {
+  const { email, fname, message } = objT;
+  const transcriptData = {};
+  transcriptData.email = email;
+  transcriptData.fname = fname;
+  transcriptData.message = message;
+  transcripts.push(transcriptData);
+  return;
+}
+
+function removeTranscript(email) {
+  transcripts = transcripts.filter((t) => email != t.email);
+}
+
+function transcriptCount() {
+  return transcripts.length;
+}
 
 function addAlways(userObj) {
   alwaysAcceptMessagesFrom[`${userObj.email}`] = userObj;
@@ -96,7 +115,8 @@ document.addEventListener("DOMContentLoaded", function () {
           break;
 
         case "broadcast":
-          displayMessage(data);
+          addTranscript(data);
+          handleBroadcastMessage(data);
           break;
       }
     };
@@ -158,17 +178,8 @@ function handleUserList(data) {
     }
   }
   handleOnlineUserCount(onlineUserCount);
-  setupActivity();
+  initActivity();
   return;
-}
-
-function setupActivity() {
-  if (countClients() > 0) {
-    for (const c in clients) {
-      const client = clients[c];
-      log(`Client: ${stringify(client)}\n`);
-    }
-  }
 }
 
 function handleOnlineUserCount(count) {
@@ -191,6 +202,25 @@ function sendMessage(jsonData = {}) {
   socket.send(JSON.stringify(jsonData));
 }
 
+function displayTranscripts() {
+  if (transcriptCount() > 0) {
+    const chatTranscriptParent = document.querySelector("#chat-transcript");
+
+    for (const t in transcripts) {
+      const transcriptData = transcripts[t];
+      const message = transcriptData.message;
+      const email = transcriptData.email;
+      const fname = transcriptData.fname;
+
+      if (email == document.querySelector("#email").value) {
+        log(`Transcript By: Me says ${message}`);
+      } else {
+        log(`Transcript By: ${fname} says ${message}`);
+      }
+    }
+  }
+}
+
 document.querySelector("#visible-input").addEventListener("click", (e) => {
   const jsonData = {};
   if (e.target.checked) {
@@ -200,6 +230,150 @@ document.querySelector("#visible-input").addEventListener("click", (e) => {
   }
   sendMessage(jsonData);
 });
+
+function initActivity() {
+  if (countClients() > 0) {
+    const activityParent = document.querySelector("#activity-parent");
+
+    if (countChildren(activityParent) > 0) {
+      removeChildren(activityParent);
+    }
+
+    const rowTop = document.createElement("div");
+    const rowMiddle = document.createElement("div");
+    const rowBottom = document.createElement("div");
+
+    addAttribute(rowTop, "class", "row");
+    addAttribute(rowMiddle, "class", "row");
+    addAttribute(rowBottom, "class", "row");
+
+    const colTop = document.createElement("div");
+    const colMiddle = document.createElement("div");
+    const colBottom = document.createElement("div");
+
+    addAttribute(colTop, "class", "col-12");
+    addAttribute(colMiddle, "class", "col-12");
+    addAttribute(colBottom, "class", "col-12  ");
+
+    const hstack = document.createElement("div");
+    addAttribute(hstack, "class", "hstack gap-2 my-2");
+    appendChild(colTop, hstack);
+
+    appendChild(activityParent, rowTop);
+    appendChild(activityParent, rowMiddle);
+    appendChild(activityParent, rowBottom);
+
+    appendChild(rowTop, colTop);
+    appendChild(rowMiddle, colMiddle);
+    appendChild(rowBottom, colBottom);
+
+    for (const c in clients) {
+      const client = clients[c];
+      log(`Client: ${stringify(client)}\n`);
+
+      if (client.email != document.querySelector("#email").value) {
+        const div = document.createElement("div");
+        const divGroup = document.createElement("div");
+        const msgIcon = document.createElement("i");
+        const namePara = document.createElement("p");
+        const span = document.createElement("span");
+
+        namePara.innerHTML = `<strong>${cap(client.fname)}</strong>`;
+
+        addAttribute(divGroup, "class", "input-group d-flex gap-2");
+        addAttribute(div, "class", "p-2 border border-primary-subtle rounded");
+        addAttribute(
+          msgIcon,
+          "class",
+          "bi bi-chat-right-text fw-bold fw-2 icon p-0 m-0 text-primary-emphasis"
+        );
+        addAttribute(span, "class", "input-group-text p-0 m-0 border-0");
+        addAttribute(
+          namePara,
+          "class",
+          "form-control border-0 rounded m-0 p-0 bg-transparent text-primary-emphasis"
+        );
+
+        appendChild(hstack, div);
+        appendChild(div, divGroup);
+        appendChild(divGroup, span);
+        appendChild(divGroup, namePara);
+        appendChild(span, msgIcon);
+      }
+    }
+
+    const chatTranscript = document.createElement("div");
+    addAttribute(chatTranscript, "id", "chat-transcript");
+    addAttribute(
+      chatTranscript,
+      "class",
+      "chat-transcript bg-light-subtle border border-light-subtle rounded"
+    );
+    appendChild(colMiddle, chatTranscript);
+
+    const chatControls = document.createElement("div");
+    const textInput = document.createElement("input");
+    const sendButton = document.createElement("button");
+    const span = document.createElement("span");
+
+    sendButton.innerHTML = `<strong class="text-center text-primary-emphasis">Send</strong>`;
+
+    addAttribute(chatControls, "class", "input-group my-2");
+    addAttribute(textInput, "class", "form-control text-input");
+
+    addAttribute(
+      sendButton,
+      "class",
+      "btn btn-outline-primary border-primary-subtle"
+    );
+    addAttribute(span, "class", "input-group-text");
+
+    appendChild(chatControls, textInput);
+    appendChild(chatControls, span);
+    appendChild(span, sendButton);
+    appendChild(colBottom, chatControls);
+
+    sendButton.addEventListener("click", () => {
+      if (textInput.value) {
+        const jsonData = {};
+        jsonData.fname = document.querySelector("#fname").value;
+        jsonData.email = document.querySelector("#email").value;
+        jsonData.message = textInput.value;
+        jsonData.action = "broadcast";
+        sendMessage(jsonData);
+      }
+    });
+  } else {
+    const activityParent = document.querySelector("#activity-parent");
+
+    if (countChildren(activityParent) > 0) {
+      removeChildren(activityParent);
+    }
+
+    const rowDef = document.createElement("div");
+    const colDef = document.createElement("div");
+    const pDef = document.createElement("p");
+
+    addAttribute(
+      rowDef,
+      "class",
+      "row d-flex justify-content-center align-items-center"
+    );
+    addAttribute(colDef, "class", "col-auto p-3");
+    addAttribute(
+      pDef,
+      "class",
+      "text-center fw-bold fs-3 text-primary-emphasis"
+    );
+
+    appendChild(activityParent, rowDef);
+    appendChild(rowDef, colDef);
+    appendChild(colDef, pDef);
+
+    pDef.innerHTML = `<strong>No Users Online</strong>`;
+  }
+  // });
+}
 
 window.addEventListener("beforeunload", (event) => {
   dlog(`\tbeforeunload window event fired`, `wss.js`);
