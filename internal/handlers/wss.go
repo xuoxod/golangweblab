@@ -121,35 +121,42 @@ func ListenToWsChannel() {
 		switch e.Action {
 		case "initconnect":
 			handleInitConnect(e)
+
 		case "exit":
 			handleUserExit(e.Conn)
 
 		case "hide":
+			fmt.Println("hide")
 			handleHide(e.Conn)
 
 		case "unhide":
+			fmt.Println("show")
 			handleUnhide(e.Conn)
 
 		case "broadcast":
 			handleBroadcastMessage(e)
 
-		case "onetoone":
-			handleOneToOneMessage(e)
+		case "ptp":
+			handlePersonToPersonMessage(e)
 		}
 
 	}
 }
 
-func handleOneToOneMessage(payload WsPayload) {
+func handlePersonToPersonMessage(payload WsPayload) {
+	fname := payload.Fname
+	email := payload.Email
+	to := payload.To
+	message := payload.Message
+
 	for c := range clients {
-		if clients[c]["email"] == payload.To {
+		if clients[c]["email"] == to {
 			var response WsJsonResponse
-			from := payload.From
-			message := payload.Message
-			response.From = from
-			response.Email = payload.Email
+
+			response.Fname = fname
+			response.Email = email
 			response.Message = message
-			response.Action = "onetoone"
+			response.Action = "ptp"
 			err := c.WriteJSON(response)
 			if err != nil {
 				log.Println(err.Error())
@@ -161,7 +168,23 @@ func handleOneToOneMessage(payload WsPayload) {
 }
 
 func handleBroadcastMessage(payload WsPayload) {
+	email := payload.Email
+	message := payload.Message
+	fname := payload.Fname
 
+	var response WsJsonResponse
+	response.Email = email
+	response.Fname = fname
+	response.Message = message
+	response.Action = "broadcast"
+
+	for c := range clients {
+		err := c.WriteJSON(response)
+		if err != nil {
+			log.Println(err.Error())
+			fmt.Println("Error sending one to one message to ", clients[c]["email"])
+		}
+	}
 }
 
 func handleInitConnect(e WsPayload) {
@@ -218,7 +241,7 @@ func broadcastOnlineUsers() {
 
 	for client := range clients {
 		dict := clients[client]
-		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"], dict["permvisible"], dict["busy"]}
+		onlineClients[dict["ip"]] = []string{dict["fname"], dict["lname"], dict["email"], dict["visible"], dict["busy"]}
 	}
 
 	response.Users = onlineClients

@@ -74,7 +74,8 @@
     word-wrap: break-word;
 }
 
-p {
+p,
+p.para {
     /* white-space: pre-wrap; */
     /* Webkit */
     /* white-space: -moz-pre-wrap; */
