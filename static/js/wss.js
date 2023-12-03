@@ -372,7 +372,6 @@ function initActivity() {
 
     pDef.innerHTML = `<strong>No Users Online</strong>`;
   }
-  // });
 }
 
 window.addEventListener("beforeunload", (event) => {
