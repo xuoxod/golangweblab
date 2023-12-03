@@ -341,6 +341,7 @@ function initActivity() {
         jsonData.message = textInput.value;
         jsonData.action = "broadcast";
         sendMessage(jsonData);
+        textInput.value = "";
       }
     });
   } else {
