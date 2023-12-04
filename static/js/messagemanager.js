@@ -39,7 +39,7 @@ const modal = (
 // icon built-in: success, warning, error, info or question
 // btnText string: button's text
 // showStatus: true or false
-const message = (element) => {
+const message = (event) => {
   Swal.fire({
     title: "",
     text: "Message",
@@ -60,16 +60,16 @@ const message = (element) => {
   </div>
   `,
     preConfirm: () => {
-      return [document.querySelector("#msg").value];
+      return document.querySelector("#msg").value;
     },
   })
     .then((results) => {
-      const { isConfirmed, isDenied, isDismissed } = results;
+      const { isConfirmed, isDenied, isDismissed, value } = results;
       log(results, "\n");
 
       const fromInput = document.querySelector("#fname").value;
       const email = document.querySelector("#email").value;
-      const toInput = element.id.split("-")[1];
+      const toInput = event.target.id.split("-")[1];
       const message = document.querySelector("#msg").value;
 
       if (fromInput && message && toInput) {
@@ -161,28 +161,19 @@ const oneToOneMessage_ = (msgObj) => {
 function handlePersonToPersonMessage(data) {
   const { fname, email, message } = data;
 
-  if (isAccepted(email)) {
-    const activityWindow = document.querySelector(".activity-window");
-
+  if (isAlways(email)) {
+    const chatTranscript = document.querySelector("#chat-transcript");
     const p = document.createElement("p");
-    addAttribute(p, "class", "m-0 px-1 pt-1 para");
-    addAttribute(p, "style", "text-align:right;");
 
-    p.innerHTML = `<strong>${cap(from)}</strong>: ${message}`;
+    appendChild(chatTranscript, p);
 
-    const row = document.createElement("div");
     addAttribute(
-      row,
+      p,
       "class",
-      "row bg-warning-subtle border border-warning-subtle rounded-pill d-block m-1"
+      "bg-warning-subtle rounded-3 text-primary-emphasis text-end p-3 text-break"
     );
-
-    const col = document.createElement("div");
-    addAttribute(col, "class", "col-12");
-
-    appendChild(col, p);
-    appendChild(row, col);
-    appendChild(activityWindow, row);
+    p.innerHTML = `<strong>${cap(fname)}</strong>: ${message}`;
+    return;
   } else {
     // Confirm with user to accept this ptp message
     Swal.fire({
@@ -218,11 +209,21 @@ function handlePersonToPersonMessage(data) {
           const userObj = {};
           userObj.email = email;
           userObj.fname = fname;
-          addUser(userObj);
+          addAlways(userObj);
         }
 
         if (isConfirmed) {
-          displayMessage(data);
+          const chatTranscript = document.querySelector("#chat-transcript");
+          const p = document.createElement("p");
+
+          appendChild(chatTranscript, p);
+
+          addAttribute(
+            p,
+            "class",
+            "bg-warning-subtle rounded-3 text-primary-emphasis text-end p-3 text-break"
+          );
+          p.innerHTML = `<strong>${cap(fname)}</strong>: ${message}`;
           return;
         } else {
           Swal.closeModal();

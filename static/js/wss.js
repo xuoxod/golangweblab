@@ -22,7 +22,7 @@ function transcriptCount() {
 }
 
 function addAlways(userObj) {
-  alwaysAcceptMessagesFrom[`${userObj.email}`] = userObj;
+  alwaysAcceptMessagesFrom[userObj.email] = userObj;
 }
 
 function removeAlways(email) {
@@ -287,7 +287,9 @@ function initActivity() {
           "class",
           "bi bi-chat-right-text fw-bold fw-2 icon p-0 m-0 text-primary-emphasis"
         );
+        addAttribute(msgIcon, "id", `icon-${client.email}`);
         addAttribute(span, "class", "input-group-text p-0 m-0 border-0");
+        addAttribute(span, "id", `${client.fname}`);
         addAttribute(
           namePara,
           "class",
@@ -299,6 +301,68 @@ function initActivity() {
         appendChild(divGroup, span);
         appendChild(divGroup, namePara);
         appendChild(span, msgIcon);
+
+        msgIcon.addEventListener("click", (e) => {
+          const to = e.target.id.split("-")[1];
+          const fname = document.querySelector("#fname").value;
+          const email = document.querySelector("#email").value;
+
+          Swal.fire({
+            title: `Direct Message To ${cap(e.target.parentElement.id)}`,
+            icon: "success",
+            confirmButtonText: "Send",
+            showCloseButton: true,
+            showCancelButton: true,
+            toast: true,
+            position: "center",
+            width: "58rem",
+
+            html: `
+  <div class="container-fluid">
+    <div class="input-group">
+      <textarea id="msg" type="text" name="msg" autocomplete="false"
+        class="form-control"></textarea>
+    </div>
+  </div>
+  `,
+            preConfirm: () => {
+              return document.querySelector("#msg").value;
+            },
+          })
+            .then((results) => {
+              const { isConfirmed, isDenied, isDismissed, value } = results;
+              log(results, "\n");
+
+              const fname = document.querySelector("#fname").value;
+              const email = document.querySelector("#email").value;
+              const to = e.target.id.split("-")[1];
+              const message = document.querySelector("#msg").value;
+
+              if (value) {
+                if (isConfirmed) {
+                  log(`From ${fname}\n`);
+                  log(`To ${to}\n`);
+                  log(`Message ${message}\n`);
+
+                  const jsonData = {};
+                  jsonData.action = "ptp";
+                  jsonData.to = to;
+                  jsonData.fname = fname;
+                  jsonData.email = email;
+                  jsonData.message = message;
+                  sendMessage(jsonData);
+                  return;
+                } else {
+                  Swal.closeModal();
+                }
+              }
+
+              Swal.closeModal();
+            })
+            .catch((err) => {
+              log(err);
+            });
+        });
       }
     }
 
