@@ -299,7 +299,7 @@ function handleOnlineUsers() {
     addAttribute(
       pDef,
       "class",
-      "text-center fw-bold fs-3 text-primary-emphasis"
+      "text-center fw-bold fs-3 text-primary-emphasis my-0"
     );
     appendChild(hstack, pDef);
 
@@ -370,7 +370,7 @@ function initActivity() {
   const colMiddle = document.createElement("div");
   const colBottom = document.createElement("div");
 
-  addAttribute(colTop, "class", "col-12");
+  addAttribute(colTop, "class", "col-12 my-0");
   addAttribute(colMiddle, "class", "col-12");
   addAttribute(colBottom, "class", "col-12  ");
 
