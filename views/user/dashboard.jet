@@ -6,17 +6,18 @@
             <div class="col-md-2 col-sm-12">
                 <ul class="w3-ul index-menu">
                     <li>
-                        <a id="index-account" href="#" class="w3-bar-item w3-button w3-round-large">Account</a>
+                        <a id="index-account" href="#"
+                            class="w3-bar-item w3-button w3-round-large w3-hover-blue">Account</a>
                     </li>
 
                     <li>
                         <a id="index-profile" href="#"
-                            class="w3-bar-item w3-button w3-round-large w3-hide-small profile-link">Profile</a>
+                            class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small profile-link">Profile</a>
                     </li>
 
                     <li>
                         <a id="index-settings" href="#"
-                            class="w3-bar-item w3-button w3-round-large w3-hide-small settings-link">Settings</a>
+                            class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small settings-link">Settings</a>
                     </li>
                 </ul>
             </div>
