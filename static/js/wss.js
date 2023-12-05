@@ -303,7 +303,7 @@ function handleOnlineUsers() {
     );
     appendChild(hstack, pDef);
 
-    pDef.innerHTML = `<strong>No Users Online</strong>`;
+    pDef.innerHTML = `<strong>No Visible Users</strong>`;
   }
 }
 
