@@ -187,8 +187,8 @@ function handleUserList(data) {
 }
 
 function handleOnlineUsers() {
+  const hstack = document.querySelector("#hor-list");
   if (countClients() > 0) {
-    const hstack = document.querySelector("#hor-list");
     if (countChildren(hstack) > 0) {
       removeChildren(hstack);
     }
@@ -282,7 +282,6 @@ function handleOnlineUsers() {
                   Swal.closeModal();
                 }
               }
-
               Swal.closeModal();
             })
             .catch((err) => {
@@ -292,7 +291,6 @@ function handleOnlineUsers() {
       }
     }
   } else {
-    const hstack = document.querySelector("#hor-list");
     if (countChildren(hstack) > 0) {
       removeChildren(hstack);
     }
