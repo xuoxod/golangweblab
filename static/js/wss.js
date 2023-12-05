@@ -297,24 +297,12 @@ function handleOnlineUsers() {
       removeChildren(hstack);
     }
 
-    // const rowDef = document.createElement("div");
-    // const colDef = document.createElement("div");
     const pDef = document.createElement("p");
-
-    // addAttribute(
-    //   rowDef,
-    //   "class",
-    //   "row d-flex justify-content-center align-items-center"
-    // );
-    // addAttribute(colDef, "class", "col-auto p-3");
     addAttribute(
       pDef,
       "class",
       "text-center fw-bold fs-3 text-primary-emphasis"
     );
-
-    // appendChild(hstack, rowDef);
-    // appendChild(rowDef, colDef);
     appendChild(hstack, pDef);
 
     pDef.innerHTML = `<strong>No Users Online</strong>`;
@@ -390,7 +378,11 @@ function initActivity() {
 
   const hstack = document.createElement("div");
   addAttribute(hstack, "id", "hor-list");
-  addAttribute(hstack, "class", "hstack gap-2 my-2");
+  addAttribute(
+    hstack,
+    "class",
+    "hstack d-flex justify-content-center align-content-center align-items-center my-0"
+  );
   appendChild(colTop, hstack);
 
   appendChild(activityParent, rowTop);
