@@ -1,126 +1,129 @@
 {{extends "../layouts/layout.jet"}}
 {{block documentBody()}}
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-2 col-sm-12">
-            <ul class="w3-ul index-menu">
-                <li>
-                    <a id="index-account" href="#" class="w3-bar-item w3-button">Account</a>
-                </li>
+<div class="row">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 col-sm-12">
+                <ul class="w3-ul index-menu">
+                    <li>
+                        <a id="index-account" href="#" class="w3-bar-item w3-button w3-round-large">Account</a>
+                    </li>
 
-                <li>
-                    <a id="index-profile" href="#" class="w3-bar-item w3-button w3-hide-small profile-link">Profile</a>
-                </li>
+                    <li>
+                        <a id="index-profile" href="#"
+                            class="w3-bar-item w3-button w3-round-large w3-hide-small profile-link">Profile</a>
+                    </li>
 
-                <li>
-                    <a id="index-settings" href="#"
-                        class="w3-bar-item w3-button w3-hide-small settings-link">Settings</a>
-                </li>
-            </ul>
-        </div>
-        <input type="hidden" id="fname" value="{{.user.FirstName}}">
-        <input type="hidden" id="lname" value="{{.user.LastName}}">
-        <input type="hidden" id="email" value="{{.user.Email}}">
-        <input type="hidden" id="visible" value="{{.preferences.Visible}}">
-        <input type="hidden" id="remote-address">
-        <input type="hidden" id="perm-visible" value="{{.preferences.PermanentVisible}}">
+                    <li>
+                        <a id="index-settings" href="#"
+                            class="w3-bar-item w3-button w3-round-large w3-hide-small settings-link">Settings</a>
+                    </li>
+                </ul>
+            </div>
+            <input type="hidden" id="fname" value="{{.user.FirstName}}">
+            <input type="hidden" id="lname" value="{{.user.LastName}}">
+            <input type="hidden" id="email" value="{{.user.Email}}">
+            <input type="hidden" id="visible" value="{{.preferences.Visible}}">
+            <input type="hidden" id="remote-address">
+            <input type="hidden" id="perm-visible" value="{{.preferences.PermanentVisible}}">
 
-        <div class="col-md-10 col-sm-12">
-            <div class="container-fluid border border-primary rounded">
+            <div class="col-md-10 col-sm-12">
+                <div class="container-fluid rounded">
 
-                <div class="row my-1">
-                    <div class="accordion accordion-flush" id="accordionFlushExample">
-                        <div class="accordion-item">
-                            <h2 class="accordion-header text-primary-emphasis" id="flush-headingZero">
-                                <button class="accordion-button collapsed rounded text-primary-emphasis" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseZero" aria-expanded="false"
-                                    aria-controls="flush-collapseOne">
-                                    <strong>View</strong>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseZero" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
+                    <div class="row my-1">
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header text-primary-emphasis" id="flush-headingZero">
+                                    <button class="accordion-button collapsed rounded text-primary-emphasis"
+                                        type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseZero"
+                                        aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <strong>View</strong>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseZero" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
 
-                                    <div class="container-fluid d-md-flex d-sm-grid justify-content-evenly gap-3">
-                                        <div class="row d-flex justify-content-center border rounded">
-                                            <div class="col-auto">
-                                                <span id="user-count-input" type="text"
-                                                    class="form-control border-0 bg-white fw-bold fs-3 m-0 p-0 w-auto"></span>
+                                        <div class="container-fluid d-md-flex d-sm-grid justify-content-evenly gap-3">
+                                            <div class="row d-flex justify-content-center border rounded">
+                                                <div class="col-auto">
+                                                    <span id="user-count-input" type="text"
+                                                        class="form-control border-0 bg-white fw-bold fs-3 m-0 p-0 w-auto"></span>
+                                                </div>
                                             </div>
-                                        </div>
 
-                                        <div class="row border rounded">
-                                            <div class="col-auto">
-                                                <div class="form-check form-switch">
-                                                    <input id="visible-input" class="form-check-input fw-bold"
-                                                        type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                            <div class="row border rounded">
+                                                <div class="col-auto">
+                                                    <div class="form-check form-switch">
+                                                        <input id="visible-input" class="form-check-input fw-bold"
+                                                            type="checkbox" role="switch" id="flexSwitchCheckDefault">
 
-                                                    <p id="visible-label" class="form-check-label fw-bold m-0">
-                                                        Visible
-                                                    </p>
+                                                        <p id="visible-label" class="form-check-label fw-bold m-0">
+                                                            Visible
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingOne">
-                                <button class="accordion-button collapsed rounded activity-button" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                    aria-controls="flush-collapseOne">
-                                    <strong>Activity</strong>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseOne" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <div id="activity-parent"
-                                        class="container-fluid border border-light-subtle rounded bg-body-tertiary">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed rounded activity-button" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                        aria-expanded="false" aria-controls="flush-collapseOne">
+                                        <strong>Activity</strong>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div id="activity-parent"
+                                            class="container-fluid border border-light-subtle rounded bg-body-tertiary">
 
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingTwo">
-                                <button class="accordion-button collapsed rounded" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false"
-                                    aria-controls="flush-collapseTwo">
-                                    <strong>Subscriptions</strong>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseTwo" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <div class="box col-12 border border-primary">
-                                        <p>
-                                            No subscriptions
-                                        </p>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingTwo">
+                                    <button class="accordion-button collapsed rounded" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                        aria-expanded="false" aria-controls="flush-collapseTwo">
+                                        <strong>Subscriptions</strong>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="box col-12 border border-primary">
+                                            <p>
+                                                No subscriptions
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="accordion-item">
-                            <h2 class="accordion-header" id="flush-headingThree">
-                                <button class="accordion-button collapsed rounded" type="button"
-                                    data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
-                                    aria-expanded="false" aria-controls="flush-collapseThree">
-                                    <strong>Services</strong>
-                                </button>
-                            </h2>
-                            <div id="flush-collapseThree" class="accordion-collapse collapse"
-                                aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                                <div class="accordion-body">
-                                    <div class="box col-12 border border-primary">
-                                        <p>
-                                            No services
-                                        </p>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="flush-headingThree">
+                                    <button class="accordion-button collapsed rounded" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                        aria-expanded="false" aria-controls="flush-collapseThree">
+                                        <strong>Services</strong>
+                                    </button>
+                                </h2>
+                                <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body">
+                                        <div class="box col-12 border border-primary">
+                                            <p>
+                                                No services
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
