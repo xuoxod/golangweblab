@@ -1,7 +1,7 @@
 {{extends "../layouts/layout.jet"}}
 {{block documentBody()}}
 <div class="row">
-    <div class="container-fluid">
+    <div class="container-fluid rounded">
         <div class="row">
             <div class="col-md-2 col-sm-12">
                 <ul class="w3-ul index-menu">
