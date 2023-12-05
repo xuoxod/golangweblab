@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function () {
       switch (data.action) {
         case "userlist":
           handleUserList(data);
-
           handleOnlineUsers();
           break;
 
