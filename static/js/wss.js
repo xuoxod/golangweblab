@@ -288,6 +288,9 @@ function handleOnlineUsers() {
               log(err);
             });
         });
+      } else {
+        log(`Remote Address:\t${client.ip}\n`);
+        document.querySelector("#remote-address").value = client.ip;
       }
     }
   } else {

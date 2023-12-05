@@ -22,6 +22,7 @@
         <input type="hidden" id="lname" value="{{.user.LastName}}">
         <input type="hidden" id="email" value="{{.user.Email}}">
         <input type="hidden" id="visible" value="{{.preferences.Visible}}">
+        <input type="hidden" id="remote-address">
         <input type="hidden" id="perm-visible" value="{{.preferences.PermanentVisible}}">
 
         <div class="col-md-10 col-sm-12">
