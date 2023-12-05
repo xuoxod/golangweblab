@@ -108,6 +108,8 @@ document.addEventListener("DOMContentLoaded", function () {
       switch (data.action) {
         case "userlist":
           handleUserList(data);
+
+          handleOnlineUsers();
           break;
 
         case "ptp":
@@ -124,6 +126,9 @@ document.addEventListener("DOMContentLoaded", function () {
     log("\n\nWS Connection Error:\t", err);
     log(`\n\n`);
   }
+
+  initActivity();
+  handleOnlineUsers();
 });
 
 function handleUserList(data) {
@@ -178,94 +183,15 @@ function handleUserList(data) {
     }
   }
   handleOnlineUserCount(onlineUserCount);
-  initActivity();
   return;
 }
 
-function handleOnlineUserCount(count) {
-  let suf = "";
-
-  switch (count) {
-    case 1:
-      suf = `${count} online user`;
-      break;
-
-    default:
-      suf = `${count} online users`;
-      break;
-  }
-
-  document.querySelector("#user-count-input").innerText = `${suf}`;
-}
-
-function sendMessage(jsonData = {}) {
-  socket.send(JSON.stringify(jsonData));
-}
-
-function displayTranscripts() {
-  if (transcriptCount() > 0) {
-    const chatTranscriptParent = document.querySelector("#chat-transcript");
-
-    for (const t in transcripts) {
-      const transcriptData = transcripts[t];
-      const message = transcriptData.message;
-      const email = transcriptData.email;
-      const fname = transcriptData.fname;
-
-      if (email == document.querySelector("#email").value) {
-        log(`Transcript By: Me says ${message}`);
-      } else {
-        log(`Transcript By: ${fname} says ${message}`);
-      }
-    }
-  }
-}
-
-document.querySelector("#visible-input").addEventListener("click", (e) => {
-  const jsonData = {};
-  if (e.target.checked) {
-    jsonData.action = "unhide";
-  } else {
-    jsonData.action = "hide";
-  }
-  sendMessage(jsonData);
-});
-
-function initActivity() {
+function handleOnlineUsers() {
   if (countClients() > 0) {
-    const activityParent = document.querySelector("#activity-parent");
-
-    if (countChildren(activityParent) > 0) {
-      removeChildren(activityParent);
+    const hstack = document.querySelector("#hor-list");
+    if (countChildren(hstack) > 0) {
+      removeChildren(hstack);
     }
-
-    const rowTop = document.createElement("div");
-    const rowMiddle = document.createElement("div");
-    const rowBottom = document.createElement("div");
-
-    addAttribute(rowTop, "class", "row");
-    addAttribute(rowMiddle, "class", "row");
-    addAttribute(rowBottom, "class", "row");
-
-    const colTop = document.createElement("div");
-    const colMiddle = document.createElement("div");
-    const colBottom = document.createElement("div");
-
-    addAttribute(colTop, "class", "col-12");
-    addAttribute(colMiddle, "class", "col-12");
-    addAttribute(colBottom, "class", "col-12  ");
-
-    const hstack = document.createElement("div");
-    addAttribute(hstack, "class", "hstack gap-2 my-2");
-    appendChild(colTop, hstack);
-
-    appendChild(activityParent, rowTop);
-    appendChild(activityParent, rowMiddle);
-    appendChild(activityParent, rowBottom);
-
-    appendChild(rowTop, colTop);
-    appendChild(rowMiddle, colMiddle);
-    appendChild(rowBottom, colBottom);
 
     for (const c in clients) {
       const client = clients[c];
@@ -365,78 +291,158 @@ function initActivity() {
         });
       }
     }
-
-    const chatTranscript = document.createElement("div");
-    addAttribute(chatTranscript, "id", "chat-transcript");
-    addAttribute(
-      chatTranscript,
-      "class",
-      "chat-transcript bg-light-subtle border border-light-subtle rounded"
-    );
-    appendChild(colMiddle, chatTranscript);
-
-    const chatControls = document.createElement("div");
-    const textInput = document.createElement("input");
-    const sendButton = document.createElement("button");
-    const span = document.createElement("span");
-
-    sendButton.innerHTML = `<strong class="text-center text-primary-emphasis">Send</strong>`;
-
-    addAttribute(chatControls, "class", "input-group my-2");
-    addAttribute(textInput, "class", "form-control text-input");
-
-    addAttribute(
-      sendButton,
-      "class",
-      "btn btn-outline-primary border-primary-subtle"
-    );
-    addAttribute(span, "class", "input-group-text");
-
-    appendChild(chatControls, textInput);
-    appendChild(chatControls, span);
-    appendChild(span, sendButton);
-    appendChild(colBottom, chatControls);
-
-    sendButton.addEventListener("click", () => {
-      if (textInput.value) {
-        const jsonData = {};
-        jsonData.fname = document.querySelector("#fname").value;
-        jsonData.email = document.querySelector("#email").value;
-        jsonData.message = textInput.value;
-        jsonData.action = "broadcast";
-        sendMessage(jsonData);
-        textInput.value = "";
-      }
-    });
   } else {
-    const activityParent = document.querySelector("#activity-parent");
-
-    if (countChildren(activityParent) > 0) {
-      removeChildren(activityParent);
+    const hstack = document.querySelector("#hor-list");
+    if (countChildren(hstack) > 0) {
+      removeChildren(hstack);
     }
 
-    const rowDef = document.createElement("div");
-    const colDef = document.createElement("div");
+    // const rowDef = document.createElement("div");
+    // const colDef = document.createElement("div");
     const pDef = document.createElement("p");
 
-    addAttribute(
-      rowDef,
-      "class",
-      "row d-flex justify-content-center align-items-center"
-    );
-    addAttribute(colDef, "class", "col-auto p-3");
+    // addAttribute(
+    //   rowDef,
+    //   "class",
+    //   "row d-flex justify-content-center align-items-center"
+    // );
+    // addAttribute(colDef, "class", "col-auto p-3");
     addAttribute(
       pDef,
       "class",
       "text-center fw-bold fs-3 text-primary-emphasis"
     );
 
-    appendChild(activityParent, rowDef);
-    appendChild(rowDef, colDef);
-    appendChild(colDef, pDef);
+    // appendChild(hstack, rowDef);
+    // appendChild(rowDef, colDef);
+    appendChild(hstack, pDef);
 
     pDef.innerHTML = `<strong>No Users Online</strong>`;
   }
+}
+
+function handleOnlineUserCount(count) {
+  let suf = "";
+
+  switch (count) {
+    case 1:
+      suf = `${count} online user`;
+      break;
+
+    default:
+      suf = `${count} online users`;
+      break;
+  }
+
+  document.querySelector("#user-count-input").innerText = `${suf}`;
+}
+
+function sendMessage(jsonData = {}) {
+  socket.send(JSON.stringify(jsonData));
+}
+
+function displayTranscripts() {
+  if (transcriptCount() > 0) {
+    const chatTranscriptParent = document.querySelector("#chat-transcript");
+
+    for (const t in transcripts) {
+      const transcriptData = transcripts[t];
+      const message = transcriptData.message;
+      const email = transcriptData.email;
+      const fname = transcriptData.fname;
+
+      if (email == document.querySelector("#email").value) {
+        log(`Transcript By: Me says ${message}`);
+      } else {
+        log(`Transcript By: ${fname} says ${message}`);
+      }
+    }
+  }
+}
+
+document.querySelector("#visible-input").addEventListener("click", (e) => {
+  const jsonData = {};
+  if (e.target.checked) {
+    jsonData.action = "unhide";
+  } else {
+    jsonData.action = "hide";
+  }
+  sendMessage(jsonData);
+});
+
+function initActivity() {
+  const activityParent = document.querySelector("#activity-parent");
+  const rowTop = document.createElement("div");
+  const rowMiddle = document.createElement("div");
+  const rowBottom = document.createElement("div");
+
+  addAttribute(rowTop, "class", "row");
+  addAttribute(rowMiddle, "class", "row");
+  addAttribute(rowBottom, "class", "row");
+
+  const colTop = document.createElement("div");
+  const colMiddle = document.createElement("div");
+  const colBottom = document.createElement("div");
+
+  addAttribute(colTop, "class", "col-12");
+  addAttribute(colMiddle, "class", "col-12");
+  addAttribute(colBottom, "class", "col-12  ");
+
+  const hstack = document.createElement("div");
+  addAttribute(hstack, "id", "hor-list");
+  addAttribute(hstack, "class", "hstack gap-2 my-2");
+  appendChild(colTop, hstack);
+
+  appendChild(activityParent, rowTop);
+  appendChild(activityParent, rowMiddle);
+  appendChild(activityParent, rowBottom);
+
+  appendChild(rowTop, colTop);
+  appendChild(rowMiddle, colMiddle);
+  appendChild(rowBottom, colBottom);
+
+  const chatTranscript = document.createElement("div");
+  addAttribute(chatTranscript, "id", "chat-transcript");
+  addAttribute(
+    chatTranscript,
+    "class",
+    "chat-transcript bg-light-subtle border border-light-subtle rounded"
+  );
+  appendChild(colMiddle, chatTranscript);
+
+  const chatControls = document.createElement("div");
+  const textInput = document.createElement("input");
+  const sendButton = document.createElement("button");
+  const span = document.createElement("span");
+
+  sendButton.innerHTML = `<strong class="text-center text-primary-emphasis">Send</strong>`;
+
+  addAttribute(chatControls, "class", "input-group my-2");
+  addAttribute(textInput, "class", "form-control text-input");
+
+  addAttribute(
+    sendButton,
+    "class",
+    "btn btn-outline-primary border-primary-subtle"
+  );
+  addAttribute(span, "class", "input-group-text");
+
+  appendChild(chatControls, textInput);
+  appendChild(chatControls, span);
+  appendChild(span, sendButton);
+  appendChild(colBottom, chatControls);
+
+  sendButton.addEventListener("click", () => {
+    if (textInput.value) {
+      const jsonData = {};
+      jsonData.fname = document.querySelector("#fname").value;
+      jsonData.email = document.querySelector("#email").value;
+      jsonData.message = textInput.value;
+      jsonData.action = "broadcast";
+      sendMessage(jsonData);
+      textInput.value = "";
+    }
+  });
 }
 
 window.addEventListener("beforeunload", (event) => {
