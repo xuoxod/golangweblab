@@ -230,7 +230,7 @@ func handleUnhide(conn WebSocketConnection) {
 }
 
 func handleUserExit(conn WebSocketConnection) {
-	fmt.Println("User exited")
+	fmt.Printf("User %s exited\n", clients[conn]["fname"])
 	delete(clients, conn)
 	broadcastOnlineUsers()
 }

@@ -2,9 +2,9 @@
 {{block authmenu()}}
 <div class="w3-bar w3-blue">
     <a href="/user" class="w3-bar-item w3-button">Home</a>
-    <a id="menu-account" href="#" class="w3-bar-item w3-button w3-hide-small account-link menu-account">Account</a>
-    <a id="menu-profile" href="#" class="w3-bar-item w3-button w3-hide-small profile-link menu-profile">Profile</a>
-    <a id="menu-settings" href="#" class="w3-bar-item w3-button w3-hide-small settings-link menu-settings">Settings</a>
+    <a id="menu-account" href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hide-large account-link menu-account">Account</a>
+    <a id="menu-profile" href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hide-large profile-link menu-profile">Profile</a>
+    <a id="menu-settings" href="#" class="w3-bar-item w3-button w3-hide-small w3-hide-medium w3-hide-large settings-link menu-settings">Settings</a>
     <a href="/user/signout" class="w3-bar-item w3-button w3-hide-small signout-link w3-right">Sign Out</a>
     <a href="javascript:void(0)" class="w3-bar-item w3-button w3-right w3-hide-large w3-hide-medium"
         onclick="siteMenuEffect()">&#9776;</a>
