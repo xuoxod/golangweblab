@@ -2,9 +2,12 @@ package utils
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"strings"
 	"time"
+
+	gonanoid "github.com/matoous/go-nanoid/v2"
 )
 
 func DateTimeStamp() string {
@@ -80,7 +83,7 @@ func Print(msg string) {
 	fmt.Println(msg)
 }
 
-func GenerateRandomNumber() (int, error) {
+func GenerateRandomNumberMinMax() (int, error) {
 	min := 111111
 	max := 999999
 	return min + rand.Intn(max-min), nil
@@ -91,4 +94,70 @@ func CopyrightDate() string {
 	year, _, _ := d.Date()
 
 	return fmt.Sprintf("RmediaTech.com %v", year)
+}
+
+func GenerateMinMaxRandomNumber() (int, error) {
+	min := 111111
+	max := 999999
+	return min + rand.Intn(max-min), nil
+}
+
+func GenerateUserDefinedRandomNumber(min, max int) (int, error) {
+	return min + rand.Intn(max-min), nil
+}
+
+func GenerateRandomNumber() (int, error) {
+	min := 1
+	max := 999999
+	return min + rand.Intn(max-min), nil
+}
+
+func GenerateID() string {
+	id, err := gonanoid.New()
+
+	if err != nil {
+		log.Println(err.Error())
+		return "0"
+	}
+	return id
+}
+
+func GenerateName(size int) string {
+	if size < 1 {
+		size = 13
+	}
+
+	name, err := gonanoid.Generate("abcdefghijklmopqrstuvwxyzACDEFGHIJKLMOPQRSTUVWXYZ~!@#$%^&*,.?>}]|", size)
+
+	if err != nil {
+		log.Println(err.Error())
+		return ""
+	}
+
+	return name
+}
+
+func GenerateUID() string {
+	uid, err := gonanoid.Generate("0123456789", 14)
+
+	if err != nil {
+		log.Println(err.Error())
+		return ""
+	}
+	return uid
+}
+
+func GenerateWord(size int) string {
+	if size < 1 {
+		size = 13
+	}
+
+	name, err := gonanoid.Generate("aeiouylmqrsvAEIOUYBCDNP", size)
+
+	if err != nil {
+		log.Println(err.Error())
+		return ""
+	}
+
+	return name
 }

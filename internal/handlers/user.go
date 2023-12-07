@@ -10,6 +10,7 @@ import (
 	"github.com/xuoxod/weblab/internal/helpers"
 	"github.com/xuoxod/weblab/internal/models"
 	"github.com/xuoxod/weblab/internal/render"
+	"github.com/xuoxod/weblab/pkg/utils"
 )
 
 // @desc        User dashboard
@@ -50,6 +51,40 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 	data["preferences"] = preferences
 	data["isAuthenticated"] = helpers.IsAuthenticated(r)
 	data["title"] = "Dashboard"
+
+	/* 	var returnStr string
+	   	for _, cookie := range r.Cookies() {
+	   		returnStr = returnStr + cookie.Name + ":" + cookie.Value + "\n"
+	   		fmt.Println(returnStr)
+	   	} */
+
+	cookie, cookieErr := r.Cookie("deezToken")
+
+	if cookieErr != nil {
+		fmt.Println("Cookie Error")
+		fmt.Println(cookieErr.Error())
+	}
+
+	if cookie != nil {
+		fmt.Println("Cooke Name:\t", cookie.Name)
+		fmt.Println("Expires:\t", cookie.Expires)
+
+		token := cookie.Value
+
+		valid, err := utils.ValidateTokenfunc(token)
+
+		if err != nil {
+			fmt.Println("Token validation failed")
+			fmt.Println(err.Error())
+			fmt.Printf("\n")
+		}
+
+		if valid {
+			fmt.Println("Token: ", token)
+			fmt.Printf("\n")
+			fmt.Printf("\n")
+		}
+	}
 
 	err := render.Render(w, r, "user/dashboard.jet", nil, data)
 

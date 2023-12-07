@@ -181,7 +181,7 @@ const newElement = (type) => {
   return null;
 };
 
-const handleSigninSuccess = (data) => {
+const handleSigninSuccess = () => {
   log(`Sign in successful`);
   location.href = "/user";
 };

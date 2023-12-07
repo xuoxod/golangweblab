@@ -5,10 +5,13 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/xuoxod/weblab/internal/forms"
 	"github.com/xuoxod/weblab/internal/helpers"
 	"github.com/xuoxod/weblab/internal/models"
+	"github.com/xuoxod/weblab/pkg/utils"
 )
 
 func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
@@ -92,6 +95,10 @@ func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
 	profile = p
 	preferences = s
 
+	if err != nil {
+		fmt.Println("Failed to generate token")
+	}
+
 	// Put user in session
 	m.App.Session.Put(r.Context(), "user_id", user)
 	m.App.Session.Put(r.Context(), "profile", profile)
@@ -105,11 +112,30 @@ func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
 	obj["title"] = "Home"
 	obj["ok"] = true
 
+	// fmt.Fprintf(w, "%v", token)
+
 	out, err := json.MarshalIndent(obj, "", " ")
 
 	if err != nil {
 		log.Println(err)
 	}
+
+	userId, err := strconv.Atoi(user.ID)
+
+	if err != nil {
+		fmt.Println("Error converting var to int")
+	}
+
+	token, err := utils.GenerateJWT(uint64(userId))
+
+	cookie := http.Cookie{}
+	cookie.Name = "deezCookies"
+	cookie.Value = token
+	cookie.Expires = time.Now().Add(24 * time.Hour)
+	cookie.Secure = false
+	cookie.HttpOnly = true
+	cookie.Path = "/"
+	http.SetCookie(w, &cookie)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(200)

@@ -60,37 +60,6 @@ func SessionLoad(next http.Handler) http.Handler {
 	return session.LoadAndSave(next)
 }
 
-/* func SessionLoad(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(writer http.ResponseWriter, request *http.Request) {
-		fmt.Println("start")
-
-		writer.Header().Add("Content-Length", "5")
-		writer.WriteHeader(200)
-		hj, ok := writer.(http.Hijacker)
-
-		fmt.Println(ok)
-
-		c, _, err := hj.Hijack()
-		if err != nil {
-			panic(err)
-		}
-		n, err := c.Write([]byte("hello"))
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println("n == ", n)
-
-		err = c.Close()
-		if err != nil {
-			panic(err)
-		}
-
-		fmt.Println("end")
-		session.LoadAndSave(next)
-	})
-} */
-
 func Auth(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if !helpers.IsAuthenticated(r) {
