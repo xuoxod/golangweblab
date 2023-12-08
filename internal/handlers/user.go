@@ -5,7 +5,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 
+	// "github.com/golang-jwt/jwt"
+	"github.com/dgrijalva/jwt-go"
 	"github.com/xuoxod/weblab/internal/forms"
 	"github.com/xuoxod/weblab/internal/helpers"
 	"github.com/xuoxod/weblab/internal/models"
@@ -52,13 +55,7 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 	data["isAuthenticated"] = helpers.IsAuthenticated(r)
 	data["title"] = "Dashboard"
 
-	/* 	var returnStr string
-	   	for _, cookie := range r.Cookies() {
-	   		returnStr = returnStr + cookie.Name + ":" + cookie.Value + "\n"
-	   		fmt.Println(returnStr)
-	   	} */
-
-	cookie, cookieErr := r.Cookie("deezToken")
+	cookie, cookieErr := r.Cookie("deezCookies")
 
 	if cookieErr != nil {
 		fmt.Println("Cookie Error")
@@ -67,21 +64,45 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 
 	if cookie != nil {
 		fmt.Println("Cooke Name:\t", cookie.Name)
-		fmt.Println("Expires:\t", cookie.Expires)
 
-		token := cookie.Value
+		/* token := cookie.Value
 
 		valid, err := utils.ValidateTokenfunc(token)
 
+		token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
+			return []byte(constants.SecretKey), nil
+		})
+
 		if err != nil {
-			fmt.Println("Token validation failed")
+			fmt.Println("Token parsing failed")
 			fmt.Println(err.Error())
 			fmt.Printf("\n")
 		}
 
-		if valid {
-			fmt.Println("Token: ", token)
+		if token.Valid {
+			fmt.Println("Token: ", *token)
+			fmt.Println("Expires: ")
 			fmt.Printf("\n")
+			fmt.Printf("\n")
+		} */
+
+		token, isValid, err := utils.ValidateToken(cookie)
+
+		if isValid {
+			fmt.Println("Token: ", *token)
+			claims := token.Claims.(*jwt.StandardClaims)
+
+			userId := claims.Issuer
+			expiresAt := claims.ExpiresAt
+
+			fmt.Printf("Current User? %t\n", userId == user.ID)
+			fmt.Println("Expires At: ", expiresAt)
+
+			fmt.Printf("\n")
+			fmt.Printf("\n")
+		} else {
+			fmt.Println("Token parsing failed")
+			fmt.Println(err.Error())
 			fmt.Printf("\n")
 		}
 	}
@@ -300,6 +321,11 @@ func (m *Respository) PreferencesPost(w http.ResponseWriter, r *http.Request) {
 // @route       GET /user/signout
 // @access      Private
 func (m *Respository) SignOut(w http.ResponseWriter, r *http.Request) {
+	cookie := http.Cookie{}
+	cookie.Value = ""
+	cookie.Name = "deezCookies"
+	cookie.Expires = time.Now().Add(-time.Hour)
+	cookie.HttpOnly = true
 	_ = m.App.Session.Destroy(r.Context())
 	_ = m.App.Session.RenewToken(r.Context())
 

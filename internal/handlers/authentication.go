@@ -126,7 +126,7 @@ func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Error converting var to int")
 	}
 
-	token, err := utils.GenerateJWT(uint64(userId))
+	token, err := utils.GenerateJwt(userId)
 
 	cookie := http.Cookie{}
 	cookie.Name = "deezCookies"
@@ -134,7 +134,6 @@ func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
 	cookie.Expires = time.Now().Add(24 * time.Hour)
 	cookie.Secure = false
 	cookie.HttpOnly = true
-	cookie.Path = "/"
 	http.SetCookie(w, &cookie)
 
 	w.Header().Set("Content-Type", "application/json")

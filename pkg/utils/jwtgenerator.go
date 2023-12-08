@@ -1,14 +1,15 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
-	"github.com/golang-jwt/jwt/v5"
+	"github.com/golang-jwt/jwt"
 	"github.com/xuoxod/weblab/pkg/constants"
 )
 
-func GenerateJWT(id uint64) (string, error) {
+/* func GenerateJWT(id uint64) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
 
@@ -23,4 +24,19 @@ func GenerateJWT(id uint64) (string, error) {
 		return "", err
 	}
 	return tokenString, nil
+} */
+
+func GenerateJwt(id int) (string, error) {
+	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+		Issuer:    fmt.Sprintf("%d", id),
+		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
+	})
+
+	token, err := claims.SignedString([]byte(constants.SecretKey))
+
+	if err != nil {
+		return "", errors.New("Unabled to generate token")
+	}
+
+	return token, nil
 }
