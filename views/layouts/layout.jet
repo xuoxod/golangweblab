@@ -51,7 +51,7 @@
     {{include "partials/_unauthmenu.jet"}}
     {{ end }}
 
-    <div class="container-fluid rounded my-0">
+    <div class="container-fluid rounded m-3">
         {{block documentBody()}}{{ end }}
     </div>
 
