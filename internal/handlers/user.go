@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	// "github.com/golang-jwt/jwt"
@@ -70,7 +71,7 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("Token: ", *token)
 			claims := token.Claims.(*jwt.StandardClaims)
 
-			userId := claims.Issuer
+			userId, _ := strconv.Atoi(claims.Issuer)
 			expiresAt := claims.ExpiresAt
 
 			fmt.Printf("Current User? %t\n", userId == user.ID)

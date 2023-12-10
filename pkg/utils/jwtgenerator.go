@@ -2,7 +2,7 @@ package utils
 
 import (
 	"errors"
-	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/golang-jwt/jwt"
@@ -27,8 +27,9 @@ import (
 } */
 
 func GenerateJwt(id int) (string, error) {
+	strId := strconv.Itoa(id)
 	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
-		Issuer:    fmt.Sprintf("%d", id),
+		Issuer:    strId,
 		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
 	})
 
