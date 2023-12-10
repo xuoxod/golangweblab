@@ -28,7 +28,7 @@ import (
 
 func GenerateJwt(id int) (string, error) {
 	strId := strconv.Itoa(id)
-	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.StandardClaims{
+	claims := jwt.NewWithClaims(jwt.SigningMethodHS256, &jwt.StandardClaims{
 		Issuer:    strId,
 		ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
 	})
