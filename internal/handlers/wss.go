@@ -182,7 +182,7 @@ func handleBroadcastMessage(payload WsPayload) {
 	response.Action = "broadcast"
 
 	currentTime := time.Now().UTC()
-	transcripts[email] = append(transcripts[email], fmt.Sprintf("%v|%s", currentTime, message))
+	transcripts[email] = append(transcripts[email], fmt.Sprintf("%s:%v|%s", fname, currentTime, message))
 
 	for c := range clients {
 		err := c.WriteJSON(response)
