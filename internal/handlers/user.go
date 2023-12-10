@@ -64,28 +64,6 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 
 	if cookie != nil {
 		fmt.Println("Cooke Name:\t", cookie.Name)
-
-		/* token := cookie.Value
-
-		valid, err := utils.ValidateTokenfunc(token)
-
-		token, err := jwt.ParseWithClaims(cookie.Value, &jwt.StandardClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte(constants.SecretKey), nil
-		})
-
-		if err != nil {
-			fmt.Println("Token parsing failed")
-			fmt.Println(err.Error())
-			fmt.Printf("\n")
-		}
-
-		if token.Valid {
-			fmt.Println("Token: ", *token)
-			fmt.Println("Expires: ")
-			fmt.Printf("\n")
-			fmt.Printf("\n")
-		} */
-
 		token, isValid, err := utils.ValidateToken(cookie)
 
 		if isValid {
