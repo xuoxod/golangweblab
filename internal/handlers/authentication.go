@@ -31,8 +31,6 @@ func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
 		Password: r.Form.Get("password"),
 	}
 
-	fmt.Println("Signin posted")
-
 	// Validate form
 	form := forms.New(r.PostForm)
 	form.Required("email", "password")
