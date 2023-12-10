@@ -9,7 +9,6 @@
         </div>
     </div>
 
-    <div class="col-12"></div>
     <input type="hidden" id="csrf" value="{{.csrf_token}}">
     <input type="hidden" id="appname" value="{{appname}}">
     <input type="hidden" id="appver" value="{{appver}}">
