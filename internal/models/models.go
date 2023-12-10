@@ -25,7 +25,7 @@ type RegistrationErrData struct {
 
 // User
 type User struct {
-	ID            string
+	ID            int
 	FirstName     string
 	LastName      string
 	Email         string

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/xuoxod/weblab/internal/forms"
@@ -118,13 +117,7 @@ func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
 		log.Println(err)
 	}
 
-	userId, err := strconv.Atoi(user.ID)
-
-	if err != nil {
-		fmt.Println("Error converting var to int")
-	}
-
-	token, err := utils.GenerateJwt(userId)
+	token, err := utils.GenerateJwt(user.ID)
 
 	cookie := http.Cookie{}
 	cookie.Name = "deezCookies"
