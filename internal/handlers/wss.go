@@ -42,6 +42,7 @@ type WsJsonResponse struct {
 	PermanentVisible string              `json:"permvisible"`
 	Users            map[string][]string `json:"users"`
 	Exit             string              `json:"exit"`
+	Transcripts      map[string][]string `json:"transcripts"`
 }
 
 type WsPayload struct {
@@ -59,6 +60,7 @@ type WsPayload struct {
 	PermanentVisible string              `json:"permvisible"`
 	Conn             WebSocketConnection `json:"-"`
 	Exit             string              `json:"exit"`
+	Transcripts      map[string][]string `json:"transcripts"`
 }
 
 func WsEndpoint(w http.ResponseWriter, r *http.Request) {
@@ -252,6 +254,11 @@ func broadcastOnlineUsers() {
 
 	response.Users = onlineClients
 	response.Action = "userlist"
+
+	if len(transcripts) > 0 {
+		response.Transcripts = transcripts
+	}
+
 	broadcastToAll(response)
 }
 
