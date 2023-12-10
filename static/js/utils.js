@@ -175,7 +175,7 @@ const cap = (arg) => {
 };
 
 const newElement = (type) => {
-  if (null != type && typeof type == " string") {
+  if (null != type && typeof type == "string") {
     return document.createElement(type);
   }
   return null;
