@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/xuoxod/weblab/pkg/constants"
 )
 
 var wsChan = make(chan WsPayload)
@@ -183,8 +183,8 @@ func handleBroadcastMessage(payload WsPayload) {
 	response.Message = message
 	response.Action = "broadcast"
 
-	currentTime := time.Now().UTC()
-	transcripts[email] = append(transcripts[email], fmt.Sprintf("%s:%v|%s", fname, currentTime, message))
+	currentTime := constants.NumLongDateNormalTimeFull
+	transcripts[email] = append(transcripts[email], fmt.Sprintf("%s;%v|%s", fname, currentTime, message))
 
 	for c := range clients {
 		err := c.WriteJSON(response)

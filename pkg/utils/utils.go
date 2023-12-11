@@ -4,79 +4,25 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
-	"strings"
 	"time"
 
 	gonanoid "github.com/matoous/go-nanoid/v2"
+	"github.com/xuoxod/weblab/pkg/constants"
 )
 
 func DateTimeStamp() string {
-	// dts := fmt.Sprint("Date: ", time.Now())
-
-	// d := time.Date(2000, 2, 1, 12, 30, 0, 0, time.UTC)
-
-	d := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 12, 30, 0, 0, time.UTC)
-	year, month, day := d.Date()
-
-	return fmt.Sprintf("%v %v, %v", month, day, year)
+	return constants.NumLongDateNormalTimeFull
 }
 func DateStamp() string {
-	// dts := fmt.Sprint("Date: ", time.Now())
-
-	// d := time.Date(2000, 2, 1, 12, 30, 0, 0, time.UTC)
-
-	d := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 12, 30, 0, 0, time.UTC)
-	year, month, day := d.Date()
-
-	return fmt.Sprintf("%v %v %v", month, day, year)
-}
-
-func DTS() string {
-	// dts := fmt.Sprint("Date: ", time.Now())
-	// d := time.Date(2000, 2, 1, 12, 30, 0, 0, time.UTC)
-
-	d := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 12, 30, 0, 0, time.UTC)
-	year, month, day := d.Date()
-	hour, minute, second := time.Now().Local().Clock()
-
-	var suffix string
-	var strDay string = fmt.Sprintf("%d", day)
-
-	if strings.HasSuffix(strDay, "1") {
-		suffix = "st"
-	} else if strings.HasSuffix(strDay, "2") {
-		suffix = "nd"
-	} else if strings.HasSuffix(strDay, "3") {
-		suffix = "rd"
-	} else {
-		suffix = "th"
-	}
-
-	return fmt.Sprintf("%v %v%s %v %v:%v:%v", month, day, suffix, year, hour, minute, second)
+	return constants.NumLongNumberDateOnly
 }
 
 func DS() string {
-	d := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 12, 30, 0, 0, time.UTC)
-	year, month, day := d.Date()
-	var suffix string
-	var strDay string = fmt.Sprintf("%d", day)
-
-	if strings.HasSuffix(strDay, "1") {
-		suffix = "st"
-	} else if strings.HasSuffix(strDay, "2") {
-		suffix = "nd"
-	} else if strings.HasSuffix(strDay, "3") {
-		suffix = "rd"
-	} else {
-		suffix = "th"
-	}
-
-	return fmt.Sprintf("%v %v%s %v", month, day, suffix, year)
+	return constants.NumShortNumberDateOnly
 }
 
 func TS() string {
-	hour, minute, second := time.Now().Local().Clock()
-	return fmt.Sprintf("%v:%v:%v", hour, minute, second)
+	return constants.NumNormalTimeFull
 }
 
 func Print(msg string) {
