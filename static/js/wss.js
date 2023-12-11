@@ -109,6 +109,7 @@ document.addEventListener("DOMContentLoaded", function () {
         case "userlist":
           handleUserList(data);
           handleOnlineUsers();
+          handleTranscripts(data.transcripts);
           break;
 
         case "ptp":
@@ -129,6 +130,12 @@ document.addEventListener("DOMContentLoaded", function () {
   initActivity();
   handleOnlineUsers();
 });
+
+function handleTranscripts(transcripts) {
+  if (transcripts) {
+    log(`${stringify(transcripts)}`);
+  }
+}
 
 function handleUserList(data) {
   let onlineUserCount = 0;
