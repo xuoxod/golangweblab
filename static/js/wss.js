@@ -132,8 +132,28 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleTranscripts(transcripts) {
+  // rick;12/11/2023,9:34:22am|It seems to be working to my liking","rick;12/11/2023,9:34:22am|and then some ...."
   if (transcripts) {
-    log(`${stringify(transcripts)}`);
+    for (const t in transcripts) {
+      transcript = transcripts[t];
+      // Me
+      for (const o in transcript) {
+        objT = transcript[o];
+        // log(`ObjT:\t${stringify(objT)}\n`);
+        semicolonSplit = objT.split(";");
+        fname = semicolonSplit[0];
+        pipeSplit = semicolonSplit[1].split("|");
+        stamp = pipeSplit[0];
+        msg = pipeSplit[1];
+
+        if (t.trim() == document.querySelector("#email").value) {
+          log(`${cap("me")}\n\tTime Stamp:\t${stamp}\n\tMessage:\t${msg}\n\n`);
+        } else {
+          // Them
+          log(`${cap(fname)}\n\tTime Stamp:\t${stamp}\n\tMessage:\t${msg}\n\n`);
+        }
+      }
+    }
   }
 }
 

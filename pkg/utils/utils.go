@@ -11,18 +11,18 @@ import (
 )
 
 func DateTimeStamp() string {
-	return constants.NumLongDateNormalTimeFull
+	return time.Now().Format(constants.StrLongDateNormalTimeFull)
 }
 func DateStamp() string {
-	return constants.NumLongNumberDateOnly
+	return time.Now().Format(constants.NumLongDateNormalTimeFull)
 }
 
 func DS() string {
-	return constants.NumShortNumberDateOnly
+	return time.Now().Format(constants.NumLongDateNormalTime)
 }
 
 func TS() string {
-	return constants.NumNormalTimeFull
+	return time.Now().Format(constants.NumNormalTimeFull)
 }
 
 func Print(msg string) {
