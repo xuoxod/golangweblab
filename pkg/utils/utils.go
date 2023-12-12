@@ -11,7 +11,7 @@ import (
 )
 
 func DateTimeStamp() string {
-	return time.Now().Format(constants.NumLongDateNormalTimeFull)
+	return time.Now().Format(constants.NumLongDateMilitaryTime)
 }
 func DateStamp() string {
 	return time.Now().Format(constants.NumLongDateNormalTimeFull)

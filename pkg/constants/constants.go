@@ -31,8 +31,9 @@ var StrShortDateNormalTime = "Jan 2,2006,3:04pm"
 var StrShortDateNormalTimeFull = "Jan 2,2006,3:04:05pm"
 var StrLongDateMilitaryTime = "January 2, 2006,15:04"
 var StrLongDateMilitaryTimeFull = "January 2, 2006,15:04:05"
-var NumLongDateNormalTime = "01/02/2006,3:04pm"
+var NumLongDateNormalTime = "01/02/2006,3:04"
 var NumLongDateNormalTimeFull = "01/02/2006,3:04:05pm"
+var NumLongDateMilitaryTime = "01/02/2006,15:04:05"
 
 // var StrLongDateNormalTime = time.Now().Format(strLongDateNormalTime)
 // var StrShortDateNormalTime = time.Now().Format(strShortDateNormalTime)
