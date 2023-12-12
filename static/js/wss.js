@@ -132,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function handleTranscripts(transcripts) {
-  // rick;12/11/2023,9:34:22am|It seems to be working to my liking","rick;12/11/2023,9:34:22am|and then some ...."
   if (transcripts) {
     for (const t in transcripts) {
       transcript = transcripts[t];
