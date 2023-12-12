@@ -133,23 +133,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function handleTranscripts(transcripts) {
   if (transcripts) {
+    let t;
+
     for (const t in transcripts) {
       transcript = transcripts[t];
       // Me
       for (const o in transcript) {
-        objT = transcript[o];
-        // log(`ObjT:\t${stringify(objT)}\n`);
-        semicolonSplit = objT.split(";");
-        fname = semicolonSplit[0];
-        pipeSplit = semicolonSplit[1].split("|");
-        stamp = pipeSplit[0];
-        msg = pipeSplit[1];
+        const objT = transcript[o];
+        const semicolonSplit = objT.split(";");
+        const fname = semicolonSplit[0];
+        const pipeSplit = semicolonSplit[1].split("|");
+        const stamp = pipeSplit[0];
+        const msg = pipeSplit[1];
+        const stampSplit = stamp.split(",");
+        const time = stampSplit[1];
+        let t = time;
 
-        if (t.trim() == document.querySelector("#email").value) {
-          log(`${cap("me")}\n\tTime Stamp:\t${stamp}\n\tMessage:\t${msg}\n\n`);
+        if (t < stamp.split(",")[1]) {
+          if (t.trim() == document.querySelector("#email").value) {
+            log(`${cap("me")}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`);
+          } else {
+            // Them
+            log(
+              `${cap(fname)}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`
+            );
+          }
         } else {
-          // Them
-          log(`${cap(fname)}\n\tTime Stamp:\t${stamp}\n\tMessage:\t${msg}\n\n`);
+          if (t.trim() == document.querySelector("#email").value) {
+            log(`${cap("me")}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`);
+          } else {
+            // Them
+            log(
+              `${cap(fname)}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`
+            );
+          }
         }
       }
     }
