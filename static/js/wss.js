@@ -470,7 +470,7 @@ function initActivity() {
   addAttribute(
     sendButton,
     "class",
-    "btn btn-outline-primary border-primary-subtle"
+    "btn btn-outline-primary border-primary-subtle send-message-button"
   );
   addAttribute(span, "class", "input-group-text");
 
