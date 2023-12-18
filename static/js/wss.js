@@ -4,12 +4,9 @@ const alwaysAcceptMessagesFrom = {};
 let transcripts = [];
 
 function addTranscript(objT) {
-  const { email, fname, message } = objT;
-  const transcriptData = {};
-  transcriptData.email = email;
-  transcriptData.fname = fname;
-  transcriptData.message = message;
-  transcripts.push(transcriptData);
+  if (objT) {
+    log(`Transcripts:\n\t${stringify(objT)}`);
+  }
   return;
 }
 
@@ -109,7 +106,9 @@ document.addEventListener("DOMContentLoaded", function () {
         case "userlist":
           handleUserList(data);
           handleOnlineUsers();
-          handleTranscripts(data.transcripts);
+          if (data.transcripts) {
+            addTranscript(data.transcripts);
+          }
           break;
 
         case "ptp":
@@ -117,7 +116,6 @@ document.addEventListener("DOMContentLoaded", function () {
           break;
 
         case "broadcast":
-          addTranscript(data);
           handleBroadcastMessage(data);
           break;
       }
@@ -133,13 +131,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function handleTranscripts(transcripts) {
   if (transcripts) {
-    let t;
+    const tArr = [];
 
     for (const t in transcripts) {
       transcript = transcripts[t];
-      // Me
-      for (const o in transcript) {
-        const objT = transcript[o];
+      let newDate;
+      let email = t;
+      let obj;
+      let currentTime, nextTime;
+
+      for (let i = 0; i < transcript.length; i++) {
+        const objT = transcript[i];
         const semicolonSplit = objT.split(";");
         const fname = semicolonSplit[0];
         const pipeSplit = semicolonSplit[1].split("|");
@@ -147,27 +149,37 @@ function handleTranscripts(transcripts) {
         const msg = pipeSplit[1];
         const stampSplit = stamp.split(",");
         const time = stampSplit[1];
-        let t = time;
+        currentTime = new Date(stamp);
 
-        if (t < stamp.split(",")[1]) {
-          if (t.trim() == document.querySelector("#email").value) {
-            log(`${cap("me")}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`);
-          } else {
-            // Them
-            log(
-              `${cap(fname)}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`
-            );
-          }
-        } else {
-          if (t.trim() == document.querySelector("#email").value) {
-            log(`${cap("me")}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`);
-          } else {
-            // Them
-            log(
-              `${cap(fname)}\n\tTime Stamp:\t${time}\n\tMessage:\t${msg}\n\n`
-            );
+        if (i < transcript.length - 1) {
+          nextTime = new Date(transcript[i + 1].split(";")[1].split("|")[0]);
+
+          if (currentTime < nextTime) {
+            obj = {};
+            obj.email = email;
+            obj.fname = fname;
+            obj.msg = msg;
+            obj.stamp = stamp;
+            tArr.push(obj);
           }
         }
+
+        if (i == transcript.length - 1) {
+          if (currentTime < nextTime) {
+            obj = {};
+            obj.email = email;
+            obj.fname = fname;
+            obj.msg = msg;
+            obj.stamp = stamp;
+            tArr.push(obj);
+          }
+        }
+      }
+
+      for (const a in tArr) {
+        const arg = tArr[a];
+
+        log(`${stringify(arg)}`);
       }
     }
   }

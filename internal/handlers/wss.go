@@ -13,7 +13,7 @@ var wsChan = make(chan WsPayload)
 
 var clients = make(map[WebSocketConnection]map[string]string)
 
-var transcripts = make(map[string][]string)
+var transcripts = []string{}
 
 var upgradeConnection = websocket.Upgrader{
 	ReadBufferSize:  1024,
@@ -42,7 +42,7 @@ type WsJsonResponse struct {
 	PermanentVisible string              `json:"permvisible"`
 	Users            map[string][]string `json:"users"`
 	Exit             string              `json:"exit"`
-	Transcripts      map[string][]string `json:"transcripts"`
+	Transcripts      []string            `json:"transcripts"`
 }
 
 type WsPayload struct {
@@ -144,7 +144,6 @@ func ListenToWsChannel() {
 		case "ptp":
 			handlePersonToPersonMessage(e)
 		}
-
 	}
 }
 
@@ -184,7 +183,7 @@ func handleBroadcastMessage(payload WsPayload) {
 	response.Action = "broadcast"
 
 	currentTime := utils.DateTimeStamp()
-	transcripts[email] = append(transcripts[email], fmt.Sprintf("%s;%v|%s", fname, currentTime, message))
+	transcripts = append(transcripts, fmt.Sprintf("%s-%s-%v-%s", email, fname, currentTime, message))
 
 	for c := range clients {
 		err := c.WriteJSON(response)
