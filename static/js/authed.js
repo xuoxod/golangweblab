@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  /* Account form submission results handler */
+  /* Preferences form submission results handler */
   const handlePreferencesUpdateResults = (data) => {
     if (data["ok"]) {
       log(`Settings Changed\n\n`);
@@ -65,64 +65,30 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Click Handlers */
 
   // Account Link
-  const handlePreferences = async () => {
+  const handleAccount = async () => {
     const form = await Swal.fire({
-      title: "Preferences",
+      title: "Account Status",
       icon: "info",
-      showConfirmButton: true,
+      showConfirmButton: false,
       confirmButtonText: "Submit",
-      showCancelButton: true,
+      showCancelButton: false,
       cancelButtonText: "Cancel",
       allowEscapeKey: true,
-      allowEnterKey: true,
+      allowEnterKey: false,
 
       html: `
-  <form id="settings-form">
-    <div class="input-group mb-3">
-      <div class="input-group-text">
-        <input class="form-check-input mt-0" id="asmsnots" name="smsnots" ${
-          document.querySelector("#enablesmsnots").value == "true"
-            ? "checked"
-            : ""
-        } type="checkbox" value="" aria-label="Enable SMS Notifications">
-      </div>
-      <input type="text" class="form-control" aria-label="Enable SMS Notifications" value="Enable SMS Notifications" readonly>
-    </div>
+  <form id="settings-form">     
+     ${
+       document.querySelector("#phoneverified").value == "false"
+         ? '<div class="input-group mb-3"><input type="text" class="form-control" value="Phone is not verified" readonly><span class="input-group-text"><button id="btnVerifyPhone" class="btn btn-outline-primary" type="button">Verify Phone</button></span>'
+         : '<div class="input-group mb-3"><input type="text" class="form-control" value="Phone verified" readonly>'
+     }
 
-    <div class="input-group mb-3">
-      <div class="input-group-text">
-        <input class="form-check-input mt-0" id="aemailnots" name="emailnots" ${
-          document.querySelector("#enableemailnots").value == "true"
-            ? "checked"
-            : ""
-        } type="checkbox" value="" aria-label="Enable Email Notifications">
-      </div>
-      <input type="text" class="form-control" aria-label="Enable Email Notifications" value="Enable Email Notifications" readonly>
-    </div>
-
-    <div class="input-group mb-3">
-      <div class="input-group-text">
-        <input class="form-check-input mt-0" id="publicpro" name="publicpro" ${
-          document.querySelector("#enablepublicprofile").value == "true"
-            ? "checked"
-            : ""
-        } type="checkbox" value="" aria-label="Enable Public Profile">
-      </div>
-      <input type="text" class="form-control" aria-label="Enable Public Profile" value="Enable Public Profile" readonly>
-    </div>
-
-    <div class="input-group mb-3">
-      <div class="input-group-text">
-        <input class="form-check-input mt-0" id="permvis" name="permvis" ${
-          document.querySelector("#permvisible").value == "true"
-            ? "checked"
-            : ""
-        } type="checkbox" value="" aria-label="Stay Visible">
-      </div>
-      <input type="text" class="form-control" aria-label="Stay Visible" value="Stay Visible" readonly>
-    </div>
-
-
+     ${
+       document.querySelector("#emailverified").value == "false"
+         ? '<div class="input-group mt-3"><input id="inputEmailVerify" type="text" class="form-control" value="Email is not verified" readonly><span class="input-group-text"><button id="btnEmailVerify" class="btn btn-outline-primary" type="button">Verify Email</button></span>'
+         : '<div class="input-group mt-3"><input type="text" class="form-control" value="Email verified" readonly>'
+     }
   </form>
   `,
       focusConfirm: true,
@@ -173,6 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const accountLinkHandler = () => {
     log(`Account link clicked`);
+    handleAccount();
   };
 
   // Profile Link
@@ -367,9 +334,115 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // Settings Link
+  const handleSettings = async () => {
+    const form = await Swal.fire({
+      title: "Settings",
+      icon: "info",
+      showConfirmButton: true,
+      confirmButtonText: "Submit",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+      allowEscapeKey: true,
+      allowEnterKey: true,
+
+      html: `
+  <form id="settings-form">
+    <div class="input-group mb-3">
+      <div class="input-group-text">
+        <input class="form-check-input mt-0" id="asmsnots" name="smsnots" ${
+          document.querySelector("#enablesmsnots").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Enable SMS Notifications">
+      </div>
+      <input type="text" class="form-control" aria-label="Enable SMS Notifications" value="Enable SMS Notifications" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-text">
+        <input class="form-check-input mt-0" id="aemailnots" name="emailnots" ${
+          document.querySelector("#enableemailnots").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Enable Email Notifications">
+      </div>
+      <input type="text" class="form-control" aria-label="Enable Email Notifications" value="Enable Email Notifications" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-text">
+        <input class="form-check-input mt-0" id="publicpro" name="publicpro" ${
+          document.querySelector("#enablepublicprofile").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Enable Public Profile">
+      </div>
+      <input type="text" class="form-control" aria-label="Enable Public Profile" value="Enable Public Profile" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-text">
+        <input class="form-check-input mt-0" id="permvis" name="permvis" ${
+          document.querySelector("#permvisible").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Stay Visible">
+      </div>
+      <input type="text" class="form-control" aria-label="Stay Visible" value="Stay Visible" readonly>
+    </div>
+
+
+  </form>
+  `,
+      focusConfirm: true,
+      preConfirm: () => {
+        return [
+          document.querySelector("#asmsnots").value,
+          document.querySelector("#aemailnots").value,
+          document.querySelector("#permvis").value,
+        ];
+      },
+    })
+      .then((results) => {
+        log(`Results\t${stringify(results)}\n\n`);
+        const { isConfirmed } = results;
+        if (isConfirmed) {
+          log(`Confirmed`);
+          const settingsForm = document.querySelector("#settings-form");
+          const token = document.querySelector("#csrf").value;
+
+          if (token) {
+            const formData = new FormData(settingsForm);
+            formData.append("csrf_token", token);
+            try {
+              fetch("/user/settings", {
+                method: "post",
+                body: formData,
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  handlePreferencesUpdateResults(data);
+                });
+            } catch (err) {
+              log(err);
+            }
+            log(`Submitted Signin Form\n`);
+          } else {
+            Swal.closeModal();
+          }
+        } else {
+          log(`Dismissed`);
+          Swal.closeModal();
+        }
+      })
+      .catch((err) => {
+        log(err);
+      });
+  };
+
   const settingsLinkHandler = () => {
     log(`Settings link clicked`);
-    handlePreferences();
+    handleSettings();
   };
 
   if (accountLink && profileLink && settingsLink) {
