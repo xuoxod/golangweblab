@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   /* Account form submission results handler */
-  const handleAccountUpdateResults = (data) => {
+  const handlePreferencesUpdateResults = (data) => {
     if (data["ok"]) {
       log(`Settings Changed\n\n`);
       this.location.href = "/user";
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Click Handlers */
 
   // Account Link
-  const handleAccount = async () => {
+  const handlePreferences = async () => {
     const form = await Swal.fire({
       title: "Preferences",
       icon: "info",
@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
               })
                 .then((response) => response.json())
                 .then((data) => {
-                  handleAccountUpdateResults(data);
+                  handlePreferencesUpdateResults(data);
                 });
             } catch (err) {
               log(err);
@@ -173,7 +173,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const accountLinkHandler = () => {
     log(`Account link clicked`);
-    handleAccount();
   };
 
   // Profile Link
@@ -370,6 +369,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Settings Link
   const settingsLinkHandler = () => {
     log(`Settings link clicked`);
+    handlePreferences();
   };
 
   if (accountLink && profileLink && settingsLink) {
