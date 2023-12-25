@@ -102,6 +102,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     <div class="input-group mb-3">
       <div class="input-group-text">
+        <input class="form-check-input mt-0" id="publicpro" name="publicpro" ${
+          document.querySelector("#enablepublicprofile").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Enable Public Profile">
+      </div>
+      <input type="text" class="form-control" aria-label="Enable Public Profile" value="Enable Public Profile" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-text">
         <input class="form-check-input mt-0" id="permvis" name="permvis" ${
           document.querySelector("#permvisible").value == "true"
             ? "checked"

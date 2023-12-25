@@ -251,6 +251,10 @@ func (m *Respository) PreferencesPost(w http.ResponseWriter, r *http.Request) {
 			parsedPreferences.EnableEmailNotifications = true
 		}
 
+		if key == "publicpro" {
+			parsedPreferences.EnablePublicProfile = true
+		}
+
 	}
 
 	log.Printf("\n\tParsed Settings Form: \n\t%v\n\n", parsedPreferences)

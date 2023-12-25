@@ -110,7 +110,7 @@ func (m *postgresDbRepo) UpdatePreferences(preferences models.Preferences) (mode
 
 	// Update user table
 	preferencesQuery := `
-		update preferences set enable_sms_nots = $1, enable_email_nots = $2, permanent_visible = $3, updated_at = $4 where user_id = $5 returning id, user_id, enable_sms_nots, enable_email_nots, permanent_visible, updated_at
+		update preferences set enable_sms_nots = $1, enable_email_nots = $2, permanent_visible = $3, updated_at = $4, enable_public_profile = $5 where user_id = $6 returning id, user_id, enable_sms_nots, enable_email_nots, permanent_visible, updated_at, enable_public_profile
 	`
 
 	preferencesRows, preferencesRowsErr := m.DB.QueryContext(ctx, preferencesQuery,
@@ -118,6 +118,7 @@ func (m *postgresDbRepo) UpdatePreferences(preferences models.Preferences) (mode
 		preferences.EnableEmailNotifications,
 		preferences.PermanentVisible,
 		time.Now(),
+		preferences.EnablePublicProfile,
 		preferences.UserID,
 	)
 
@@ -127,7 +128,7 @@ func (m *postgresDbRepo) UpdatePreferences(preferences models.Preferences) (mode
 	}
 
 	for preferencesRows.Next() {
-		if err := preferencesRows.Scan(&p.ID, &p.UserID, &p.EnableSmsNotifications, &p.EnableEmailNotifications, &p.PermanentVisible, &p.UpdatedAt); err != nil {
+		if err := preferencesRows.Scan(&p.ID, &p.UserID, &p.EnableSmsNotifications, &p.EnableEmailNotifications, &p.PermanentVisible, &p.UpdatedAt, &p.EnablePublicProfile); err != nil {
 			log.Println("preferences rows scan err ", err)
 			return p, err
 		}
