@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const indexProfileLink = document.querySelector("#index-profile");
   const indexSettingsLink = document.querySelector("#index-settings");
 
-  /* Profile form submission results handlers */
+  /* Profile form submission results handler */
   const handleProfileUpdateResults = (data) => {
     if (data["ok"]) {
       this.location.href = "/user";
@@ -52,11 +52,117 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
+  /* Account form submission results handler */
+  const handleAccountUpdateResults = (data) => {
+    if (data["ok"]) {
+      log(`Settings Changed\n\n`);
+      this.location.href = "/user";
+    } else {
+      log(`Settings Error`);
+    }
+  };
+
   /* Click Handlers */
 
   // Account Link
+  const handleAccount = async () => {
+    const form = await Swal.fire({
+      title: "Preferences",
+      icon: "info",
+      showConfirmButton: true,
+      confirmButtonText: "Submit",
+      showCancelButton: true,
+      cancelButtonText: "Cancel",
+      allowEscapeKey: true,
+      allowEnterKey: true,
+
+      html: `
+  <form id="settings-form">
+    <div class="input-group mb-3">
+      <div class="input-group-text">
+        <input class="form-check-input mt-0" id="asmsnots" name="smsnots" ${
+          document.querySelector("#enablesmsnots").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Enable SMS Notifications">
+      </div>
+      <input type="text" class="form-control" aria-label="Enable SMS Notifications" value="Enable SMS Notifications" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-text">
+        <input class="form-check-input mt-0" id="aemailnots" name="emailnots" ${
+          document.querySelector("#enableemailnots").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Enable Email Notifications">
+      </div>
+      <input type="text" class="form-control" aria-label="Enable Email Notifications" value="Enable Email Notifications" readonly>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="input-group-text">
+        <input class="form-check-input mt-0" id="permvis" name="permvis" ${
+          document.querySelector("#permvisible").value == "true"
+            ? "checked"
+            : ""
+        } type="checkbox" value="" aria-label="Stay Visible">
+      </div>
+      <input type="text" class="form-control" aria-label="Stay Visible" value="Stay Visible" readonly>
+    </div>
+
+
+  </form>
+  `,
+      focusConfirm: true,
+      preConfirm: () => {
+        return [
+          document.querySelector("#asmsnots").value,
+          document.querySelector("#aemailnots").value,
+          document.querySelector("#permvis").value,
+        ];
+      },
+    })
+      .then((results) => {
+        log(`Results\t${stringify(results)}\n\n`);
+        const { isConfirmed } = results;
+        if (isConfirmed) {
+          log(`Confirmed`);
+          const settingsForm = document.querySelector("#settings-form");
+          const token = document.querySelector("#csrf").value;
+
+          if (token) {
+            const formData = new FormData(settingsForm);
+            formData.append("csrf_token", token);
+            try {
+              fetch("/user/settings", {
+                method: "post",
+                body: formData,
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  handleAccountUpdateResults(data);
+                });
+            } catch (err) {
+              log(err);
+            }
+            log(`Submitted Signin Form\n`);
+          } else {
+            Swal.closeModal();
+          }
+        } else {
+          log(`Dismissed`);
+          Swal.closeModal();
+        }
+      })
+      .catch((err) => {
+        log(err);
+      });
+  };
+
   const accountLinkHandler = () => {
     log(`Account link clicked`);
+    handleAccount();
   };
 
   // Profile Link

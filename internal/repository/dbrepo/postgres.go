@@ -110,13 +110,13 @@ func (m *postgresDbRepo) UpdatePreferences(preferences models.Preferences) (mode
 
 	// Update user table
 	preferencesQuery := `
-		update preferences set enable_sms_nots = $1, enable_email_nots = $2, enable_public_profile = $3, updated_at = $4 where user_id = $5 returning id, user_id, enable_sms_nots, enable_email_nots, enable_public_profile, updated_at
+		update preferences set enable_sms_nots = $1, enable_email_nots = $2, permanent_visible = $3, updated_at = $4 where user_id = $5 returning id, user_id, enable_sms_nots, enable_email_nots, permanent_visible, updated_at
 	`
 
 	preferencesRows, preferencesRowsErr := m.DB.QueryContext(ctx, preferencesQuery,
 		preferences.EnableSmsNotifications,
 		preferences.EnableEmailNotifications,
-		preferences.EnablePublicProfile,
+		preferences.PermanentVisible,
 		time.Now(),
 		preferences.UserID,
 	)
@@ -127,7 +127,7 @@ func (m *postgresDbRepo) UpdatePreferences(preferences models.Preferences) (mode
 	}
 
 	for preferencesRows.Next() {
-		if err := preferencesRows.Scan(&p.ID, &p.UserID, &p.EnableSmsNotifications, &p.EnableEmailNotifications, &p.EnablePublicProfile, &p.UpdatedAt); err != nil {
+		if err := preferencesRows.Scan(&p.ID, &p.UserID, &p.EnableSmsNotifications, &p.EnableEmailNotifications, &p.PermanentVisible, &p.UpdatedAt); err != nil {
 			log.Println("preferences rows scan err ", err)
 			return p, err
 		}

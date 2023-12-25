@@ -66,11 +66,11 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if cookie != nil {
-		fmt.Println("Cooke Name:\t", cookie.Name)
+		// fmt.Println("Cooke Name:\t", cookie.Name)
 		token, isValid, err := utils.ValidateToken(cookie)
 
 		if isValid {
-			fmt.Println("Token: ", *token)
+			// fmt.Println("Token: ", *token)
 			claims := token.Claims.(*jwt.StandardClaims)
 
 			userId, _ := strconv.Atoi(claims.Issuer)
@@ -238,15 +238,16 @@ func (m *Respository) PreferencesPost(w http.ResponseWriter, r *http.Request) {
 	parsedPreferences.UserID = preferences.UserID
 
 	for key := range r.Form {
-		if key == "enable-public-profile" {
-			parsedPreferences.EnablePublicProfile = true
+		fmt.Println("Key: ", key)
+		if key == "permvis" {
+			parsedPreferences.PermanentVisible = true
 		}
 
-		if key == "enable-sms-notifications" {
+		if key == "smsnots" {
 			parsedPreferences.EnableSmsNotifications = true
 		}
 
-		if key == "enable-email-notifications" {
+		if key == "emailnots" {
 			parsedPreferences.EnableEmailNotifications = true
 		}
 
@@ -282,7 +283,6 @@ func (m *Respository) PreferencesPost(w http.ResponseWriter, r *http.Request) {
 	m.App.Session.Put(r.Context(), "preferences", updatedPreferences)
 
 	obj["ok"] = true
-
 	out, err := json.MarshalIndent(obj, "", " ")
 
 	if err != nil {
