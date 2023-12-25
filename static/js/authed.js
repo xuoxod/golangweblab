@@ -55,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Click Handlers */
 
   // Account Link
-
   const handleAccount = async () => {
     const form = await Swal.fire({
       title: "Account",
@@ -246,10 +245,12 @@ document.addEventListener("DOMContentLoaded", function () {
     handleAccount();
   };
 
+  // Profile Link
   const profileLinkHandler = () => {
     log(`Profile link clicked`);
   };
 
+  // Settings Link
   const settingsLinkHandler = () => {
     log(`Settings link clicked`);
   };
