@@ -9,8 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const indexProfileLink = document.querySelector("#index-profile");
   const indexSettingsLink = document.querySelector("#index-settings");
 
-  /* Form submission results handlers */
-  const handleAccountUpdateResults = (data) => {
+  /* Profile form submission results handlers */
+  const handleProfileUpdateResults = (data) => {
     if (data["ok"]) {
       this.location.href = "/user";
     } else {
@@ -55,19 +55,24 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Click Handlers */
 
   // Account Link
-  const handleAccount = async () => {
+  const accountLinkHandler = () => {
+    log(`Account link clicked`);
+  };
+
+  // Profile Link
+  const handleProfile = async () => {
     const form = await Swal.fire({
-      title: "Account",
+      title: "Profile",
       icon: "info",
       showConfirmButton: true,
-      confirmButtonText: "Confirm",
+      confirmButtonText: "Submit",
       showCancelButton: true,
       cancelButtonText: "Cancel",
       allowEscapeKey: true,
       allowEnterKey: true,
 
       html: `
-  <form id="account-form">
+  <form id="profile-form">
     <div class="input-group">
       <label class="input-group-text">
         <strong>
@@ -207,12 +212,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const { isConfirmed } = results;
         if (isConfirmed) {
           log(`Confirmed`);
-          const signinForm = document.querySelector("#account-form");
+          const profileForm = document.querySelector("#profile-form");
           const email = document.querySelector("#email").value;
           const token = document.querySelector("#csrf").value;
 
           if (email && token) {
-            const formData = new FormData(signinForm);
+            const formData = new FormData(profileForm);
             formData.append("csrf_token", token);
             try {
               fetch("/user", {
@@ -221,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
               })
                 .then((response) => response.json())
                 .then((data) => {
-                  handleAccountUpdateResults(data);
+                  handleProfileUpdateResults(data);
                 });
             } catch (err) {
               log(err);
@@ -240,14 +245,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   };
 
-  const accountLinkHandler = () => {
-    log(`Account link clicked`);
-    handleAccount();
-  };
-
-  // Profile Link
   const profileLinkHandler = () => {
     log(`Profile link clicked`);
+    handleProfile();
   };
 
   // Settings Link
