@@ -17,7 +17,6 @@ document.addEventListener("DOMContentLoaded", function () {
       // notify(data["type"], data["msg"]);
       const type = "error";
       const msg = [];
-      const form = data["form"];
 
       if (data["email"]) {
         msg.push({ title: "email", message: data["email"] });
@@ -49,7 +48,6 @@ document.addEventListener("DOMContentLoaded", function () {
       options.type = "error";
       options.text = errors;
       options.stay = true;
-
       notie.alert(options);
     }
   };
