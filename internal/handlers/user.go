@@ -10,6 +10,7 @@ import (
 
 	// "github.com/golang-jwt/jwt"
 	"github.com/dgrijalva/jwt-go"
+	"github.com/justinas/nosurf"
 	"github.com/xuoxod/weblab/internal/forms"
 	"github.com/xuoxod/weblab/internal/helpers"
 	"github.com/xuoxod/weblab/internal/models"
@@ -55,6 +56,7 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 	data["preferences"] = preferences
 	data["isAuthenticated"] = helpers.IsAuthenticated(r)
 	data["title"] = "Dashboard"
+	data["csrf_token"] = nosurf.Token(r)
 
 	cookie, cookieErr := r.Cookie("deezCookies")
 
@@ -125,7 +127,6 @@ func (m *Respository) ProfilePost(w http.ResponseWriter, r *http.Request) {
 	// form validation
 	form := forms.New(r.PostForm)
 	form.IsEmail("email")
-	form.IsUrl("iurl")
 	form.Required("fname", "lname", "email", "phone")
 
 	obj := make(map[string]interface{})
@@ -133,7 +134,6 @@ func (m *Respository) ProfilePost(w http.ResponseWriter, r *http.Request) {
 	if !form.Valid() {
 		fmt.Println("Form Errors: ", form.Errors)
 		obj["profileform"] = parsedProfile
-		obj["userform"] = parsedUser
 		obj["ok"] = false
 
 		if form.Errors.Get("email") != "" {
@@ -171,6 +171,7 @@ func (m *Respository) ProfilePost(w http.ResponseWriter, r *http.Request) {
 		}
 
 		log.Printf("Response Writer's returned integer: %d\n", num)
+		return
 	} else {
 		// Update user and their profile then return it
 		updatedUser, updatedProfile, err := m.DB.UpdateUser(parsedUser, parsedProfile)
@@ -203,6 +204,7 @@ func (m *Respository) ProfilePost(w http.ResponseWriter, r *http.Request) {
 		}
 
 		log.Printf("Response Writer's returned integer: %d\n", num)
+		return
 	}
 }
 

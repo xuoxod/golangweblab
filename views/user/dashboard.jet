@@ -24,9 +24,22 @@
             <input type="hidden" id="fname" value="{{.user.FirstName}}">
             <input type="hidden" id="lname" value="{{.user.LastName}}">
             <input type="hidden" id="email" value="{{.user.Email}}">
+            <input type="hidden" id="phone" value="{{.user.Phone}}">
+            <input type="hidden" id="phoneverified" value="{{.user.PhoneVerified}}">
+            <input type="hidden" id="emailverified" value="{{.user.EmailVerified}}">
+            <input type="hidden" id="uname" value="{{.profile.UserName}}">
+            <input type="hidden" id="image" value="{{.profile.Image}}">
+            <input type="hidden" id="address" value="{{.profile.Address}}">
+            <input type="hidden" id="city" value="{{.profile.City}}">
+            <input type="hidden" id="state" value="{{.profile.State}}">
+            <input type="hidden" id="zipcode" value="{{.profile.Zipcode}}">
+            <input type="hidden" id="enablepublicprofile" value="{{.preferences.EnablePublicProfile}}">
+            <input type="hidden" id="enablesmsnots" value="{{.preferences.EnableSmsNotifications}}">
+            <input type="hidden" id="enableemailnots" value="{{.preferences.EnableEmailNotifications}}">
             <input type="hidden" id="visible" value="{{.preferences.Visible}}">
+            <input type="hidden" id="permvisible" value="{{.preferences.PermanentVisible}}">
             <input type="hidden" id="remote-address">
-            <input type="hidden" id="perm-visible" value="{{.preferences.PermanentVisible}}">
+            <input type="hidden" id="csrf" value="{{.csrf_token}}">
 
             <div class="col-md-10 col-sm-12">
                 <div class="container-fluid rounded">

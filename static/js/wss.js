@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const lname = document.querySelector("#lname").value;
       const email = document.querySelector("#email").value;
       const visible = document.querySelector("#visible").value;
-      const permvisible = document.querySelector("#perm-visible").value;
+      const permvisible = document.querySelector("#permvisible").value;
       const jsonData = {};
       jsonData.action = action;
       jsonData.fname = fname;
