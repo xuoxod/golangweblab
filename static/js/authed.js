@@ -65,81 +65,9 @@ document.addEventListener("DOMContentLoaded", function () {
   /* Click Handlers */
 
   // Account Link
-  const handleAccount = async () => {
-    const form = await Swal.fire({
-      title: "Account Status",
-      icon: "info",
-      showConfirmButton: false,
-      confirmButtonText: "Submit",
-      showCancelButton: false,
-      cancelButtonText: "Cancel",
-      allowEscapeKey: true,
-      allowEnterKey: false,
-
-      html: `
-  <form id="settings-form">     
-     ${
-       document.querySelector("#phoneverified").value == "false"
-         ? '<div class="input-group mb-3"><input type="text" class="form-control" value="Phone is not verified" readonly><span class="input-group-text"><button id="btnVerifyPhone" class="btn btn-outline-primary" type="button">Verify Phone</button></span>'
-         : '<div class="input-group mb-3"><input type="text" class="form-control" value="Phone verified" readonly>'
-     }
-
-     ${
-       document.querySelector("#emailverified").value == "false"
-         ? '<div class="input-group mt-3"><input id="inputEmailVerify" type="text" class="form-control" value="Email is not verified" readonly><span class="input-group-text"><button id="btnEmailVerify" class="btn btn-outline-primary" type="button">Verify Email</button></span>'
-         : '<div class="input-group mt-3"><input type="text" class="form-control" value="Email verified" readonly>'
-     }
-  </form>
-  `,
-      focusConfirm: true,
-      preConfirm: () => {
-        return [
-          document.querySelector("#asmsnots").value,
-          document.querySelector("#aemailnots").value,
-          document.querySelector("#permvis").value,
-        ];
-      },
-    })
-      .then((results) => {
-        log(`Results\t${stringify(results)}\n\n`);
-        const { isConfirmed } = results;
-        if (isConfirmed) {
-          log(`Confirmed`);
-          const settingsForm = document.querySelector("#settings-form");
-          const token = document.querySelector("#csrf").value;
-
-          if (token) {
-            const formData = new FormData(settingsForm);
-            formData.append("csrf_token", token);
-            try {
-              fetch("/user/settings", {
-                method: "post",
-                body: formData,
-              })
-                .then((response) => response.json())
-                .then((data) => {
-                  handlePreferencesUpdateResults(data);
-                });
-            } catch (err) {
-              log(err);
-            }
-            log(`Submitted Signin Form\n`);
-          } else {
-            Swal.closeModal();
-          }
-        } else {
-          log(`Dismissed`);
-          Swal.closeModal();
-        }
-      })
-      .catch((err) => {
-        log(err);
-      });
-  };
-
   const accountLinkHandler = () => {
     log(`Account link clicked`);
-    handleAccount();
+    this.location.href = "/user/account";
   };
 
   // Profile Link

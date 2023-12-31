@@ -1,5 +1,56 @@
+{{extends "../layouts/layout.jet"}}
 {{block documentBody()}}
 <div class="row">
-    <h3>Account</h3>
+    <div class="col-12">
+        <input type="hidden" id="phoneverified" value="{{.user.PhoneVerified}}">
+        <input type="hidden" id="emailverified" value="{{.user.EmailVerified}}">
+        <input type="hidden" id="fname" value="{{.user.FirstName}}">
+        <input type="hidden" id="lname" value="{{.user.LastName}}">
+        <input type="hidden" id="email" value="{{.user.Email}}">
+        <input type="hidden" id="phone" value="{{.user.Phone}}">
+        <input type="hidden" id="uname" value="{{.profile.UserName}}">
+        <input type="hidden" id="image" value="{{.profile.Image}}">
+        <input type="hidden" id="address" value="{{.profile.Address}}">
+        <input type="hidden" id="city" value="{{.profile.City}}">
+        <input type="hidden" id="state" value="{{.profile.State}}">
+        <input type="hidden" id="zipcode" value="{{.profile.Zipcode}}">
+        <input type="hidden" id="enablepublicprofile" value="{{.preferences.EnablePublicProfile}}">
+        <input type="hidden" id="enablesmsnots" value="{{.preferences.EnableSmsNotifications}}">
+        <input type="hidden" id="enableemailnots" value="{{.preferences.EnableEmailNotifications}}">
+        <input type="hidden" id="visible" value="{{.preferences.Visible}}">
+        <input type="hidden" id="permvisible" value="{{.preferences.PermanentVisible}}">
+        <input type="hidden" id="remote-address">
+    </div>
+
+    <div class="col-md-6 col-sm-12 mb-2">
+        {{if !.user.EmailVerified}}
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="bi bi-envelope-fill text-primary fs-3"></i>
+            </span>
+            <input type="text" value="Email is not verified" class="form-control fw-bold text-primary-emphasis"
+                readonly>
+            <span class="input-group-text">
+                <button type="button" class="btn btn-outline-primary">Verify</button>
+            </span>
+        </div>
+        {{end}}
+    </div>
+    <div class="col-md-6 col-sm-12 mb-2">
+        {{if !.user.PhoneVerified}}
+        <div class="input-group">
+            <span class="input-group-text">
+                <i class="bi bi-telephone-fill text-primary fs-3"></i>
+            </span>
+            <input type="text" value="Phone is not verified" class="form-control fw-bold text-primary-emphasis"
+                readonly>
+            <span class="input-group-text">
+                <button type="button" class="btn btn-outline-primary">Verify</button>
+            </span>
+        </div>
+        {{end}}
+    </div>
+
+</div>
 </div>
 {{end}}

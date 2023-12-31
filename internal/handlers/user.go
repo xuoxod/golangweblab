@@ -95,6 +95,53 @@ func (m *Respository) Dashboard(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// @desc        User account
+// @route       GET /user/account
+// @access      Private
+func (m *Respository) Account(w http.ResponseWriter, r *http.Request) {
+	user, userOk := m.App.Session.Get(r.Context(), "user_id").(models.User)
+	profile, profileOk := m.App.Session.Get(r.Context(), "profile").(models.Profile)
+	preferences, preferencesOk := m.App.Session.Get(r.Context(), "preferences").(models.Preferences)
+
+	if !userOk {
+		log.Println("Cannot get user_id data from session")
+		m.App.ErrorLog.Println("Can't get user_id data from the session")
+		m.App.Session.Put(r.Context(), "error", "Can't get user_id data from session")
+		http.Redirect(w, r, "/user", http.StatusTemporaryRedirect)
+		return
+	}
+
+	if !profileOk {
+		log.Println("Cannot get profile data from session")
+		m.App.ErrorLog.Println("Can't get profile data from the session")
+		m.App.Session.Put(r.Context(), "error", "Can't get profile data from session")
+		http.Redirect(w, r, "/user", http.StatusTemporaryRedirect)
+		return
+	}
+
+	if !preferencesOk {
+		log.Println("Cannot get preferences data from session")
+		m.App.ErrorLog.Println("Can't get preferences data from the session")
+		m.App.Session.Put(r.Context(), "error", "Can't get preferences data from session")
+		http.Redirect(w, r, "/user", http.StatusTemporaryRedirect)
+		return
+	}
+
+	data := make(map[string]interface{})
+	data["user"] = user
+	data["profile"] = profile
+	data["preferences"] = preferences
+	data["isAuthenticated"] = helpers.IsAuthenticated(r)
+	data["title"] = "Account"
+	data["csrf_token"] = nosurf.Token(r)
+
+	err := render.Render(w, r, "user/account.jet", nil, data)
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+}
+
 // @desc        Update profile
 // @route       POST /user/profile
 // @access      Private

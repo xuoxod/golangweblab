@@ -215,8 +215,10 @@ function handleUserList(data) {
             userObj.busy = busy;
             addClient(userObj);
           } else {
-            document.querySelector("#visible-input").checked = false;
-            removeClient(email);
+            if (document.querySelector("#visible-input")) {
+              document.querySelector("#visible-input").checked = false;
+              removeClient(email);
+            }
           }
         } else {
           if (visible == "true") {
@@ -377,7 +379,9 @@ function handleOnlineUserCount(count) {
       break;
   }
 
-  document.querySelector("#user-count-input").innerText = `${suf}`;
+  if (document.querySelector("#user-count-input")) {
+    document.querySelector("#user-count-input").innerText = `${suf}`;
+  }
 }
 
 function sendMessage(jsonData = {}) {
@@ -403,15 +407,17 @@ function displayTranscripts() {
   }
 }
 
-document.querySelector("#visible-input").addEventListener("click", (e) => {
-  const jsonData = {};
-  if (e.target.checked) {
-    jsonData.action = "unhide";
-  } else {
-    jsonData.action = "hide";
-  }
-  sendMessage(jsonData);
-});
+if (document.querySelector("#visible-input")) {
+  document.querySelector("#visible-input").addEventListener("click", (e) => {
+    const jsonData = {};
+    if (e.target.checked) {
+      jsonData.action = "unhide";
+    } else {
+      jsonData.action = "hide";
+    }
+    sendMessage(jsonData);
+  });
+}
 
 function initActivity() {
   const activityParent = document.querySelector("#activity-parent");

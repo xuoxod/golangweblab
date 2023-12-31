@@ -21,6 +21,10 @@
     <link rel="icon" href="/static/favicon-settings.ico" />
     {{ end }}
 
+    {{if .title == "Account"}}
+    <link rel="icon" href="/static/favicon-account.ico" />
+    {{ end }}
+
     {{if .title == "Home"}}
     <link rel="icon" type="image/x-icon" href="/static/favicon-home.ico" />
     {{ end }}
@@ -51,7 +55,7 @@
     {{include "partials/_unauthmenu.jet"}}
     {{ end }}
 
-    <div class="container-fluid rounded m-3">
+    <div class="container-fluid rounded m-3 d-grid h-gap-3 justify-content-center">
         {{block documentBody()}}{{ end }}
     </div>
 
