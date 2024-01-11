@@ -48,14 +48,14 @@
                             <button class="accordion-button collapsed rounded text-primary-emphasis" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseZero" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
-                                <strong>View</strong>
+                                <strong>Activity</strong>
                             </button>
                         </h2>
                         <div id="flush-collapseZero" class="accordion-collapse collapse"
                             aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
 
-                                <div class="container-fluid d-md-flex d-sm-grid justify-content-evenly gap-3">
+                                <div class="container d-md-flex d-sm-grid justify-content-evenly gap-3 mb-2">
                                     <div class="row d-flex justify-content-center border rounded">
                                         <div class="col-auto">
                                             <span id="user-count-input" type="text"
@@ -76,23 +76,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingOne">
-                            <button class="accordion-button collapsed rounded activity-button" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false"
-                                aria-controls="flush-collapseOne">
-                                <strong>Activity</strong>
-                            </button>
-                        </h2>
-                        <div id="flush-collapseOne" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
                                 <div id="activity-parent"
-                                    class="container-fluid border border-light-subtle rounded bg-body-tertiary">
+                                    class="container border border-light-subtle rounded bg-body-tertiary">
 
                                 </div>
                             </div>
