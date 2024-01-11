@@ -375,11 +375,16 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // Delete Account Button
+  const deleteAccount = () => {
+    const userId = this.querySelector("#user-id").value;
+    log(`Deleting account ID:\t${userId}\n`);
+  };
+
   const deleteAccountHandler = () => {
     confirm(
       "You are about to PERMANENTLY DELETE your account. Once this done, it can not be undone. Are You Sure You Want To Do This?",
       () => {
-        log(`Deleted your account`);
+        deleteAccount();
       },
       () => {
         log(`Cancelled account deletion`);

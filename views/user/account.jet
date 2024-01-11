@@ -4,7 +4,7 @@
     <div class="col-12">
         <input type="hidden" id="phoneverified" value="{{.user.PhoneVerified}}">
         <input type="hidden" id="emailverified" value="{{.user.EmailVerified}}">
-        <input type="hidden" id="id" value="{{.user.ID}}">
+        <input type="hidden" id="user-id" value="{{.user.ID}}">
         <input type="hidden" id="fname" value="{{.user.FirstName}}">
         <input type="hidden" id="lname" value="{{.user.LastName}}">
         <input type="hidden" id="email" value="{{.user.Email}}">
