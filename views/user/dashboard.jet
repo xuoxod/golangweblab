@@ -19,6 +19,7 @@
             </li>
         </ul>
     </div>
+    <input type="hidden" id="id" value="{{.user.ID}}">
     <input type="hidden" id="fname" value="{{.user.FirstName}}">
     <input type="hidden" id="lname" value="{{.user.LastName}}">
     <input type="hidden" id="email" value="{{.user.Email}}">

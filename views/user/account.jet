@@ -4,6 +4,7 @@
     <div class="col-12">
         <input type="hidden" id="phoneverified" value="{{.user.PhoneVerified}}">
         <input type="hidden" id="emailverified" value="{{.user.EmailVerified}}">
+        <input type="hidden" id="id" value="{{.user.ID}}">
         <input type="hidden" id="fname" value="{{.user.FirstName}}">
         <input type="hidden" id="lname" value="{{.user.LastName}}">
         <input type="hidden" id="email" value="{{.user.Email}}">
@@ -54,10 +55,29 @@
     {{end}}
 
     {{if .user.PhoneVerified && .user.EmailVerified}}
-    <div class="col-auto">
+    <div class="col-12">
         <p>
             Subscriptions
         </p>
+    </div>
+
+    <div class="col-12 rounded">
+        <div class="container">
+            <div class="row">
+                <form action="#">
+                    <div class="input-group">
+                        <div class="input-group-text bg-transparent border-danger">
+                            <i class="bi bi-trash-fill text-danger"></i>
+                        </div>
+
+                        <button id="delete-account"
+                            class="form-control btn btn-danger rounded-top-right rounded-bottom-left pr-2">
+                            Delete Account
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     {{end}}
 
