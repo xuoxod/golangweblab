@@ -377,7 +377,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Delete Account Button
   const deleteAccountHandler = () => {
     confirm(
-      "You are about to permantly delete your account, once this done it can not be undone. Are you sure you want to do this?",
+      "You are about to PERMANENTLY DELETE your account. Once this done, it can not be undone. Are You Sure You Want To Do This?",
       null,
       null,
       () => {
