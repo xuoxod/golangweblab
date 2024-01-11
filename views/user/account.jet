@@ -54,7 +54,7 @@
     </div>
     {{end}}
 
-    {{if .user.PhoneVerified && .user.EmailVerified}}
+    {{if !.user.PhoneVerified && !.user.EmailVerified}}
     <div class="col-12">
         <p>
             Subscriptions

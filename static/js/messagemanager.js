@@ -9,6 +9,47 @@ const notify = (type, msg, time = 3) => {
   });
 };
 
+const confirm = (
+  text,
+  submitText = "Yes",
+  cancelText = "No",
+  submitHandler,
+  cancelHandler
+) => {
+  if (
+    null != submitHandler &&
+    null != cancelHandler &&
+    typeof submitHandler == "function" &&
+    typeof cancelHandler == "function"
+  ) {
+    if (null == text) {
+      text = "Are you sure you want to take this action?";
+    }
+
+    if (null == submitText) {
+      submitText = "Yes";
+    }
+
+    if (null == cancelText) {
+      cancelText = "No";
+    }
+
+    notie.confirm({
+      text: text,
+      cancelCallback: function () {
+        // notie.alert({ type: 3, text: "Aw, why not? :(", time: 2 });
+        cancelHandler();
+      },
+      submitCallback: function () {
+        // notie.alert({ type: 1, text: "Good choice! :D", time: 2 });
+        submitHandler();
+      },
+    });
+  } else {
+    log(`Nothing to see here folks!!`);
+  }
+};
+
 // modal display custom modal
 // title string: modal's title
 // text string: the message to user

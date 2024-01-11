@@ -46,6 +46,12 @@ const addOffFocusHandler = (theElement, handler) => {
   }
 };
 
+const addMouseOverHandler = (theElement, handler) => {
+  if (null != theElement && typeof handler == "function") {
+    addHandler(theElement, "mouseover", handler);
+  }
+};
+
 const appendChild = (parent, child) => {
   if (null != parent && null != child) {
     parent.appendChild(child);

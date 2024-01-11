@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const indexAccountLink = document.querySelector("#index-account");
   const indexProfileLink = document.querySelector("#index-profile");
   const indexSettingsLink = document.querySelector("#index-settings");
+  const deleteAccountButton = document.querySelector("#delete-account");
 
   /* Profile form submission results handler */
   const handleProfileUpdateResults = (data) => {
@@ -373,6 +374,21 @@ document.addEventListener("DOMContentLoaded", function () {
     handleSettings();
   };
 
+  // Delete Account Button
+  const deleteAccountHandler = () => {
+    confirm(
+      "You are about to permantly delete your account, once this done it can not be undone. Are you sure you want to do this?",
+      null,
+      null,
+      () => {
+        log(`Deleted your account`);
+      },
+      () => {
+        log(`Cancelled account deletion`);
+      }
+    );
+  };
+
   if (accountLink && profileLink && settingsLink) {
     addClickHandler(accountLink, accountLinkHandler);
 
@@ -391,6 +407,8 @@ document.addEventListener("DOMContentLoaded", function () {
     addClickHandler(indexProfileLink, profileLinkHandler);
 
     addClickHandler(indexSettingsLink, settingsLinkHandler);
+
+    addClickHandler(deleteAccountButton, deleteAccountHandler);
   }
 });
 
