@@ -9,13 +9,7 @@ const notify = (type, msg, time = 3) => {
   });
 };
 
-const confirm = (
-  text,
-  submitText = "Yes",
-  cancelText = "No",
-  submitHandler,
-  cancelHandler
-) => {
+const confirm = (text, submitHandler, cancelHandler) => {
   if (
     null != submitHandler &&
     null != cancelHandler &&
@@ -24,14 +18,6 @@ const confirm = (
   ) {
     if (null == text) {
       text = "Are you sure you want to take this action?";
-    }
-
-    if (null == submitText) {
-      submitText = "Yes";
-    }
-
-    if (null == cancelText) {
-      cancelText = "No";
     }
 
     notie.confirm({
