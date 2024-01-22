@@ -345,7 +345,7 @@ function handleOnlineUsers() {
             });
         });
       } else {
-        log(`Remote Address:\t${client.ip}\n`);
+        // log(`Remote Address:\t${client.ip}\n`);
         document.querySelector("#remote-address").value = client.ip;
       }
     }
