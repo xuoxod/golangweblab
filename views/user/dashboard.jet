@@ -5,17 +5,17 @@
     <div class="col-md-2 col-sm-12">
         <ul class="w3-ul index-menu">
             <li>
-                <a id="index-account" href="#" class="w3-bar-item w3-button w3-round-large w3-hover-blue">Account</a>
+                <a id="index-account" href="#" class="w3-bar-item w3-button w3-round-large w3-hover-blue text-primary-emphasis">Account</a>
             </li>
 
             <li>
                 <a id="index-profile" href="#"
-                    class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small profile-link">Profile</a>
+                    class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small profile-link text-primary-emphasis">Profile</a>
             </li>
 
             <li>
                 <a id="index-settings" href="#"
-                    class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small settings-link">Settings</a>
+                    class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small settings-link text-primary-emphasis">Settings</a>
             </li>
         </ul>
     </div>
@@ -45,7 +45,7 @@
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header text-primary-emphasis" id="flush-headingZero">
-                            <button class="accordion-button collapsed rounded text-primary-emphasis" type="button"
+                            <button class="accordion-button collapsed rounded text-primary-emphasis text-primary-emphasis" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseZero" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
                                 <strong>Activity</strong>
@@ -59,7 +59,7 @@
                                     <div class="row d-flex justify-content-center border rounded">
                                         <div class="col-auto">
                                             <span id="user-count-input" type="text"
-                                                class="form-control border-0 bg-white fw-bold fs-3 m-0 p-0 w-auto"></span>
+                                                class="form-control border-0 bg-white fw-bold fs-3 m-0 p-0 w-auto text-primary-emphasis"></span>
                                         </div>
                                     </div>
 
@@ -69,7 +69,7 @@
                                                 <input id="visible-input" class="form-check-input fw-bold"
                                                     type="checkbox" role="switch" id="flexSwitchCheckDefault">
 
-                                                <p id="visible-label" class="form-check-label fw-bold m-0">
+                                                <p id="visible-label" class="form-check-label fw-bold m-0 text-primary-emphasis">
                                                     Visible
                                                 </p>
                                             </div>
@@ -86,7 +86,7 @@
 
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingTwo">
-                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed rounded text-primary-emphasis" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseTwo" aria-expanded="false"
                                 aria-controls="flush-collapseTwo">
                                 <strong>Subscriptions</strong>
@@ -106,7 +106,7 @@
 
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingThree">
-                            <button class="accordion-button collapsed rounded" type="button" data-bs-toggle="collapse"
+                            <button class="accordion-button collapsed rounded text-primary-emphasis" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseThree" aria-expanded="false"
                                 aria-controls="flush-collapseThree">
                                 <strong>Services</strong>

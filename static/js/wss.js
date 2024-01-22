@@ -358,7 +358,7 @@ function handleOnlineUsers() {
     addAttribute(
       pDef,
       "class",
-      "text-center fw-bold fs-3 text-primary-emphasis my-0 p-0"
+      "text-center fw-bold fs-2 text-primary-emphasis my-0 p-0"
     );
     appendChild(hstack, pDef);
 
