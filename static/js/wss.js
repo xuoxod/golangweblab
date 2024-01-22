@@ -251,7 +251,7 @@ function handleOnlineUsers() {
 
     for (const c in clients) {
       const client = clients[c];
-      log(`Client: ${stringify(client)}\n`);
+      // log(`Client: ${stringify(client)}\n`);
 
       if (client.email != document.querySelector("#email").value) {
         const div = document.createElement("div");
@@ -409,13 +409,16 @@ function displayTranscripts() {
 
 if (document.querySelector("#visible-input")) {
   document.querySelector("#visible-input").addEventListener("click", (e) => {
-    const jsonData = {};
+    let jsonData = {};
     if (e.target.checked) {
+      log(`You are visible`);
       jsonData.action = "unhide";
     } else {
+      log(`You are invisible`);
       jsonData.action = "hide";
     }
     sendMessage(jsonData);
+    jsonData = {};
   });
 }
 
