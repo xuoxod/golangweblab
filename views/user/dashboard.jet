@@ -14,7 +14,12 @@
             </li>
 
             <li>
-                <a id="index-settings" href="#"
+                <a id="index-preferences" href="#"
+                    class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small preferences-link text-primary-emphasis">Preferences</a>
+            </li>
+
+            <li>
+                <a id="index-settings" href="/user/settings"
                     class="w3-bar-item w3-button w3-round-large w3-hover-blue w3-hide-small settings-link text-primary-emphasis">Settings</a>
             </li>
         </ul>

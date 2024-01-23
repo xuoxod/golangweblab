@@ -90,10 +90,14 @@
     {{ if (isset(.isAuthenticated)) != true }}
     <script src="/static/js/unauthed.js"></script>
     {{else}}
+    {{if .title == "Settings"}}
+
+    {{else}}
     <script src="/static/js/authed.js"></script>
     <script src="/static/js/settings.js"></script>
     <script src="/static/js/verify.js"></script>
     <script src="/static/js/wss.js"></script>
+    {{end}}
     {{ end }}
 </body>
 

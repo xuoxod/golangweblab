@@ -39,11 +39,12 @@ func routes() http.Handler {
 		mux.Post("/", handlers.Repo.ProfilePost)
 		mux.Get("/signout", handlers.Repo.SignOut)
 		mux.Post("/profile", handlers.Repo.ProfilePost)
-		mux.Post("/settings", handlers.Repo.PreferencesPost)
+		mux.Post("/preferences", handlers.Repo.PreferencesPost)
 		mux.Get("/email/verify", handlers.Repo.VerifyEmail)
 		mux.Post("/email/verify", handlers.Repo.VerifyEmailPost)
 		mux.Get("/phone/verify", handlers.Repo.VerifyPhone)
 		mux.Post("/phone/verify", handlers.Repo.VerifyPhonePost)
+		mux.Get("/settings", handlers.Repo.Settings)
 	})
 
 	fileserver := http.FileServer(http.Dir("./static/"))

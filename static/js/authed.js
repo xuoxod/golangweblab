@@ -1,13 +1,15 @@
 document.addEventListener("DOMContentLoaded", function () {
   const accountLink = document.querySelector(".account-link");
   const profileLink = document.querySelector(".profile-link");
-  const settingsLink = document.querySelector(".settings-link");
+  const preferencesLink = document.querySelector(".preferences-link");
   const mobileAccountLink = document.querySelector(".mobile-account-link");
   const mobileProfileLink = document.querySelector(".mobile-profile-link");
-  const mobileSettingsLink = document.querySelector(".mobile-settings-link");
+  const mobilePreferencesLink = document.querySelector(
+    ".mobile-preferences-link"
+  );
   const indexAccountLink = document.querySelector("#index-account");
   const indexProfileLink = document.querySelector("#index-profile");
-  const indexSettingsLink = document.querySelector("#index-settings");
+  const indexPreferencesLink = document.querySelector("#index-preferences");
   const deleteAccountButton = document.querySelector("#delete-account");
 
   /* Profile form submission results handler */
@@ -263,9 +265,9 @@ document.addEventListener("DOMContentLoaded", function () {
   };
 
   // Settings Link
-  const handleSettings = async () => {
+  const handlePreferences = async () => {
     const form = await Swal.fire({
-      title: "Settings",
+      title: "Preferences",
       icon: "info",
       showConfirmButton: true,
       confirmButtonText: "Submit",
@@ -344,7 +346,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const formData = new FormData(settingsForm);
             formData.append("csrf_token", token);
             try {
-              fetch("/user/settings", {
+              fetch("/user/preferences", {
                 method: "post",
                 body: formData,
               })
@@ -369,9 +371,9 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   };
 
-  const settingsLinkHandler = () => {
+  const preferencesLinkHandler = () => {
     log(`Settings link clicked`);
-    handleSettings();
+    handlePreferences();
   };
 
   // Delete Account Button
@@ -392,24 +394,24 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   };
 
-  if (accountLink && profileLink && settingsLink) {
+  if (accountLink && profileLink && preferencesLink) {
     addClickHandler(accountLink, accountLinkHandler);
 
     addClickHandler(profileLink, profileLinkHandler);
 
-    addClickHandler(settingsLink, settingsLinkHandler);
+    addClickHandler(preferencesLink, preferencesLinkHandler);
 
     addClickHandler(mobileAccountLink, accountLinkHandler);
 
     addClickHandler(mobileProfileLink, profileLinkHandler);
 
-    addClickHandler(mobileSettingsLink, settingsLinkHandler);
+    addClickHandler(mobilePreferencesLink, preferencesLinkHandler);
 
     addClickHandler(indexAccountLink, accountLinkHandler);
 
     addClickHandler(indexProfileLink, profileLinkHandler);
 
-    addClickHandler(indexSettingsLink, settingsLinkHandler);
+    addClickHandler(indexPreferencesLink, preferencesLinkHandler);
 
     addClickHandler(deleteAccountButton, deleteAccountHandler);
   }
