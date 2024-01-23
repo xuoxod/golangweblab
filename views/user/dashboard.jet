@@ -50,7 +50,7 @@
                 <div class="accordion accordion-flush" id="accordionFlushExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header text-primary-emphasis" id="flush-headingZero">
-                            <button class="accordion-button collapsed rounded text-primary-emphasis text-primary-emphasis" type="button"
+                            <button class="accordion-button collapsed rounded text-primary-emphasis" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#flush-collapseZero" aria-expanded="false"
                                 aria-controls="flush-collapseOne">
                                 <strong>Activity</strong>

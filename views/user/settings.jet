@@ -1,8 +1,94 @@
 {{extends "../layouts/layout.jet"}}
 {{block documentBody()}}
-<div class="row">
-    <div class="col-12">
-        <h3 class="text-center">Settings</h3>
+<div class="container gap-3">
+    <div class="row d-grid justify-content-lg-start align-items-center mb-5 border border-light rounded">
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center align-content-center">
+                        <div class="image">
+                            <i class="bi bi-image-alt fs-1 text-primary-emphasis"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="input-group input-group-lg">
+                            <input type="file" name="image" class="form-control fw-bold text-primary-emphasis">
+                            <span class="input-group-text">
+                                <button class="btn  rounded btn-outline-primary">
+                                    Upload Picture
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-grid justify-content-start align-items-center mb-5 border border-light rounded">
+        <div class="col-12">
+            <form action="#">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group input-group-lg">
+                                <span class="input-group-text">
+                                    <i class="bi bi-incognito fs-1 text-primary-emphasis"></i>
+                                </span>
+                                <input type="password" class="form-control fw-bold text-primary-emphasis"
+                                    value="********" autocomplete="new-password">
+                                <span class="input-group-text">
+                                    <button class="btn btn-outline-primary">Change Password</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row d-grid justify-content-start align-items-center mb-5 border border-light rounded">
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope-fill fs-1 text-primary-emphasis"></i>
+                            </span>
+                            <input type="email" value="{{.user.Email}}"
+                                class="form-control fw-bold text-primary-emphasis">
+                            <span class="input-group-text">
+                                <button class="btn btn-outline-primary">Change Email</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row d-grid justify-content-start align-items-center border border-light rounded">
+        <div class="col-12">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text">
+                                <i class="bi bi-telephone-fill fs-1 text-primary-emphasis"></i>
+                            </span>
+                            <input type="email" value="{{.user.Phone}}"
+                                class="form-control fw-bold text-primary-emphasis">
+                            <span class="input-group-text">
+                                <button class="btn btn-outline-primary">Change Phone Number</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {{end}}

@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <input type="email" id="aemail" name="email" value=${
         document.querySelector("#email").value
       } placeholder="Enter email address" autocomplete="false"
-        class="form-control" required>
+        class="form-control" required readonly>
     </div>
 
     <div class="input-group">
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
       <input type="tel" id="aphone" name="phone" value=${
         document.querySelector("#phone").value
       } placeholder="Enter phone number" autocomplete="false"
-        class="form-control" required>
+        class="form-control" required readonly>
     </div>
 
     <div class="input-group">
