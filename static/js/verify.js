@@ -68,22 +68,28 @@ const verifyPhoneButtonHandler = () => {
 
   label.innerText = `Didn't get the code?`;
   button.innerText = `Send a new one`;
+  button.addEventListener("click", () => {
+    row.remove();
+    verifyPhoneButtonHandler();
+  });
   verifyPhone();
 };
 
 function verifyPhone() {
-  log(`Requested phone verification`);
+  if (phoneContainer) {
+    log(`Requested phone verification`);
 
-  const url = "/user/phone/verify";
+    const url = "/user/phone/verify";
 
-  try {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        phoneVerificationResponse(data);
-      });
-  } catch (err) {
-    log(err);
+    try {
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          phoneVerificationResponse(data);
+        });
+    } catch (err) {
+      log(err);
+    }
   }
 }
 
@@ -166,26 +172,33 @@ const verifyEmailButtonHandler = () => {
 
   label.innerText = `Didn't get the code?`;
   button.innerText = `Send a new one`;
+
+  button.addEventListener("click", () => {
+    row.remove();
+    verifyEmailButtonHandler();
+  });
   verifyEmail();
 };
 
 function verifyEmail() {
-  log(`Requested email verification`);
+  if (emailContainer) {
+    log(`Requested email verification`);
 
-  const url = "/user/email/verify";
+    const url = "/user/email/verify";
 
-  try {
-    fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        emailVerificationResponse(data);
-      });
-  } catch (err) {
-    log(err);
+    try {
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          emailVerificationResponseHandler(data);
+        });
+    } catch (err) {
+      log(err);
+    }
   }
 }
 
-function emailVerificationResponse(response) {
+function emailVerificationResponseHandler(response) {
   if (response["ok"]) {
     log(`Email verification succeeded\n`);
   } else {
