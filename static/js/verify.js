@@ -85,7 +85,7 @@ function verifyPhone() {
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          phoneVerificationResponse(data);
+          phoneVerificationResponseHandler(data);
         });
     } catch (err) {
       log(err);
@@ -93,7 +93,7 @@ function verifyPhone() {
   }
 }
 
-function phoneVerificationResponse(response) {
+function phoneVerificationResponseHandler(response) {
   if (response["ok"]) {
     log(`Phone verification succeeded\n`);
   } else {
