@@ -9,7 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const changePasswordButton = document.querySelector(
     "#change-password-button"
   );
+  const changeEmailParent = document.querySelector("#change-email-parent");
+  const changeEmailDiv = document.querySelector("#change-email-div");
   const changeEmailButton = document.querySelector("#change-email-button");
+  const changePhoneParent = document.querySelector("#change-phone-parent");
+  const changePhoneDiv = document.querySelector("#change-phone-div");
+  const changePhoneButton = document.querySelector("#change-phone-button");
 
   // Values
   const password = document.querySelector("#password").value;
