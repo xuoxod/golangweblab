@@ -79,7 +79,7 @@
                             <span class="input-group-text">
                                 <i class="bi bi-telephone-fill fs-1 text-primary-emphasis"></i>
                             </span>
-                            <input type="email" value="{{.user.Phone}}"
+                            <input type="tel" value="{{.user.Phone}}"
                                 class="form-control fw-bold text-primary-emphasis">
                             <span class="input-group-text">
                                 <button class="btn btn-outline-primary">Change Phone Number</button>

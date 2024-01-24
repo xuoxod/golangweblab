@@ -93,10 +93,13 @@
     {{if .title == "Settings"}}
 
     {{else}}
-    <script src="/static/js/authed.js"></script>
+    {{if .title == "Account"}}
     <script src="/static/js/settings.js"></script>
     <script src="/static/js/verify.js"></script>
+    {{else}}
+    <script src="/static/js/authed.js"></script>
     <script src="/static/js/wss.js"></script>
+    {{end}}
     {{end}}
     {{ end }}
 </body>
