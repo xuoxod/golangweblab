@@ -13,9 +13,10 @@
 
                     <div class="col-12">
                         <div class="input-group input-group-lg">
-                            <input type="file" name="image" class="form-control fw-bold text-primary-emphasis">
+                            <input id="account-picture" type="file" name="image"
+                                class="form-control fw-bold text-primary-emphasis">
                             <span class="input-group-text">
-                                <button class="btn  rounded btn-outline-primary">
+                                <button id="upload-picture-button" class="btn rounded btn-outline-primary">
                                     Upload Picture
                                 </button>
                             </span>
@@ -31,15 +32,16 @@
             <form action="#">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12">
-                            <div class="input-group input-group-lg">
+                        <div id="change-password-parent" class="col-12">
+                            <div id="change-password-div" class="input-group input-group-lg">
                                 <span class="input-group-text">
                                     <i class="bi bi-incognito fs-1 text-primary-emphasis"></i>
                                 </span>
-                                <input type="password" class="form-control fw-bold text-primary-emphasis"
-                                    value="********" autocomplete="new-password">
+                                <input id="password" type="password" class="form-control fw-bold text-primary-emphasis"
+                                    value="{{.user.Password}}" autocomplete="new-password">
                                 <span class="input-group-text">
-                                    <button class="btn btn-outline-primary">Change Password</button>
+                                    <button id="change-password-button" class="btn btn-outline-primary">Change
+                                        Password</button>
                                 </span>
                             </div>
                         </div>
@@ -58,10 +60,10 @@
                             <span class="input-group-text">
                                 <i class="bi bi-envelope-fill fs-1 text-primary-emphasis"></i>
                             </span>
-                            <input type="email" value="{{.user.Email}}"
+                            <input id="email" type="email" value="{{.user.Email}}"
                                 class="form-control fw-bold text-primary-emphasis">
                             <span class="input-group-text">
-                                <button class="btn btn-outline-primary">Change Email</button>
+                                <button id="change-email-button" class="btn btn-outline-primary">Change Email</button>
                             </span>
                         </div>
                     </div>
@@ -79,7 +81,7 @@
                             <span class="input-group-text">
                                 <i class="bi bi-telephone-fill fs-1 text-primary-emphasis"></i>
                             </span>
-                            <input type="tel" value="{{.user.Phone}}"
+                            <input id="phone" type="tel" value="{{.user.Phone}}"
                                 class="form-control fw-bold text-primary-emphasis">
                             <span class="input-group-text">
                                 <button class="btn btn-outline-primary">Change Phone Number</button>
