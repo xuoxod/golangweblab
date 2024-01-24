@@ -40,8 +40,9 @@
                                 <input id="password" type="password" class="form-control fw-bold text-primary-emphasis"
                                     value="{{.user.Password}}" autocomplete="new-password">
                                 <span class="input-group-text">
-                                    <button id="change-password-button" class="btn btn-outline-primary">Change
-                                        Password</button>
+                                    <button id="change-password-button" class="btn btn-outline-primary">
+                                        Change Password
+                                    </button>
                                 </span>
                             </div>
                         </div>
@@ -63,7 +64,9 @@
                             <input id="email" type="email" value="{{.user.Email}}"
                                 class="form-control fw-bold text-primary-emphasis">
                             <span class="input-group-text">
-                                <button id="change-email-button" class="btn btn-outline-primary">Change Email</button>
+                                <button id="change-email-button" class="btn btn-outline-primary">
+                                    Change Email
+                                </button>
                             </span>
                         </div>
                     </div>
