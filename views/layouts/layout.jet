@@ -91,7 +91,7 @@
     <script src="/static/js/unauthed.js"></script>
     {{else}}
     {{if .title == "Settings"}}
-
+    <script src="/static/js/account.js"></script>
     {{else}}
     {{if .title == "Account"}}
     <script src="/static/js/settings.js"></script>
