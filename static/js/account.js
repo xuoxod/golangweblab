@@ -4,11 +4,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Account Picture
   const accountPicture = document.querySelector("#account-picture");
   const uploadPictureButton = document.querySelector("#upload-picture-button");
+
+  // Change Password
   const changePasswordParent = document.querySelector(
     "#change-password-parent"
   );
-
-  // Change Password
   const changePasswordDiv = document.querySelector("#change-password-div");
   const changePasswordButton = document.querySelector(
     "#change-password-button"
