@@ -18,7 +18,7 @@ func WriteToConsole(next http.Handler) http.Handler {
 		protocolMajor := r.ProtoMajor
 		protocolMinor := r.ProtoMinor
 
-		fmt.Printf("Middleware: type is %T\n", w)
+		fmt.Printf("\nMiddleware: Response Writer is %T", w)
 
 		if path == "/ws" {
 			w.Header().Set("Content", "text/plain")

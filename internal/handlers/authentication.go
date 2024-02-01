@@ -230,5 +230,26 @@ func (m *Respository) PostRegister(w http.ResponseWriter, r *http.Request) {
 	if rErr != nil {
 		log.Println(err)
 	}
+}
 
+func (m *Respository) VerifyIdentity(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Get VerifyIdentity")
+	obj := make(map[string]interface{})
+
+	// Send back JSON results
+	obj["ok"] = true
+
+	out, err := json.MarshalIndent(obj, "", " ")
+
+	if err != nil {
+		log.Println(err)
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(200)
+	_, rErr := w.Write(out)
+
+	if rErr != nil {
+		log.Println(err)
+	}
 }

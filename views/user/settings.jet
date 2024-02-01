@@ -1,17 +1,17 @@
 {{extends "../layouts/layout.jet"}}
 {{block documentBody()}}
 <div class="container gap-3">
-    <div class="row d-grid justify-content-lg-start align-items-center mb-5 border border-light rounded">
+    <div class="row d-grid justify-content-lg-start align-items-center mb-5 border border-secondary rounded">
         <div class="col-12">
             <div class="container">
                 <div class="row">
-                    <div class="col-12 d-flex justify-content-center align-content-center">
+                    <div class="col-12 col-md-2 d-flex justify-content-center align-content-center">
                         <div class="image">
                             <i class="bi bi-image-alt fs-1 text-primary-emphasis"></i>
                         </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-12 col-md-10">
                         <div class="input-group input-group-lg">
                             <input id="account-picture" type="file" name="image"
                                 class="form-control fw-bold text-primary-emphasis">
@@ -27,18 +27,18 @@
         </div>
     </div>
 
-    <div class="row d-grid justify-content-start align-items-center mb-5 border border-light rounded">
+    <div class="row d-grid justify-content-start align-items-center mb-5 border border-secondary rounded">
         <div class="col-12">
             <form action="#">
-                <div class="container">
-                    <div class="row">
+                <div class="container change-password-container">
+                    <div class="row change-password-row">
                         <div id="change-password-parent" class="col-12">
                             <div id="change-password-div" class="input-group input-group-lg">
                                 <span class="input-group-text">
                                     <i class="bi bi-incognito fs-1 text-primary-emphasis"></i>
                                 </span>
                                 <input id="password" type="password" class="form-control fw-bold text-primary-emphasis"
-                                    value="{{.user.Password}}" autocomplete="new-password">
+                                    value="{{.user.Password}}" autocomplete="new-password" readonly>
                                 <span class="input-group-text">
                                     <button id="change-password-button" class="btn btn-outline-primary">
                                         Change Password
@@ -52,7 +52,7 @@
         </div>
     </div>
 
-    <div class="row d-grid justify-content-start align-items-center mb-5 border border-light rounded">
+    <div class="row d-grid justify-content-start align-items-center mb-5 border border-secondary rounded">
         <div class="col-12">
             <div class="container">
                 <div class="row">
@@ -75,7 +75,7 @@
         </div>
     </div>
 
-    <div class="row d-grid justify-content-start align-items-center border border-light rounded">
+    <div class="row d-grid justify-content-start align-items-center border border-secondary rounded">
         <div class="col-12">
             <div class="container">
                 <div class="row">

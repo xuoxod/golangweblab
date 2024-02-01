@@ -47,6 +47,12 @@ func routes() http.Handler {
 		mux.Get("/settings", handlers.Repo.Settings)
 	})
 
+	mux.Route("/auth", func(mux chi.Router) {
+		mux.Use(SessionLoad)
+		mux.Use(Auth)
+		mux.Get("/", handlers.Repo.VerifyIdentity)
+	})
+
 	fileserver := http.FileServer(http.Dir("./static/"))
 	mux.Handle("/static/*", http.StripPrefix("/static", fileserver))
 

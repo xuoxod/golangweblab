@@ -1,3 +1,5 @@
+import { updatePassword, updateEmail, updatePhone } from "./account-ui.js";
+
 document.addEventListener("DOMContentLoaded", () => {
   /* Controls */
 
@@ -6,23 +8,23 @@ document.addEventListener("DOMContentLoaded", () => {
   const uploadPictureButton = document.querySelector("#upload-picture-button");
 
   // Change Password
-  const changePasswordParent = document.querySelector(
-    "#change-password-parent"
-  );
-  const changePasswordDiv = document.querySelector("#change-password-div");
   const changePasswordButton = document.querySelector(
     "#change-password-button"
   );
 
+  changePasswordButton.addEventListener("click", updatePassword);
+
   // Change Email
-  const changeEmailParent = document.querySelector("#change-email-parent");
   const changeEmailDiv = document.querySelector("#change-email-div");
   const changeEmailButton = document.querySelector("#change-email-button");
 
+  changeEmailButton.addEventListener("click", updateEmail);
+
   // Change Phone
-  const changePhoneParent = document.querySelector("#change-phone-parent");
   const changePhoneDiv = document.querySelector("#change-phone-div");
   const changePhoneButton = document.querySelector("#change-phone-button");
+
+  changePhoneButton.addEventListener("click", updatePhone);
 
   // Input Values
   const password = document.querySelector("#password").value;
