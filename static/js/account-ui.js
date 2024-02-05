@@ -1,4 +1,22 @@
-// Update Account Picture
+const hide = "d-none";
+
+// Update Email
+const emailParent = document.querySelector("#change-email-parent");
+const emailRow = document.querySelector(".change-email-row");
+export const updateEmail = () => {
+  prepareToSendVerificationCode((results) => {
+    const { status, email, phone } = results;
+    if (status) {
+      if (email) {
+        log(`Send verification to your email`);
+      } else {
+        log(`Send verification to your phone`);
+      }
+      emailParent.classList.add(hide);
+      appendChild(emailRow, enterVerificationCode("email"));
+    }
+  });
+};
 
 // Update Password
 const changePasswordContainer = document.querySelector(
@@ -7,12 +25,63 @@ const changePasswordContainer = document.querySelector(
 const changePasswordRow = document.querySelector(".change-password-row");
 const changePasswordParent = document.querySelector("#change-password-parent");
 const changePasswordDiv = document.querySelector("#change-password-div");
-
 export const updatePassword = () => {
-  prepareToSendVerificationCode();
+  prepareToSendVerificationCode((results) => {
+    const { status, email, phone } = results;
+    if (status) {
+      if (email) {
+        log(`Send verification to your email`);
+      } else {
+        log(`Send verification to your phone`);
+      }
+      changePasswordParent.classList.add(hide);
+      appendChild(changePasswordRow, enterVerificationCode("password"));
+    }
+  });
 };
 
-function prepareToSendVerificationCode() {
+function enterChangePasswordCode(results) {
+  const hide = "d-none";
+  changePasswordParent.classList.add(hide);
+  if (!document.querySelector(".enter-verification-container")) {
+    appendChild(changePasswordRow, enterVerificationCode("password"));
+  }
+  if (results.email) {
+    log(`Send verification to your email`);
+  } else {
+    log(`Send verification to your phone`);
+  }
+}
+
+// Update Phone
+export const updatePhone = () => {
+  prepareToSendVerificationCode((results) => {
+    const { status, email, phone } = results;
+    if (status) {
+      if (email) {
+        log(`Send verification to your email`);
+      } else {
+        log(`Send verification to your phone`);
+      }
+    }
+  });
+};
+
+export const updatePicture = () => {
+  prepareToSendVerificationCode((results) => {
+    const { status, email, phone } = results;
+    if (status) {
+      if (email) {
+        log(`Send verification to your email`);
+      } else {
+        log(`Send verification to your phone`);
+      }
+    }
+  });
+};
+
+// Creates an alert to send verification code
+function prepareToSendVerificationCode(cb) {
   const text =
     "We'll send you a verification code to verify it's you. How do you want to receive it?";
   Swal.fire({
@@ -51,7 +120,7 @@ function prepareToSendVerificationCode() {
       const { isConfirmed, isDenied, isDismissed, value } = results;
       if (isConfirmed) {
         const results = JSON.parse(value);
-        enterCode(results);
+        cb(results);
       } else {
         Swal.closeModal();
       }
@@ -62,20 +131,7 @@ function prepareToSendVerificationCode() {
     });
 }
 
-function enterCode(results) {
-  const hide = "d-none";
-  changePasswordParent.classList.add(hide);
-  if (!document.querySelector(".enter-verification-container")) {
-    appendChild(changePasswordRow, enterVerificationCode());
-  }
-  if (results.email) {
-    log(`Send verification to your email`);
-  } else {
-    log(`Send verification to your phone`);
-  }
-}
-
-function enterVerificationCode() {
+function enterVerificationCode(whichBlock) {
   const container = document.createElement("div");
   const row1 = document.createElement("div");
   const row2 = document.createElement("div");
@@ -133,67 +189,54 @@ function enterVerificationCode() {
   appendChild(container, row2);
   appendChild(container, row3);
 
-  resendButton.addEventListener("click", prepareToSendVerificationCode);
+  resendButton.addEventListener("click", () => {
+    switch (whichBlock.toLowerCase().trim()) {
+      case "password":
+        prepareToSendVerificationCode((results) => {
+          const { status, email, phone } = results;
+          if (status) {
+            if (email) {
+              log(`Send verification to your email`);
+            } else {
+              log(`Send verification to your phone`);
+            }
+            if (!document.querySelector(".enter-verification-container")) {
+              changePasswordParent.classList.add(hide);
+              appendChild(changePasswordRow, enterVerificationCode("password"));
+            }
+          }
+        });
+        break;
+
+      case "email":
+        prepareToSendVerificationCode((results) => {
+          const { status, email, phone } = results;
+          if (status) {
+            if (email) {
+              log(`Send verification to your email`);
+            } else {
+              log(`Send verification to your phone`);
+            }
+            if (!document.querySelector(".enter-verification-container")) {
+              emailParent.classList.add(hide);
+              appendChild(emailRow, enterVerificationCode("email"));
+            }
+          }
+        });
+    }
+  });
   cancelButton.addEventListener("click", () => {
     container.remove();
-    changePasswordParent.classList.remove("d-none");
+    switch (whichBlock.toLowerCase().trim()) {
+      case "password":
+        changePasswordParent.classList.remove("d-none");
+        break;
+
+      case "email":
+        emailParent.classList.remove("d-none");
+        break;
+    }
   });
 
   return container;
 }
-
-function createNewPassword() {
-  const cancelButton = document.createElement("button");
-  const confirmButton = document.createElement("button");
-  const buttonGroup = document.createElement("div");
-  //   const firstLabel = document.createElement("span");
-  //   const secondLabel = document.createElement("span");
-  //   const thirdLabel = document.createElement("span");
-  const pwd1Input = document.createElement("input");
-  const pwd2Input = document.createElement("input");
-  const pwd3Input = document.createElement("input");
-  //   const pwd1InputGroup = document.createElement("div");
-  //   const pwd2InputGroup = document.createElement("div");
-  //   const pwd3InputGroup = document.createElement("div");
-  const newPasswordDiv = document.createElement("div");
-
-  addAttribute(cancelButton, "class", "btn btn-outline-primary");
-  cancelButton.innerText = "Cancel";
-  addAttribute(confirmButton, "class", "btn btn-outline-primary");
-  cancelButton.innerText = "Confirm";
-  addAttribute(
-    buttonGroup,
-    "class",
-    "d-grid justify-content-center align-items-center"
-  );
-  appendChild(buttonGroup, confirmButton);
-  appendChild(buttonGroup, cancelmButton);
-
-  addAttribute(pwd1Input, "type", "password");
-  addAttribute(pwd2Input, "type", "password");
-  addAttribute(pwd3Input, "type", "password");
-  addAttribute(pwd1Input, "class", "form-control");
-  addAttribute(pwd2Input, "class", "form-control");
-  addAttribute(pwd3Input, "class", "form-control");
-  addAttribute(pwd1Input, "placeholder", "Current Password");
-  addAttribute(pwd2Input, "placeholder", "New Password");
-  addAttribute(pwd3Input, "placeholder", "Confirm Password");
-  addAttribute(newPasswordDiv, "class", "d-grid v-gap-2");
-  appendChild(newPasswordDiv, pwd1Input);
-  appendChild(newPasswordDiv, pwd12nput);
-  appendChild(newPasswordDiv, pwd13nput);
-  appendChild(newPasswordDiv, buttonGroup);
-  return newPasswordDiv;
-}
-
-// Update Email
-const changeEmailParent = document.querySelector("#change-email-parent");
-export const updateEmail = () => {
-  removeChildren(changeEmailParent);
-};
-
-// Update Phone
-const changePhoneParent = document.querySelector("#change-phone-parent");
-export const updatePhone = () => {
-  removeChildren(changePhoneParent);
-};

@@ -55,7 +55,7 @@
     <div class="row d-grid justify-content-start align-items-center mb-5 border border-secondary rounded">
         <div class="col-12">
             <div class="container">
-                <div class="row">
+                <div class="row change-email-row">
                     <div id="change-email-parent" class="col-12">
                         <div id="change-email-div" class="input-group input-group-lg">
                             <span class="input-group-text">

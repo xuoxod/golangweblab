@@ -1,4 +1,9 @@
-import { updatePassword, updateEmail, updatePhone } from "./account-ui.js";
+import {
+  updatePassword,
+  updateEmail,
+  updatePhone,
+  updatePicture,
+} from "./account-ui.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   /* Controls */
@@ -15,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
   changePasswordButton.addEventListener("click", updatePassword);
 
   // Change Email
-  const changeEmailDiv = document.querySelector("#change-email-div");
   const changeEmailButton = document.querySelector("#change-email-button");
 
   changeEmailButton.addEventListener("click", updateEmail);
