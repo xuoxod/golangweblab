@@ -16,9 +16,7 @@
                             <input id="account-picture" type="file" name="image"
                                 class="form-control fw-bold text-primary-emphasis">
                             <span class="input-group-text">
-                                <button id="upload-picture-button" class="btn rounded btn-outline-primary">
-                                    Upload Picture
-                                </button>
+                                <i class="text-primary-emphasis">Account Picture</i>
                             </span>
                         </div>
                     </div>
