@@ -40,20 +40,9 @@ export const updatePassword = () => {
   });
 };
 
-function enterChangePasswordCode(results) {
-  const hide = "d-none";
-  changePasswordParent.classList.add(hide);
-  if (!document.querySelector(".enter-verification-container")) {
-    appendChild(changePasswordRow, enterVerificationCode("password"));
-  }
-  if (results.email) {
-    log(`Send verification to your email`);
-  } else {
-    log(`Send verification to your phone`);
-  }
-}
-
 // Update Phone
+const changePhoneParent = document.querySelector("#change-phone-parent");
+const changePhoneDiv = document.querySelector("#change-phone-div");
 export const updatePhone = () => {
   prepareToSendVerificationCode((results) => {
     const { status, email, phone } = results;
@@ -63,6 +52,8 @@ export const updatePhone = () => {
       } else {
         log(`Send verification to your phone`);
       }
+      changePhoneDiv.classList.add(hide);
+      appendChild(changePhoneParent, enterVerificationCode("phone"));
     }
   });
 };
@@ -223,6 +214,23 @@ function enterVerificationCode(whichBlock) {
             }
           }
         });
+        break;
+
+      case "phone":
+        prepareToSendVerificationCode((results) => {
+          const { status, email, phone } = results;
+          if (status) {
+            if (email) {
+              log(`Send verification to your email`);
+            } else {
+              log(`Send verification to your phone`);
+            }
+            if (!document.querySelector(".enter-verification-container")) {
+              changePhoneDiv.classList.add(hide);
+              appendChild(changePhoneParent, enterVerificationCode("phone"));
+            }
+          }
+        });
     }
   });
   cancelButton.addEventListener("click", () => {
@@ -234,6 +242,10 @@ function enterVerificationCode(whichBlock) {
 
       case "email":
         emailParent.classList.remove("d-none");
+        break;
+
+      case "phone":
+        changePhoneDiv.classList.remove("d-none");
         break;
     }
   });
