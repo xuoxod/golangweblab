@@ -216,7 +216,7 @@ function requestCode(whichBlock) {
 }
 
 // Cancel verification code request
-function cancelRequest(whickBlock) {
+function cancelRequest(whichBlock) {
   switch (whichBlock.toLowerCase().trim()) {
     case "password":
       changePasswordParent.classList.remove("d-none");
