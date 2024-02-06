@@ -3,20 +3,7 @@ const hide = "d-none";
 // Update Email
 const emailParent = document.querySelector("#change-email-parent");
 const emailRow = document.querySelector(".change-email-row");
-export const updateEmail = () => {
-  prepareToSendVerificationCode((results) => {
-    const { status, email, phone } = results;
-    if (status) {
-      if (email) {
-        log(`Send verification to your email`);
-      } else {
-        log(`Send verification to your phone`);
-      }
-      emailParent.classList.add(hide);
-      appendChild(emailRow, enterVerificationCode("email"));
-    }
-  });
-};
+export const updateEmail = () => requestCode("email");
 
 // Update Password
 const changePasswordContainer = document.querySelector(
@@ -25,39 +12,14 @@ const changePasswordContainer = document.querySelector(
 const changePasswordRow = document.querySelector(".change-password-row");
 const changePasswordParent = document.querySelector("#change-password-parent");
 const changePasswordDiv = document.querySelector("#change-password-div");
-export const updatePassword = () => {
-  prepareToSendVerificationCode((results) => {
-    const { status, email, phone } = results;
-    if (status) {
-      if (email) {
-        log(`Send verification to your email`);
-      } else {
-        log(`Send verification to your phone`);
-      }
-      changePasswordParent.classList.add(hide);
-      appendChild(changePasswordRow, enterVerificationCode("password"));
-    }
-  });
-};
+export const updatePassword = () => requestCode("password");
 
 // Update Phone
 const changePhoneParent = document.querySelector("#change-phone-parent");
 const changePhoneDiv = document.querySelector("#change-phone-div");
-export const updatePhone = () => {
-  prepareToSendVerificationCode((results) => {
-    const { status, email, phone } = results;
-    if (status) {
-      if (email) {
-        log(`Send verification to your email`);
-      } else {
-        log(`Send verification to your phone`);
-      }
-      changePhoneDiv.classList.add(hide);
-      appendChild(changePhoneParent, enterVerificationCode("phone"));
-    }
-  });
-};
+export const updatePhone = () => requestCode("phone");
 
+// Update Picture
 export const updatePicture = () => {
   prepareToSendVerificationCode((results) => {
     const { status, email, phone } = results;
@@ -71,7 +33,7 @@ export const updatePicture = () => {
   });
 };
 
-// Creates an alert to send verification code
+// Create an alert to send verification code
 function prepareToSendVerificationCode(cb) {
   const text =
     "We'll send you a verification code to verify it's you. How do you want to receive it?";
@@ -122,6 +84,7 @@ function prepareToSendVerificationCode(cb) {
     });
 }
 
+// Create UI to enter verification code
 function enterVerificationCode(whichBlock) {
   const container = document.createElement("div");
   const row1 = document.createElement("div");
@@ -183,72 +146,88 @@ function enterVerificationCode(whichBlock) {
   resendButton.addEventListener("click", () => {
     switch (whichBlock.toLowerCase().trim()) {
       case "password":
-        prepareToSendVerificationCode((results) => {
-          const { status, email, phone } = results;
-          if (status) {
-            if (email) {
-              log(`Send verification to your email`);
-            } else {
-              log(`Send verification to your phone`);
-            }
-            if (!document.querySelector(".enter-verification-container")) {
-              changePasswordParent.classList.add(hide);
-              appendChild(changePasswordRow, enterVerificationCode("password"));
-            }
-          }
-        });
+        requestCode("password");
         break;
 
       case "email":
-        prepareToSendVerificationCode((results) => {
-          const { status, email, phone } = results;
-          if (status) {
-            if (email) {
-              log(`Send verification to your email`);
-            } else {
-              log(`Send verification to your phone`);
-            }
-            if (!document.querySelector(".enter-verification-container")) {
-              emailParent.classList.add(hide);
-              appendChild(emailRow, enterVerificationCode("email"));
-            }
-          }
-        });
+        requestCode("email");
         break;
 
       case "phone":
-        prepareToSendVerificationCode((results) => {
-          const { status, email, phone } = results;
-          if (status) {
-            if (email) {
-              log(`Send verification to your email`);
-            } else {
-              log(`Send verification to your phone`);
-            }
-            if (!document.querySelector(".enter-verification-container")) {
-              changePhoneDiv.classList.add(hide);
-              appendChild(changePhoneParent, enterVerificationCode("phone"));
-            }
-          }
-        });
+        requestCode("phone");
+        break;
     }
   });
   cancelButton.addEventListener("click", () => {
     container.remove();
     switch (whichBlock.toLowerCase().trim()) {
       case "password":
-        changePasswordParent.classList.remove("d-none");
+        cancelRequest("password");
         break;
 
       case "email":
-        emailParent.classList.remove("d-none");
+        cancelRequest("email");
         break;
 
       case "phone":
-        changePhoneDiv.classList.remove("d-none");
+        cancelRequest("phone");
         break;
     }
   });
 
   return container;
+}
+
+// Request verification code
+function requestCode(whichBlock) {
+  prepareToSendVerificationCode((results) => {
+    const { status, email, phone } = results;
+    if (status) {
+      if (email) {
+        log(`Send verification to your email`);
+      } else {
+        log(`Send verification to your phone`);
+      }
+
+      switch (whichBlock.toLowerCase().trim()) {
+        case "email":
+          if (!document.querySelector(".enter-verification-container")) {
+            emailParent.classList.add(hide);
+            appendChild(emailRow, enterVerificationCode("email"));
+          }
+          break;
+
+        case "password":
+          if (!document.querySelector(".enter-verification-container")) {
+            changePasswordParent.classList.add(hide);
+            appendChild(changePasswordRow, enterVerificationCode("password"));
+          }
+          break;
+
+        case "phone":
+          if (!document.querySelector(".enter-verification-container")) {
+            changePhoneDiv.classList.add(hide);
+            appendChild(changePhoneParent, enterVerificationCode("phone"));
+          }
+          break;
+      }
+    }
+  });
+}
+
+// Cancel verification code request
+function cancelRequest(whickBlock) {
+  switch (whichBlock.toLowerCase().trim()) {
+    case "password":
+      changePasswordParent.classList.remove("d-none");
+      break;
+
+    case "email":
+      emailParent.classList.remove("d-none");
+      break;
+
+    case "phone":
+      changePhoneDiv.classList.remove("d-none");
+      break;
+  }
 }
