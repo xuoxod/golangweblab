@@ -199,7 +199,7 @@ function enterVerificationCode(whichBlock) {
   return container;
 }
 
-// Request verification code
+// Request verification code via AJAX
 function requestCode(whichBlock) {
   prepareToSendVerificationCode((results) => {
     const { status, email, phone } = results;
@@ -253,7 +253,7 @@ function cancelRequest(whichBlock) {
   }
 }
 
-// Submit verification code
+// Submit verification code via AJAX
 function submitCode(whichBlock) {
   switch (whichBlock.toLowerCase().trim()) {
     case "password":
