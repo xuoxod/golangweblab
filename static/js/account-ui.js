@@ -99,6 +99,7 @@ function enterVerificationCode(whichBlock) {
   const input = document.createElement("input");
   const resendButton = document.createElement("button");
   const cancelButton = document.createElement("button");
+  const submitButton = document.createElement("button");
   const bi = document.createElement("i");
 
   addAttribute(
@@ -121,17 +122,21 @@ function enterVerificationCode(whichBlock) {
   addAttribute(resendButton, "type", "button");
   addAttribute(resendButton, "class", "btn btn-outline-primary fw-bold");
   addAttribute(cancelButton, "type", "button");
-  addAttribute(cancelButton, "class", "btn btn-outline-success fw-bold");
+  addAttribute(cancelButton, "class", "btn btn-outline-warning fw-bold");
+  addAttribute(submitButton, "type", "button");
+  addAttribute(submitButton, "class", "btn btn-outline-success fw-bold");
   addAttribute(bi, "class", "bi bi-123");
 
   label2.innerText = "Didn't get the code?";
   label3.innerText = "Changed your mind?";
   resendButton.innerText = "Send new code";
   cancelButton.innerText = "Cancel";
+  submitButton.innerText = "Submit";
 
   appendChild(label1, bi);
-  appendChild(inputGroup1, label1);
+  // appendChild(inputGroup1, label1);
   appendChild(inputGroup1, input);
+  appendChild(inputGroup1, submitButton);
   appendChild(inputGroup2, label2);
   appendChild(inputGroup2, resendButton);
   appendChild(inputGroup3, label3);
@@ -155,6 +160,22 @@ function enterVerificationCode(whichBlock) {
 
       case "phone":
         requestCode("phone");
+        break;
+    }
+  });
+  submitButton.addEventListener("click", () => {
+    container.remove();
+    switch (whichBlock.toLowerCase().trim()) {
+      case "password":
+        submitCode("password");
+        break;
+
+      case "email":
+        submitCode("email");
+        break;
+
+      case "phone":
+        submitCode("phone");
         break;
     }
   });
@@ -184,9 +205,9 @@ function requestCode(whichBlock) {
     const { status, email, phone } = results;
     if (status) {
       if (email) {
-        log(`Send verification to your email`);
+        log(`Sending verification code to your email`);
       } else {
-        log(`Send verification to your phone`);
+        log(`Sending verification code to your phone`);
       }
 
       switch (whichBlock.toLowerCase().trim()) {
@@ -227,6 +248,26 @@ function cancelRequest(whichBlock) {
       break;
 
     case "phone":
+      changePhoneDiv.classList.remove("d-none");
+      break;
+  }
+}
+
+// Submit verification code
+function submitCode(whichBlock) {
+  switch (whichBlock.toLowerCase().trim()) {
+    case "password":
+      log(`Code submitted for password update`);
+      changePasswordParent.classList.remove("d-none");
+      break;
+
+    case "email":
+      log(`Code submitted for email update`);
+      emailParent.classList.remove("d-none");
+      break;
+
+    case "phone":
+      log(`Code submitted for phone update`);
       changePhoneDiv.classList.remove("d-none");
       break;
   }

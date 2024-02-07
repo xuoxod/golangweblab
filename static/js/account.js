@@ -16,18 +16,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const changePasswordButton = document.querySelector(
     "#change-password-button"
   );
-
   changePasswordButton.addEventListener("click", updatePassword);
 
   // Change Email
   const changeEmailButton = document.querySelector("#change-email-button");
-
   changeEmailButton.addEventListener("click", updateEmail);
 
   // Change Phone
-  const changePhoneDiv = document.querySelector("#change-phone-div");
   const changePhoneButton = document.querySelector("#change-phone-button");
-
   changePhoneButton.addEventListener("click", updatePhone);
 
   // Input Values
