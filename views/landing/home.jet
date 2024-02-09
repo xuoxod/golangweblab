@@ -8,7 +8,6 @@
             <h2 class="text-center fw-bold">Home Page</h2>
         </div>
     </div>
-
     <input type="hidden" id="csrf" value="{{.csrf_token}}">
     <input type="hidden" id="appname" value="{{appname}}">
     <input type="hidden" id="appver" value="{{appver}}">
