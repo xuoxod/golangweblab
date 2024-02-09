@@ -1,11 +1,11 @@
 {{extends "../layouts/layout.jet"}}
 {{block documentBody()}}
-<div class="container bg-light-subtle text-primary-emphasis rounded">
+<div class="container bg-light-subtle text-center text-primary-emphasis rounded">
     <div class="row">
         <div class="col-12"></div>
 
         <div class="col-12">
-            <h2 class="text-center fw-bold">Home Page</h2>
+            <h2 class=" fw-bold">Home Page</h2>
         </div>
     </div>
     <input type="hidden" id="csrf" value="{{.csrf_token}}">
