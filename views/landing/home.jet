@@ -1,6 +1,6 @@
 {{extends "../layouts/layout.jet"}}
 {{block documentBody()}}
-<div class="container-fluid bg-light-subtle text-primary-emphasis rounded">
+<div class="container bg-light-subtle text-primary-emphasis rounded">
     <div class="row">
         <div class="col-12"></div>
 
