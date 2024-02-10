@@ -59,7 +59,9 @@ const about = async () => {
           </strong>
         </label>
 
-        <input type="text" value="v0.0.3" autocomplete="false" readonly class="form-control">
+        <input type="text" value=v${
+          document.querySelector("#appver").value
+        } autocomplete="false" readonly class="form-control">
       </div>
 
       <div class="input-group mt-3">
@@ -69,7 +71,9 @@ const about = async () => {
           </strong>
         </label>
 
-        <input type="text" value="RmediaTech" readonly  class="form-control">
+        <input type="text" value=${
+          document.querySelector("#appname").value
+        } readonly  class="form-control">
       </div>
     </div>
   </div>

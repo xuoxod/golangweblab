@@ -25,7 +25,7 @@ func InitViews() {
 	views.SetDevelopmentMode(true)
 	views.AddGlobal("appver", "0.0.3")
 	views.AddGlobal("copyright", utils.CopyrightDate())
-	views.AddGlobal("appname", "Awesome Web App")
+	views.AddGlobal("appname", "Awesome-Web-App")
 	views.AddGlobal("appdate", fmt.Sprintf("%v", utils.DateTimeStamp()))
 }
 
