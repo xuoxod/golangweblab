@@ -36,7 +36,7 @@ const about = async () => {
     icon: "info",
     animation: true,
     position: "center",
-    timer: 5555,
+    timer: 6555,
     allowOutsideClick: true,
     allowEscapeKey: true,
     html: `
@@ -53,7 +53,7 @@ const about = async () => {
           document.querySelector("#copyright").value +
           " " +
           document.querySelector("#appdate").value
-        } autocomplete="false" readonly class="form-control">
+        } autocomplete="false" readonly class="form-control text-primary-emphasis">
       </div>
 
       <div class="input-group mt-3">
@@ -65,7 +65,7 @@ const about = async () => {
 
         <input type="text" value=v${
           document.querySelector("#appver").value
-        } autocomplete="false" readonly class="form-control">
+        } autocomplete="false" readonly class="form-control text-primary-emphasis">
       </div>
 
       <div class="input-group mt-3">
@@ -77,7 +77,7 @@ const about = async () => {
 
         <input type="text" value=${
           document.querySelector("#appname").value
-        } readonly  class="form-control">
+        } readonly  class="form-control text-primary-emphasis">
       </div>
     </div>
   </div>
