@@ -45,17 +45,21 @@ const about = async () => {
       <div class="input-group">
         <label class="input-group-text">
           <strong>
-            <i class="bi bi-c-circle fs-3"></i>
+            <i class="bi bi-c-circle-fill fs-3 text-primary-emphasis"></i>
           </strong>
         </label>
 
-        <input type="text" value="2023" autocomplete="false" readonly class="form-control">
+        <input type="text" value=${
+          document.querySelector("#copyright").value +
+          " " +
+          document.querySelector("#appdate").value
+        } autocomplete="false" readonly class="form-control">
       </div>
 
       <div class="input-group mt-3">
         <label class="input-group-text">
           <strong>
-            <i class="bi bi-tag fs-3"></i>
+            <i class="bi bi-file-code-fill fs-3 text-primary-emphasis"></i>
           </strong>
         </label>
 
@@ -67,7 +71,7 @@ const about = async () => {
       <div class="input-group mt-3">
         <label class="input-group-text">
           <strong>
-            <i class="bi bi-patch-check fs-3"></i>
+            <i class="bi bi-buildings-fill fs-3 text-primary-emphasis"></i>
           </strong>
         </label>
 
