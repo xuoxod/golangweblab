@@ -92,9 +92,9 @@ func (m *Respository) Authenticate(w http.ResponseWriter, r *http.Request) {
 	profile = p
 	preferences = s
 
-	if err != nil {
-		fmt.Println("Failed to generate token")
-	}
+	// if err != nil {
+	// 	fmt.Println("Failed to generate token")
+	// }
 
 	// Put user in session
 	m.App.Session.Put(r.Context(), "user_id", user)

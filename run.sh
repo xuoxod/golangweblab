@@ -2,6 +2,6 @@
 
 clear
 
-go build -o weblab ./cmd/web/*.go
+# go build -o weblab ./cmd/web/*.go
 
 ./weblab

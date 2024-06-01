@@ -28,16 +28,20 @@
         <div class="col-md-6 col-sm-12 mb-2">
             <div class="container email-container">
                 <div class="row">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="bi bi-envelope-fill text-primary fs-3"></i>
-                        </span>
-                        <input id="verify-email-input" type="text" value="Email is not verified"
-                            class="form-control fw-bold text-primary-emphasis" readonly>
-                        <span class="input-group-text">
-                            <button id="verify-email-button" type="button" class="btn btn-outline-primary">Verify</button>
-                        </span>
-                    </div>
+                    <form id="verify-email-form" action="/verifycode" method="post">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-envelope-fill text-primary fs-3"></i>
+                            </span>
+                            <input id="verify-email-input" type="text" value="Email is not verified"
+                                class="form-control fw-bold text-primary-emphasis" readonly>
+                            <span class="input-group-text">
+                                <button id="verify-email-button" type="submit"
+                                    class="btn btn-outline-primary">Verify</button>
+                            </span>
+                        </div>
+                        <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" class="csrf-token">
+                    </form>
                 </div>
             </div>
         </div>
@@ -45,18 +49,23 @@
 
         {{if !.user.PhoneVerified}}
         <div class="col-md-6 col-sm-12 mb-2">
-            <div class="container phone-container">
+            <div class="container verify-phone-container">
                 <div class="row">
-                    <div class="input-group">
-                        <span class="input-group-text">
-                            <i class="bi bi-telephone-fill text-primary fs-3"></i>
-                        </span>
-                        <input id="verify-phone-input" type="text" value="Phone is not verified"
-                            class="form-control fw-bold text-primary-emphasis" readonly>
-                        <span class="input-group-text">
-                            <button id="verify-phone-button" type="button" class="btn btn-outline-primary">Verify</button>
-                        </span>
-                    </div>
+                    <form id="verify-phone-form" action="/verifycode" method="post">
+                        <div class="input-group">
+                            <span class="input-group-text">
+                                <i class="bi bi-telephone-fill text-primary fs-3"></i>
+                            </span>
+                            <input id="verify-phone-input" name="verify-phone-input" type="text"
+                                value="Phone is not verified" class="form-control fw-bold text-primary-emphasis"
+                                readonly>
+                            <span class="input-group-text">
+                                <button id="verify-phone-button" type="submit"
+                                    class="btn btn-outline-primary">Verify</button>
+                            </span>
+                        </div>
+                        <input type="hidden" name="csrf_token" value="{{ .csrf_token }}" class="csrf-token">
+                    </form>
                 </div>
             </div>
         </div>

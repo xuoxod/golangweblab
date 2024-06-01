@@ -4,6 +4,11 @@ import (
 	"time"
 )
 
+type VerifyStatus struct {
+	Status bool   `json:"status"`
+	Code   string `json:"code"`
+}
+
 type Signin struct {
 	Email    string
 	Password string

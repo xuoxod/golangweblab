@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	// "github.com/golang-jwt/jwt"
@@ -546,8 +547,29 @@ func (m *Respository) VerifyEmailPost(w http.ResponseWriter, r *http.Request) {
 func (m *Respository) VerifyPhone(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Get verify phone")
 
+	user, userOk := m.App.Session.Get(r.Context(), "user_id").(models.User)
+
+	if !userOk {
+		log.Println("Cannot get user_id data from session")
+		m.App.ErrorLog.Println("Can't get user_id data from the session")
+		m.App.Session.Put(r.Context(), "error", "Can't get user_id data from session")
+		http.Redirect(w, r, "/user", http.StatusTemporaryRedirect)
+		return
+	}
+
+	var phoneNumber string = user.Phone
+
+	if !strings.Contains(phoneNumber, "+") {
+		phoneNumber = fmt.Sprintf("+1%s", user.Phone)
+	}
+
+	fmt.Println("Sending verification code to phone number: ", phoneNumber)
+
 	obj := make(map[string]interface{})
-	obj["ok"] = true
+	obj["status"] = true
+	obj["code"] = "4279311"
+
+	// obj := helpers.SendSmsVerify(phoneNumber)
 
 	out, err := json.MarshalIndent(obj, "", " ")
 
@@ -567,10 +589,29 @@ func (m *Respository) VerifyPhone(w http.ResponseWriter, r *http.Request) {
 // @desc        Verify Phone Post
 // @route       POST /user/phone/verify
 // @access      Private
-func (m *Respository) VerifyPhonePost(w http.ResponseWriter, r *http.Request) {
+func (m *Respository) PostVerifyPhone(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Post verify phone")
 
 	obj := make(map[string]interface{})
+
+	/*
+		user, userOk := m.App.Session.Get(r.Context(), "user_id").(models.User)
+
+		if !userOk {
+			log.Println("Cannot get user_id data from session")
+			m.App.ErrorLog.Println("Can't get user_id data from the session")
+			m.App.Session.Put(r.Context(), "error", "Can't get user_id data from session")
+			http.Redirect(w, r, "/user", http.StatusTemporaryRedirect)
+			return
+		}
+
+		user.PhoneVerified = true
+
+		m.App.Session.Remove(r.Context(), "user_id")
+		m.App.Session.Put(r.Context(), "user_id", user)
+
+		fmt.Println("Phone verified? ", user.PhoneVerified)
+	*/
 
 	err := r.ParseForm()
 
@@ -580,49 +621,12 @@ func (m *Respository) VerifyPhonePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// form validation
-	form := forms.New(r.PostForm)
-	form.Required("phone")
+	code := r.Form.Get("verify-phone-input")
 
-	if !form.Valid() {
-		log.Printf("Phone form error: %s\n\n", form.Errors.Get("phone"))
-		obj["ok"] = false
-		obj["form"] = form.Errors.Get("phone")
+	fmt.Printf("Received verification code: %v from user\n", code)
 
-		out, err := json.MarshalIndent(obj, "", " ")
-
-		if err != nil {
-			log.Println(err)
-		}
-
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(200)
-		_, rErr := w.Write(out)
-
-		if rErr != nil {
-			log.Println(err)
-		}
-		return
-	}
-
-	user, userOk := m.App.Session.Get(r.Context(), "user_id").(models.User)
-
-	if !userOk {
-		log.Println("Cannot get user_id data from session")
-		m.App.ErrorLog.Println("Can't get user_id data from the session")
-		m.App.Session.Put(r.Context(), "error", "Can't get user_id data from session")
-		http.Redirect(w, r, "/user", http.StatusTemporaryRedirect)
-		return
-	}
-
-	user.PhoneVerified = true
-
-	m.App.Session.Remove(r.Context(), "user_id")
-	m.App.Session.Put(r.Context(), "user_id", user)
-
-	fmt.Println("Phone verified? ", user.PhoneVerified)
-
-	obj["ok"] = true
+	obj["status"] = true
+	obj["code"] = fmt.Sprintf("%v", code)
 
 	out, err := json.MarshalIndent(obj, "", " ")
 
@@ -631,10 +635,10 @@ func (m *Respository) VerifyPhonePost(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
+	w.WriteHeader(http.StatusOK)
 	_, rErr := w.Write(out)
 
 	if rErr != nil {
-		log.Println(err)
+		log.Println(err.Error())
 	}
 }

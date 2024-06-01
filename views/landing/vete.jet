@@ -1,0 +1,23 @@
+{{extends "../layouts/layout.jet"}}
+{{block documentBody()}}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <h5>
+                <b class="text-center">
+                    <i>Left</i>
+                </b>
+            </h5>
+        </div>
+        <div class="col-6">
+            <h5>
+                <b class="text-center">
+                    <i>Left</i>
+                </b>
+            </h5>
+        </div>
+    </div>
+</div>
+
+{{end}}

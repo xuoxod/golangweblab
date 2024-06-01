@@ -1,21 +1,24 @@
 // Verify phone
 const verifyPhoneButton = document.querySelector("#verify-phone-button");
 const verifyPhoneInput = document.querySelector("#verify-phone-input");
-const phoneContainer = document.querySelector(".phone-container");
+const phoneContainer = document.querySelector(".verify-phone-container");
+const verifyPhoneForm = document.querySelector("#verify-phone-form");
 
 const handlePhoneVerificationFormError = (data) => {
   log(`Phone Verification Failed\n`);
-  log(`Phone Verification Form Error:\t${data["form"]}\n`);
-  notify("error", `Phone verification failed with message ${data["form"]}`);
+  log(`Phone Verification Form Error:\t${data["err"]}\n`);
+  notify("error", `Phone verification failed with message ${data["reason"]}`);
 };
 
 const handlePhoneVerificationFormSuccess = (data) => {
   log(`Phone Verification Succeeded\n`);
-  notify("success", `Phone verification successful`);
-
-  const timeout = setTimeout(() => {
-    location.href = "/user/settings";
-  }, 3000);
+  notify("success", `A verification code was sent to your phone`, 2);
+  verifyPhoneForm.removeEventListener("submit", verifyPhoneFormHandler);
+  verifyPhoneForm.addEventListener("submit", verifySentCode);
+  setAttribute(verifyPhoneInput, "type", "number");
+  setAttribute(verifyPhoneInput, "min", "1111111");
+  setAttribute(verifyPhoneInput, "max", "9999999");
+  removeAttribute(verifyPhoneInput, "readonly");
 };
 
 const sendPhoneVerification = () => {
@@ -44,7 +47,12 @@ const sendPhoneVerification = () => {
   }
 };
 
+// Init button click handler
 const verifyPhoneButtonHandler = () => {
+  if (countChildren(phoneContainer) > 1) {
+    removeChildAt(phoneContainer, 1);
+  }
+
   verifyPhoneInput.value = `Enter code`;
   verifyPhoneButton.innerText = `Submit`;
 
@@ -71,40 +79,96 @@ const verifyPhoneButtonHandler = () => {
   button.addEventListener("click", () => {
     row.remove();
     verifyPhoneButtonHandler();
+    verifyPhone();
   });
-  verifyPhone();
 };
 
-function verifyPhone() {
-  if (phoneContainer) {
-    log(`Requested phone verification`);
+// Code verifier
+function verifySentCode(e) {
+  e.preventDefault();
 
+  if (verifyPhoneInput.value) {
     const url = "/user/phone/verify";
+    const csrfToken = document.querySelector(".csrf-token").value;
+    const formData = new FormData(verifyPhoneForm);
+
+    log(`\n\tSending token ${csrfToken}\n\n`);
+
+    const options = {
+      method: "post",
+      body: formData,
+    };
 
     try {
-      fetch(url)
-        .then((response) => response.json())
+      fetch(url, options)
+        .then((response) => response.json)
         .then((data) => {
-          phoneVerificationResponseHandler(data);
+          log(`\n\t\tResponse Data\n\t${JSON.stringify(data)}\n\n`);
+          handleCodeVerificationResults(data);
         });
     } catch (err) {
-      log(err);
+      log(`\n\t\tFetch Error\n\n\t${JSON.stringify(err)}\n\n`);
+      return;
     }
+  } else {
+    log(`Code not provided`);
+    notify("warning", "Enter the verification code you had received via sms");
+  }
+}
+
+function handleCodeVerificationResults(data) {
+  log(`Server sent verification status: ${data["status"]}\n`);
+  if (undefined != data && null != data) {
+    if (data["status"] == true) {
+      notify("success", `Phone verified\n`);
+    } else {
+      notify("error", `Code verification failed\n`);
+    }
+  } else {
+    notify("error", `Error happened posting to URL`, 5);
+  }
+  return;
+}
+
+function verifyPhone() {
+  log(`Requested phone verification`);
+
+  const url = "/user/phone/verify";
+
+  try {
+    fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        phoneVerificationResponseHandler(data);
+      })
+      .catch((err) => {
+        log(err);
+      });
+  } catch (err) {
+    log("Phone verification failed\n");
   }
 }
 
 function phoneVerificationResponseHandler(response) {
-  if (response["ok"]) {
-    log(`Phone verification succeeded\n`);
+  log(`phone verification raw response: ${stringify(response)}`);
+  if (response["status"]) {
+    handlePhoneVerificationFormSuccess(response);
   } else {
-    log(`Phone verification failed\n`);
+    handlePhoneVerificationFormError(response);
   }
+}
+
+function verifyPhoneFormHandler(e) {
+  e.preventDefault();
+  verifyPhoneButtonHandler();
+  verifyPhone();
 }
 
 // Verify email
 const verifyEmailButton = document.querySelector("#verify-email-button");
 const verifyEmailInput = document.querySelector("#verify-email-input");
 const emailContainer = document.querySelector(".email-container");
+const verifyEmailForm = document.querySelector("#verify-email-form");
 
 const handleEmailVerificationFormError = (data) => {
   log(`Email Verification Failed\n`);
@@ -206,9 +270,9 @@ function emailVerificationResponseHandler(response) {
   }
 }
 
-// Register click event
-if (verifyPhoneButton) {
-  verifyPhoneButton.addEventListener("click", verifyPhoneButtonHandler);
+// Register form events
+if (verifyPhoneForm) {
+  verifyPhoneForm.addEventListener("submit", verifyPhoneFormHandler);
 }
 
 if (verifyEmailButton) {

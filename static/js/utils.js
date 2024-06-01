@@ -52,6 +52,18 @@ const addMouseOverHandler = (theElement, handler) => {
   }
 };
 
+const switchHandlers = (theElment, whichEvent, handler1, handler2) => {
+  if (
+    null != theElment &&
+    typeof handler1 == "function" &&
+    typeof handler2 == "function" &&
+    null != whichEvent
+  ) {
+    theElment.removeEventListener(whichEvent, handler1);
+    theElment.addEventListener(whichEvent, handler2);
+  }
+};
+
 const appendChild = (parent, child) => {
   if (null != parent && null != child) {
     parent.appendChild(child);
@@ -74,6 +86,16 @@ const removeChildren = (parent) => {
   parent.querySelectorAll("*").forEach((dialog) => {
     dialog.remove();
   });
+};
+
+const removeChildAt = (parent, childAt = 1) => {
+  let location = 1;
+
+  if (childAt != null && childAt != undefined) {
+    location = childAt;
+  }
+
+  parent.removeChild(parent.children[location]);
 };
 
 const countChildren = (parent) => {

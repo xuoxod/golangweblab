@@ -13,7 +13,7 @@ func routes() http.Handler {
 	mux.Use(middleware.Compress(5))
 	// mux.Use(middleware.Recoverer)
 	// mux.Use(SessionLoad)
-	// mux.Use(RecoverPanic)
+	mux.Use(RecoverPanic)
 	mux.Use(WriteToConsole)
 	mux.Use(middleware.NoCache)
 	mux.Use(NoSurf)
@@ -29,6 +29,7 @@ func routes() http.Handler {
 		mux.Get("/about", handlers.Repo.About)
 		mux.Post("/login", handlers.Repo.Authenticate)
 		mux.Post("/register", handlers.Repo.PostRegister)
+		mux.Get("/verify", handlers.Repo.VerifyTestQuery)
 	})
 
 	mux.Route("/user", func(mux chi.Router) {
@@ -43,7 +44,7 @@ func routes() http.Handler {
 		mux.Get("/email/verify", handlers.Repo.VerifyEmail)
 		mux.Post("/email/verify", handlers.Repo.VerifyEmailPost)
 		mux.Get("/phone/verify", handlers.Repo.VerifyPhone)
-		mux.Post("/phone/verify", handlers.Repo.VerifyPhonePost)
+		mux.Post("/phone/verify", handlers.Repo.PostVerifyPhone)
 		mux.Get("/settings", handlers.Repo.Settings)
 	})
 

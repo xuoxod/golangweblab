@@ -352,12 +352,21 @@ inputs.forEach((input) => {
     }
 
     if (Object.keys(changedInputs).length > 0) {
-      profileSubmitButtonGroup.classList.remove("d-none");
-      profileEditButton.innerText = "Save";
+      if (profileSubmitButtonGroup) {
+        profileSubmitButtonGroup.classList.remove("d-none");
+      }
+
+      if (profileEditButton) {
+        profileEditButton.innerText = "Save";
+      }
     } else {
       if (!profileEditButtonGroup.classList.contains("d-none")) {
-        profileSubmitButtonGroup.classList.add("d-none");
-        profileEditButton.innerText = "Edit";
+        if (profileSubmitButtonGroup) {
+          profileSubmitButtonGroup.classList.add("d-none");
+        }
+        if (profileEditButton) {
+          profileEditButton.innerText = "Edit";
+        }
       }
     }
   });

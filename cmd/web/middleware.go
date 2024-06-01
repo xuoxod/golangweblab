@@ -18,13 +18,22 @@ func WriteToConsole(next http.Handler) http.Handler {
 		protocolMajor := r.ProtoMajor
 		protocolMinor := r.ProtoMinor
 
-		fmt.Printf("\nMiddleware: Response Writer is %T", w)
+		fmt.Printf("\nRoute Hit\n")
+		fmt.Printf("\tMiddleware: Response Writer is %T\n", w)
 
 		if path == "/ws" {
 			w.Header().Set("Content", "text/plain")
 		}
 
-		fmt.Printf("\nPage Hit\n\tHost: %v\n\taddress: %v\n\tPath: %v\n\tMethod: %v\n\tProtocol: %v\n\t\tMajor: %v\n\t\tMinor: %v\n", host, remoteAddr, path, method, protocol, protocolMajor, protocolMinor)
+		fmt.Printf("\tHost: %s\n", host)
+		fmt.Printf("\tAddress: %s\n", remoteAddr)
+		fmt.Printf("\tPath: %s\n", path)
+		fmt.Printf("\tMethod: %s\n", method)
+		fmt.Printf("\tProtocol: %s\n", protocol)
+		fmt.Printf("\t\tMajor: %d\n", protocolMajor)
+		fmt.Printf("\t\tMinor: %d\n", protocolMinor)
+		fmt.Printf("\n\n")
+
 		next.ServeHTTP(w, r)
 	})
 }
