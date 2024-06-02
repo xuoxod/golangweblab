@@ -101,7 +101,7 @@ function verifySentCode(e) {
 
     try {
       fetch(url, options)
-        .then((response) => response.json)
+        .then((response) => response.json())
         .then((data) => {
           log(`\n\t\tResponse Data\n\t${JSON.stringify(data)}\n\n`);
           handleCodeVerificationResults(data);
@@ -117,7 +117,7 @@ function verifySentCode(e) {
 }
 
 function handleCodeVerificationResults(data) {
-  log(`Server sent verification status: ${data["status"]}\n`);
+  log(`Server sent verification status: ${stringify(data)}\n`);
   if (undefined != data && null != data) {
     if (data["status"] == true) {
       notify("success", `Phone verified\n`);

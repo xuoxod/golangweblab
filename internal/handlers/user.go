@@ -594,6 +594,26 @@ func (m *Respository) PostVerifyPhone(w http.ResponseWriter, r *http.Request) {
 
 	obj := make(map[string]interface{})
 
+	/* buf := &bytes.Buffer{}
+	enc := json.NewEncoder(buf)
+	enc.SetEscapeHTML(true)
+	if err := enc.Encode(obj); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	if status, ok := r.Context().Value(http.StatusOK).(int); ok {
+		w.WriteHeader(status)
+	}
+	results, rErr := w.Write(buf.Bytes())
+
+	if rErr != nil {
+		log.Println(rErr)
+	}
+
+	fmt.Println("Results: ", results) */
+
 	/*
 		user, userOk := m.App.Session.Get(r.Context(), "user_id").(models.User)
 
@@ -610,8 +630,7 @@ func (m *Respository) PostVerifyPhone(w http.ResponseWriter, r *http.Request) {
 		m.App.Session.Remove(r.Context(), "user_id")
 		m.App.Session.Put(r.Context(), "user_id", user)
 
-		fmt.Println("Phone verified? ", user.PhoneVerified)
-	*/
+		fmt.Println("Phone verified? ", user.PhoneVerified)*/
 
 	err := r.ParseForm()
 
