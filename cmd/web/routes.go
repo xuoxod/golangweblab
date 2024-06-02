@@ -29,7 +29,6 @@ func routes() http.Handler {
 		mux.Get("/about", handlers.Repo.About)
 		mux.Post("/login", handlers.Repo.Authenticate)
 		mux.Post("/register", handlers.Repo.PostRegister)
-		mux.Get("/verify", handlers.Repo.VerifyTestQuery)
 	})
 
 	mux.Route("/user", func(mux chi.Router) {

@@ -1,8 +1,6 @@
 package handlers
 
 import (
-	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 
@@ -70,42 +68,4 @@ func (m *Respository) Register(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err.Error())
 	}
-}
-
-func (m *Respository) VerifyTest(w http.ResponseWriter, r *http.Request) {
-	data := make(map[string]interface{})
-	data["title"] = "Verify Test"
-
-	err := render.Render(w, r, "landing/about.jet", nil, data)
-
-	if err != nil {
-		log.Println(err.Error())
-	}
-}
-
-func (m *Respository) VerifyTestQuery(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Query VerifyTestPost")
-
-	phoneParam := r.URL.Query().Get("phone")
-
-	fmt.Println("Param:\t", phoneParam)
-	obj := make(map[string]interface{})
-
-	// Send back JSON results
-	obj["ok"] = true
-
-	out, err := json.MarshalIndent(obj, "", " ")
-
-	if err != nil {
-		log.Println(err)
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(200)
-	_, rErr := w.Write(out)
-
-	if rErr != nil {
-		log.Println(err)
-	}
-
 }
