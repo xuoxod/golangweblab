@@ -214,6 +214,11 @@ const handleSigninSuccess = () => {
   location.href = "/user";
 };
 
+const handleCodeVerificationSuccess = () => {
+  log(`Code verification successful`);
+  location.href = "/user/account";
+};
+
 const handleSigninFailure = (data) => {
   log(`Sign in failed`);
   notify(data["type"], data["msg"]);

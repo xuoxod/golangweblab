@@ -11,13 +11,26 @@ const handlePhoneVerificationFormError = (data) => {
 };
 
 const handlePhoneVerificationFormSuccess = (data) => {
-  log(`Phone Verification Succeeded\n`);
-  notify("success", `A verification code was sent to your phone`, 2);
+  const resultStatus = data["status"];
+  const phoneNumber = data["phone"];
+  const code = data["code"];
+
+  log(`Verify Request status:\t${resultStatus}\n`);
+  log(`Verify Request Phone:\t ${phoneNumber}\n`);
+  log(`Verify Request Code:\t  ${code}\n`);
+
+  notify("success", `A verification code was sent to your phone`, 3);
+
   verifyPhoneForm.removeEventListener("submit", verifyPhoneFormHandler);
   verifyPhoneForm.addEventListener("submit", verifySentCode);
+
   setAttribute(verifyPhoneInput, "type", "number");
   setAttribute(verifyPhoneInput, "min", "1111111");
   setAttribute(verifyPhoneInput, "max", "9999999");
+  setAttribute(verifyPhoneInput, "step", "1");
+
+  verifyPhoneInput.classList.add("otp-return");
+  // setAttribute(verifyPhoneInput, "placeholder", "Submit the OTP code here");
   removeAttribute(verifyPhoneInput, "readonly");
 };
 
@@ -92,8 +105,6 @@ function verifySentCode(e) {
     const csrfToken = document.querySelector(".csrf-token").value;
     const formData = new FormData(verifyPhoneForm);
 
-    log(`\n\tSending token ${csrfToken}\n\n`);
-
     const options = {
       method: "post",
       body: formData,
@@ -103,8 +114,8 @@ function verifySentCode(e) {
       fetch(url, options)
         .then((response) => response.json())
         .then((data) => {
-          log(`\n\t\tResponse Data\n\t${JSON.stringify(data)}\n\n`);
           handleCodeVerificationResults(data);
+          verifyPhoneInput.value = "";
         });
     } catch (err) {
       log(`\n\t\tFetch Error\n\n\t${JSON.stringify(err)}\n\n`);
@@ -117,16 +128,32 @@ function verifySentCode(e) {
 }
 
 function handleCodeVerificationResults(data) {
-  log(`Server sent verification status: ${stringify(data)}\n`);
   if (undefined != data && null != data) {
+    log(`Server sent verification status: ${stringify(data)}\n`);
     if (data["status"] == true) {
-      notify("success", `Phone verified\n`);
+      return handleCodeVerificationResultsSuccess(data);
     } else {
-      notify("error", `Code verification failed\n`);
+      return handleCodeVerificationResultsFail();
     }
   } else {
-    notify("error", `Error happened posting to URL`, 5);
+    notify("error", `Error happened posting to URL`, 4);
   }
+  return;
+}
+
+/* Handle the phone verification status sent from the server  */
+function handleCodeVerificationResultsSuccess(data) {
+  notify("success", `Phone number: ${data["to"]} verified\n`, 3);
+  handleCodeVerificationSuccess();
+}
+
+function handleCodeVerificationResultsFail() {
+  notify("error", `Phone verification failed\n`, 4);
+  const timer = setTimeout(() => {
+    notify("warning", `Check the number or use a different phone number`, 4);
+    clearTimeout(timer);
+    return;
+  }, 4000);
   return;
 }
 

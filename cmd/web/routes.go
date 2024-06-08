@@ -13,7 +13,7 @@ func routes() http.Handler {
 	mux.Use(middleware.Compress(5))
 	// mux.Use(middleware.Recoverer)
 	// mux.Use(SessionLoad)
-	mux.Use(RecoverPanic)
+	// mux.Use(RecoverPanic)
 	mux.Use(WriteToConsole)
 	mux.Use(middleware.NoCache)
 	mux.Use(NoSurf)

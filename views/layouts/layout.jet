@@ -57,7 +57,7 @@
     {{include "partials/_unauthmenu.jet"}}
     {{ end }}
 
-    <div class="container-fluid rounded m-3">
+    <div class="row border border-primary rounded align-items-center justify-content-center main-div">
         {{block documentBody()}}{{ end }}
     </div>
 

@@ -1,6 +1,7 @@
 package helpers
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"regexp"
@@ -67,6 +68,7 @@ func SendSmsVerify(phoneNumber string) map[string]interface{} {
 	params := &verify.CreateVerificationParams{}
 	params.SetTo(phone)
 	params.SetChannel("sms")
+	params.SetLocale("en")
 
 	resp, err := client.VerifyV2.CreateVerification(accountSid, params)
 	if err != nil {
@@ -82,6 +84,11 @@ func SendSmsVerify(phoneNumber string) map[string]interface{} {
 			results["sid"] = resp.Sid
 			results["channel"] = resp.Channel
 			results["servicesid"] = resp.ServiceSid
+			results["lookup"] = resp.Lookup
+			results["sna"] = resp.Sna
+			results["url"] = resp.Url
+			results["createdat"] = resp.DateCreated
+			results["updatedat"] = resp.DateUpdated
 			// results["sid"] = resp.Sid
 		} else {
 			fmt.Println(resp.Sid)
@@ -91,13 +98,18 @@ func SendSmsVerify(phoneNumber string) map[string]interface{} {
 			results["sid"] = resp.Sid
 			results["channel"] = resp.Channel
 			results["servicesid"] = resp.ServiceSid
+			results["lookup"] = resp.Lookup
+			results["sna"] = resp.Sna
+			results["url"] = resp.Url
+			results["createdat"] = resp.DateCreated
+			results["updatedat"] = resp.DateUpdated
 		}
 	}
 
 	return results
 }
 
-func VerifyCode(phoneNumber, verificationCode string) bool {
+func VerifyCode(phoneNumber, verificationCode string) (bool, error) {
 	// Find your Account SID and Auth Token at twilio.com/console
 	// and set the environment variables. See http://twil.io/secure
 	client := twilio.NewRestClient()
@@ -110,8 +122,9 @@ func VerifyCode(phoneNumber, verificationCode string) bool {
 
 	resp, err := client.VerifyV2.CreateVerificationCheck(accountSid, params)
 	if err != nil {
-		fmt.Printf("\n\t\tVerification Error\n\t%s\n\n", err.Error())
-		return false
+		fmt.Printf("\n\t\tVerification Error\n\t%s\n", err.Error())
+		fmt.Printf("\t\tStatus:\t%v\n\n", resp.Status)
+		return false, err
 	} else {
 		status := strings.ToLower(strings.TrimSpace(*resp.Status))
 		fmt.Printf("\n\t\tVerification Status\n\t%s", status)
@@ -119,10 +132,9 @@ func VerifyCode(phoneNumber, verificationCode string) bool {
 
 		switch status {
 		case "approved":
-			return true
+			return true, nil
 		default:
-			return false
-
+			return false, errors.New("The verification code failed")
 		}
 	}
 }

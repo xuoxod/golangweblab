@@ -17,6 +17,7 @@ import (
 	"github.com/xuoxod/weblab/internal/helpers"
 	"github.com/xuoxod/weblab/internal/models"
 	"github.com/xuoxod/weblab/internal/render"
+	"github.com/xuoxod/weblab/internal/utils"
 )
 
 // Application configuration
@@ -91,7 +92,8 @@ func initDB() (*driver.DB, error) {
 		return nil, err
 	}
 
-	fmt.Println("Connected to datastore")
+	// utils.CustomMessage("Connected to datastore", 242, 242, 255)
+	utils.CustomMessage("Connected to datastore", 242, 242, 255)
 
 	return db, nil
 }
@@ -114,7 +116,7 @@ func main() {
 	mux := routes()
 	go handlers.ListenToWsChannel()
 
-	log.Println("Server running on port 8080")
+	utils.CustomMessage("Server running on port 8080", 155, 244, 155)
 
 	_ = http.ListenAndServe(port, mux)
 }

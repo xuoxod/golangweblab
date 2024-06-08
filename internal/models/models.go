@@ -83,3 +83,14 @@ type Collection interface {
 type AllUsers struct {
 	Collection map[string]User
 }
+
+type ObjModel struct {
+	Status bool   `json:"status"`
+	Ok     bool   `json:"ok"`
+	Code   string `json:"code"`
+	To     string `json:"to"`
+	Reason string `json:"reason"`
+	ErrMsg string `json:"errmsg"`
+	WarMsg string `json:"warmsg"`
+	SucMsg string `json:"sucmsg"`
+}

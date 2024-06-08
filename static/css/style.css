@@ -149,3 +149,27 @@ p.para {
     }
 
 }
+
+.settings-rows {
+    margin: 0;
+    align-self: auto;
+    min-width: 100%;
+    margin: 4% 0% 5% 0%;
+}
+
+.settings-rows>* {
+    margin: 0;
+    justify-content: center;
+    align-self: auto;
+}
+
+
+.settings-rows:first-child {
+    margin: 5% 0% 4% 0%;
+}
+
+.main-div {
+    display: flexbox;
+    justify-items: center;
+    justify-content: space-between;
+}
