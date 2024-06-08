@@ -102,7 +102,6 @@ function verifySentCode(e) {
 
   if (verifyPhoneInput.value) {
     const url = "/user/phone/verify";
-    const csrfToken = document.querySelector(".csrf-token").value;
     const formData = new FormData(verifyPhoneForm);
 
     const options = {
