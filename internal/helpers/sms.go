@@ -112,9 +112,18 @@ func SendSmsVerify(phoneNumber string) map[string]interface{} {
 func VerifyCode(phoneNumber, verificationCode string) (bool, error) {
 	// Find your Account SID and Auth Token at twilio.com/console
 	// and set the environment variables. See http://twil.io/secure
-	client := twilio.NewRestClient()
+	// 	const accountSid = process.env.TWILIO_ACCOUNT_SID;
+	// const authToken = process.env.TWILIO_AUTH_TOKEN;
 
-	accountSid := os.Getenv("TWILIO_VERIFY_SID")
+	accountSid := os.Getenv("TWILIO_ACCOUNT_SID")
+	authToken := os.Getenv("TWILIO_AUTH_TOKEN")
+
+	// const client = require('twilio')(accountSid, authToken);
+
+	client := twilio.NewRestClientWithParams(twilio.ClientParams{
+		Username: accountSid,
+		Password: authToken,
+	})
 
 	params := &verify.CreateVerificationCheckParams{}
 	params.SetTo(phoneNumber)
@@ -122,14 +131,17 @@ func VerifyCode(phoneNumber, verificationCode string) (bool, error) {
 
 	resp, err := client.VerifyV2.CreateVerificationCheck(accountSid, params)
 	if err != nil {
-		fmt.Printf("\n\t\tVerification Error\n\t%s\n", err.Error())
-		fmt.Printf("\t\tStatus:\t%v\n\n", resp.Status)
+		fmt.Printf("\n\t\tVerification Error\n")
+		// fmt.Printf("\tStatus:\t%v\n", resp.Status)
+		// fmt.Printf("\tTo:\t%v\n", resp.To)
+		// fmt.Printf("\tSID:\t%v\n", resp.Sid)
+		// fmt.Printf("\tErrorMessage:\t%v\n\n", err.Error())
 		return false, err
 	} else {
 		status := strings.ToLower(strings.TrimSpace(*resp.Status))
 		fmt.Printf("\n\t\tVerification Status\n\t%s", status)
 		fmt.Printf("\n\t\tVerification Response\n\t%v\n\n", resp)
-
+		// return true, nil
 		switch status {
 		case "approved":
 			return true, nil

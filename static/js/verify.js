@@ -132,7 +132,7 @@ function handleCodeVerificationResults(data) {
     if (data["status"] == true) {
       return handleCodeVerificationResultsSuccess(data);
     } else {
-      return handleCodeVerificationResultsFail();
+      return handleCodeVerificationResultsFail(data);
     }
   } else {
     notify("error", `Error happened posting to URL`, 4);
@@ -146,7 +146,7 @@ function handleCodeVerificationResultsSuccess(data) {
   handleCodeVerificationSuccess();
 }
 
-function handleCodeVerificationResultsFail() {
+function handleCodeVerificationResultsFail(data) {
   notify("error", `Phone verification failed\n`, 4);
   const timer = setTimeout(() => {
     notify("warning", `Check the number or use a different phone number`, 4);

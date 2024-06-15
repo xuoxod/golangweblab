@@ -195,7 +195,7 @@ func (m *Respository) PostVerifyPhone(w http.ResponseWriter, r *http.Request) {
 
 	/* TODO: write a more thorough phone number validator */
 	if !strings.Contains(phoneNumber, "+") {
-		phoneNumber = fmt.Sprintf("+1%s", user.Phone)
+		phoneNumber = strings.TrimSpace(fmt.Sprintf("+1%s", user.Phone))
 	}
 
 	fmt.Printf("Received verification code: %v from user\n", code)
@@ -208,6 +208,7 @@ func (m *Respository) PostVerifyPhone(w http.ResponseWriter, r *http.Request) {
 	if vErr != nil {
 		obj.Status = false
 		obj.Reason = vErr.Error()
+		obj.Code = code
 	} else {
 		obj.Code = code
 		obj.Status = good
