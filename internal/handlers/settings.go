@@ -39,8 +39,8 @@ func (m *Respository) VerifyEmail(w http.ResponseWriter, r *http.Request) {
 
 }
 
-// @desc        Verify Phone Post
-// @route       POST /user/phone/verify
+// @desc        Verify Email Post
+// @route       POST /user/email/verify
 // @access      Private
 func (m *Respository) VerifyEmailPost(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Post verify email")
